@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.25" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="yes"/>
@@ -143,6 +143,20 @@
 <smd name="ON/OFF" x="2.4" y="-1.35" dx="1.05" dy="0.6" layer="1" rot="R90"/>
 <smd name="VIN" x="0.5" y="-1.35" dx="1.05" dy="0.6" layer="1" rot="R90"/>
 <text x="0.4" y="-0.1" size="0.254" layer="1" ratio="0">&gt;Name</text>
+</package>
+<package name="SOT-223">
+<wire x1="-3.25" y1="-1.75" x2="3.25" y2="-1.75" width="0.127" layer="21"/>
+<wire x1="3.25" y1="-1.75" x2="3.25" y2="1.75" width="0.127" layer="21"/>
+<wire x1="3.25" y1="1.75" x2="-3.25" y2="1.75" width="0.127" layer="21"/>
+<wire x1="-3.25" y1="1.75" x2="-3.25" y2="-1.75" width="0.127" layer="21"/>
+<smd name="P$1" x="0" y="3.1" dx="1.9" dy="6.7" layer="1" rot="R90"/>
+<smd name="P$2" x="0" y="-3.1" dx="1.1" dy="1.9" layer="1"/>
+<smd name="P$3" x="-2.7" y="-3.1" dx="1.9" dy="1.9" layer="1"/>
+<smd name="P$4" x="2.7" y="-3.1" dx="1.9" dy="1.9" layer="1"/>
+<wire x1="-4.45" y1="4.35" x2="-4.45" y2="-4.35" width="0.127" layer="21"/>
+<wire x1="-4.45" y1="-4.35" x2="4.45" y2="-4.35" width="0.127" layer="21"/>
+<wire x1="-4.45" y1="4.35" x2="4.45" y2="4.35" width="0.127" layer="21"/>
+<wire x1="4.45" y1="4.35" x2="4.45" y2="-4.35" width="0.127" layer="21"/>
 </package>
 </packages>
 <symbols>
@@ -315,6 +329,17 @@
 <connect gate="G$1" pin="OUT" pad="OUT"/>
 <connect gate="G$1" pin="VIN" pad="VIN"/>
 </connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="AZ1117E">
+<gates>
+</gates>
+<devices>
+<device name="">
 <technologies>
 <technology name=""/>
 </technologies>
