@@ -1,3 +1,6 @@
 *.gdsheet
 *.gddoc
 *.l#*
+*.s#*
+*.b#*
+*.b$*
