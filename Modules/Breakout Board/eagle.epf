@@ -1,0 +1,50 @@
+[Eagle]
+Version="08 02 02"
+Platform="Linux"
+Globals="Globals"
+Desktop="Desktop"
+
+[Globals]
+AutoSaveProject=1
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/LilyPad-Wearables.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Aesthetics.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Batteries.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Boards.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Capacitors.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Clocks.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Coils.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Connectors.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-DiscreteSemi.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Displays.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Electromechanical.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Fuses.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-GPS.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Hardware.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-IC-Amplifiers.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-IC-Comms.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-IC-Conversion.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-IC-Logic.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-IC-Memory.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-IC-Microcontroller.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-IC-Power.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-IC-Special-Function.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Jumpers.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-LED.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-PowerSymbols.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-RF.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Resistors.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Retired.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Sensors.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/SparkFun-Switches.lbr"
+UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/User-Submitted.lbr"
+UsedLibrary="/home/ignormies/drive/Projects/IoT House/Libraries/IoT.lbr"
+
+[Win_1]
+Type="Control Panel"
+Loc="0 28 1919 1045"
+State=1
+Number=0
+
+[Desktop]
+Screen="1920 1080"
+Window="Win_1"
