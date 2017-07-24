@@ -1,3 +1,6 @@
+#include <ESP8266WiFi.h>
+#include <ESP8266WiFiGeneric.h>
+#include <ESP8266WiFiType.h>
 #include <ESP8266WiFiAP.h>
 #include <ESP8266WiFiSTA.h>
 #include <WiFiClientSecure.h>
@@ -6,15 +9,11 @@
 #include <WiFiUdp.h>
 #include <WiFiClient.h>
 #include <WiFiServer.h>
-#include <ESP8266WiFi.h>
-#include <ESP8266WiFiGeneric.h>
-#include <ESP8266WiFiType.h>
-
-#include <ESP8266wifi.h>
 
 const char* ssid = "FlipTables";
 const char* password = "visit umbrella find shame";
-const char* host = "192.168.1.100";
+// const char* host = "192.168.1.100";  // TUBUS
+const char* host = "192.168.1.115";  // griefcake
 
 String mac = "xxxx";
 
