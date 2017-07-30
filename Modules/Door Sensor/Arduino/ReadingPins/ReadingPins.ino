@@ -1,19 +1,11 @@
 #include <ESP8266WiFi.h>
-#include <ESP8266WiFiGeneric.h>
-#include <ESP8266WiFiType.h>
-#include <ESP8266WiFiAP.h>
-#include <ESP8266WiFiSTA.h>
-#include <WiFiClientSecure.h>
-#include <ESP8266WiFiScan.h>
-#include <ESP8266WiFiMulti.h>
-#include <WiFiUdp.h>
-#include <WiFiClient.h>
-#include <WiFiServer.h>
+#include <ESP8266HTTPClient.h>
 
 const char* ssid = "FlipTables";
 const char* password = "visit umbrella find shame";
-// const char* host = "192.168.1.100";  // TUBUS
+//const char* host = "192.168.1.100";  // TUBUS
 const char* host = "192.168.1.115";  // griefcake
+int port = 8008;
 
 String mac = "xxxx";
 
@@ -22,9 +14,16 @@ int inPin = 13;
 int doorStatus = 0;
 
 WiFiClient client;
+HTTPClient http;
 
 void alarmRequest(String statusVal) {
-  if (client.connect(host, 80)) {
+//  String addr = String(host) + ":" + port + "/alarm";
+//  http.begin(addr);
+//  http.addHeader("Content-Type", "application/json");
+//  String message = "{State : " + statusVal + "}";
+//  http.POST(message);
+
+  if (client.connect(host, port)) {
 
     Serial.println("Connected to server"); 
   
