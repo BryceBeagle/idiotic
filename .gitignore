@@ -1,11 +1,20 @@
+# Google Docs files
 *.gdsheet
 *.gddoc
+
+# Library backups
 *.l#*
+*.l$*
+
+# Schematic backups
 *.s#*
+
+# Board backups
 *.b#*
 *.b$*
-*.l$*
+
+# IntelliJ configuration
 .idea/*
-package-lock.json
-node_modules/
-package.json
+
+# Zipped gerber files
+eagle/gerber/*/*.zip
