@@ -1,6 +1,3 @@
-//#include <IRremoteESP8266.h>/
-//#include <ESP8266WiFi.h>/
-
 int outputPin = 2;
 
 uint32_t t0;
