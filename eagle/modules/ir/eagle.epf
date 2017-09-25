@@ -1,5 +1,5 @@
 [Eagle]
-Version="08 03 01"
+Version="08 03 02"
 Platform="Linux"
 Globals="Globals"
 Desktop="Desktop"
@@ -381,11 +381,17 @@ UsedLibrary="/home/ignormies/.eagle/lbr/SparkFun/User-Submitted.lbr"
 UsedLibrary="/home/ignormies/git/iot-house/eagle/libraries/IoT.lbr"
 
 [Win_1]
+Loc="144 144 1343 743"
+State=2
+Number=3
+
+[Win_2]
 Type="Control Panel"
-Loc="321 0 1520 639"
+Loc="0 28 1919 1045"
 State=1
 Number=0
 
 [Desktop]
 Screen="1920 1080"
 Window="Win_1"
+Window="Win_2"
