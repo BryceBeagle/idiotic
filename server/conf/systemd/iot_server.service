@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve iot-server
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/iot-server/server
+Environment="PATH=/usr/local/bin"
+ExecStart=/usr/local/bin/gunicorn --workers 3 --bind unix:iot_server.sock -m 007 iot_server:app
+
+[Install]
+WantedBy=multi-user.target
