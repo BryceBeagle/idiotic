@@ -3,9 +3,8 @@
 
 const char* ssid = "FlipTables";
 const char* password = "visit umbrella find shame";
-//const char* host = "192.168.1.100";  // TUBUS
-const char* host = "192.168.1.115";  // griefcake
-int port = 8008;
+const char* host = "brycebeagle.com";  // AWS
+//const char* host = "192.168.1.108:5000"; // griefcake
 
 String mac = "xxxx";
 
@@ -17,26 +16,17 @@ WiFiClient client;
 HTTPClient http;
 
 void alarmRequest(String statusVal) {
-//  String addr = String(host) + ":" + port + "/alarm";
-//  http.begin(addr);
-//  http.addHeader("Content-Type", "application/json");
-//  String message = "{State : " + statusVal + "}";
-//  http.POST(message);
 
-  if (client.connect(host, port)) {
-
-    Serial.println("Connected to server"); 
-  
-    String URI = String("/alarm?id=") + mac + "&status=" + statusVal;
+    HTTPClient http;
     
-    // Make a HTTP request
-    client.println("GET " + URI + " HTTP/1.1");
-    client.println("Host: " + String(host));
-    client.println("Connection: close");
-    client.println();
-  } else {
-    Serial.println("Unable to connect to server");
-  }
+    http.begin("http://" + String(host) + "/modules/door");
+    http.addHeader("Content-Type", "application/json");
+    
+    String message = "{\"status\":\"" + String(statusVal) + "\"}";
+    
+    int httpCode = http.POST(message);
+    
+    http.end();
 }
 
 void setup() {
@@ -48,6 +38,7 @@ void setup() {
 
   // prepare LED pin
   pinMode(inPin, INPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(2, 0);
   
   // Connect to WiFi network
@@ -78,10 +69,12 @@ void loop() {
     Serial.println("Door Opened");
     doorStatus = 1;
     alarmRequest("open");
+    digitalWrite(LED_BUILTIN, LOW);
   } else if (doorStatus == 1  && digitalRead(inPin) == 1) {
     Serial.println("Door Closed");
     doorStatus = 0;
     alarmRequest("closed");
+    digitalWrite(LED_BUILTIN, HIGH);
   }
 }
 
