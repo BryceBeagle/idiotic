@@ -8,8 +8,7 @@ class GoogleHome(IotDevice):
 
         super(GoogleHome, self).__init__()
 
-        self._uuid = None
-        self._name = None
+        self._is_querying = None
 
 
     @action
@@ -18,5 +17,5 @@ class GoogleHome(IotDevice):
 
     @attribute
     def is_querying(self):
-        return self.is_querying
+        return self._is_querying
 

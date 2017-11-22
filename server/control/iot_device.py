@@ -30,14 +30,23 @@ class IotDevice:
     def __init__(self):
 
         self._uuid = None
+        self._name = None
 
-    @property
+    @attribute
     def uuid(self):
         return self._uuid
 
     @uuid.setter
     def uuid(self, id):
         self._uuid = id
+
+    @attribute
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        self._name = name
 
     @classmethod
     def get_actions(cls):

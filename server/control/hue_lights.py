@@ -13,8 +13,12 @@ class HueLight(IotDevice):
         self._brightness = None
 
     @action
-    def pront(self):
-        print("Approaching infinity")
+    def pulse_lights(self):
+        pass
+
+    @action
+    def dim_lights(self):
+        pass
 
     @attribute
     def room(self):
@@ -31,13 +35,3 @@ class HueLight(IotDevice):
     @brightness.setter
     def brightness(self, brightness):
         self._room = brightness
-
-    # @room.setter
-    # def room(self, new_room):
-    #     self._room = new_room
-
-
-
-a = HueLight()
-a.brightness = 10
-print(a.brightness)

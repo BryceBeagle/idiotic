@@ -8,9 +8,6 @@ class DoorSensor(IotDevice):
 
         super(DoorSensor, self).__init__()
 
-        self._uuid = None
-        self._name = None
-
         self.state = None
 
     @attribute
