@@ -10,7 +10,6 @@ class IRSensor(IotDevice):
 
         self.signals = {}
 
-
     @action
     def add_signal(self, name, signal):
         self.signals[name] = signal

@@ -10,7 +10,6 @@ class GoogleHome(IotDevice):
 
         self._is_querying = None
 
-
     @action
     def query(self):
         pass

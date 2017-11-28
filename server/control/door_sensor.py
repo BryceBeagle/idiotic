@@ -8,7 +8,7 @@ class DoorSensor(IotDevice):
 
         super(DoorSensor, self).__init__()
 
-        self.state = None
+        self._state = None
 
     @attribute
     def state(self):
@@ -16,4 +16,4 @@ class DoorSensor(IotDevice):
 
     @state.setter
     def state(self, state):
-        self_state = state
+        self._state = state

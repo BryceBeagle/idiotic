@@ -13,7 +13,7 @@ class HueLight(IotDevice):
         self._brightness = None
 
     @action
-    def pulse_lights(self):
+    def pulse_lights(self, test):
         pass
 
     @action
@@ -24,14 +24,6 @@ class HueLight(IotDevice):
     def room(self):
         return self._room
 
-    @room.setter
-    def room(self, room):
-        self._room = room
 
-    @attribute
-    def brightness(self):
-        return self._room
-
-    @brightness.setter
-    def brightness(self, brightness):
-        self._room = brightness
+print(HueLight.actions)
+print(HueLight.attributes)
