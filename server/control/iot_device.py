@@ -16,19 +16,15 @@ class IotDevice:
     def _action(cls, func):
         cls.actions.append(func)
 
-        def decorator(*args, **kwargs):
-            func(*args, **kwargs)
-
-        return decorator
+        return func
 
     @classmethod
     def _attribute(cls, func):
         cls.attributes.append(func)
 
-        def decorator(*args, **kwargs):
-            func(*args, **kwargs)
+        func = property(func)
 
-        return decorator
+        return func
 
     # TODO: Get decorators working within class using magic
     # @_attribute()
