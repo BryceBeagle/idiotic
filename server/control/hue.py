@@ -4,19 +4,38 @@ from iot_device import IotDevice
 from iot_device import action, attribute
 
 
+class HueBridge(phue.Bridge):
+    """"""
+
+    __instance = None
+
+    def __new__(cls, *args, **kwargs):
+
+        if cls.__instance is None:
+            cls.__instance = super().__new__(cls, *args, **kwargs)
+        return HueBridge.__instance
+
+    def __init__(self):
+        super().__init__("192.168.1.202")  # TODO: Dynamic IP
+
+
 class HueLight(IotDevice):
 
-    bridge = phue.Bridge("192.168.1.202")
+    bridge = HueBridge()
 
-    def __init__(self, light_id=None):
-        super(HueLight, self).__init__()
+    def __init__(self, light_id=None, bridge=None):
+        super().__init__()
+
+        if bridge is not None:
+            self.bridge = bridge
 
         if light_id is not None:
-            self._light = HueLight.bridge[light_id]
+            self._light = self.bridge[light_id]
+            self.name = self._light.name
         else:
             self._light = None
 
-        self._light_id           = light_id
+        self._light_id = light_id
 
     @action
     def pulse_lights(self):
@@ -64,7 +83,7 @@ class HueLight(IotDevice):
 
     @attribute
     def groups(self):
-        return [group['name'] for group in HueLight.bridge.get_group().values()
+        return [group['name'] for group in self.bridge.get_group().values()
                 if str(self._light_id) in group['lights']]
 
     @groups.setter
@@ -72,7 +91,7 @@ class HueLight(IotDevice):
 
         groups = set(groups)
 
-        for group in HueLight.bridge.groups:
+        for group in self.bridge.groups:
             if group.name in groups:
 
                 # Group already exists
@@ -87,7 +106,7 @@ class HueLight(IotDevice):
 
                 # Add light to group
                 lights.add(self.light_id)
-                HueLight.bridge.set_group(group.group_id, 'lights', list(lights))
+                self.bridge.set_group(group.group_id, 'lights', list(lights))
 
             else:
 
@@ -103,15 +122,15 @@ class HueLight(IotDevice):
 
                 # Delete group if the light to remove is the only light in the group
                 if not lights:
-                    HueLight.bridge.delete_group(group.group_id)
+                    self.bridge.delete_group(group.group_id)
 
                 # Remove light from group
                 else:
-                    HueLight.bridge.set_group(group.group_id, 'lights', list(lights))
+                    self.bridge.set_group(group.group_id, 'lights', list(lights))
 
         # New groups
         for group in groups:
-            HueLight.bridge.create_group(group, [self.light_id])
+            self.bridge.create_group(group, [self.light_id])
 
 
 if __name__ == '__main__':
@@ -120,5 +139,6 @@ if __name__ == '__main__':
     print(a.groups)
     a.groups = ['Living Room']
     print(a.groups)
+    print(a.attributes)
 
     pass
