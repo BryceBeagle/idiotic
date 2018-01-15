@@ -4,6 +4,7 @@ from hue         import HueBridge, HueLight
 from ir_sensor   import IRSensor
 
 from iot_device  import IotDevice
+from iot_routine import IotRoutine
 
 
 class IotController:
@@ -11,7 +12,19 @@ class IotController:
     def __init__(self):
         self.devices = defaultdict(dict)
 
-    def add_device(self, device):
+        self.routines = {None: None}
+        """Registry of trigger:routine mappings
+        
+        None key corresponds to routines that do not have any triggers (ie. can only be triggered manually)
+        """
+
+    def add_device(self, device: IotDevice):
+        """Create a a new IotDevice instance
+
+        :param device: Instance of IotDevice subclass
+        :return: None
+        """
+
         class_type = device.__class__.__name__
 
         # Use device's name if it has one, else its id()
@@ -19,18 +32,38 @@ class IotController:
 
         self.devices[class_type][name] = device
 
-    def get(self, cls: type(IotDevice), name: str, attr):
+    def get_attr(self, cls: type(IotDevice), name: str, attr: str):
+        """Get an attribute from a device
+
+        :param cls:  IotDevice subclass
+        :param name: Name of instance of class
+        :param attr: Name of desired attribute
+        :return:     Value of attribute
+        """
+
+        # TODO: Allow access using either id() or name
 
         if attr in cls.attributes:
 
             device = self.devices[cls.__name__][name]
             return getattr(device, attr)
 
-    def set(self, cls: type(IotDevice), name: str, attr: str, value):
+    def set_attr(self, cls: type(IotDevice), name: str, attr: str, value):
+        """Sets an attribute of an IotDevice instance to a value
+
+        :param cls:   IotDevice subclass
+        :param name:  Name of instance of class
+        :param attr:  Name of attribute
+        :param value: Value to set attribute to
+        :return:      None
+        """
 
         if attr in cls.attributes:
             device = self.devices[cls.__name__][name]
             setattr(device, attr, value)
+
+    def set_routine(self, trigger: IotTrigger, routine: IotRoutine):
+        pass
 
 
 def _test_random_brightness():
@@ -57,22 +90,22 @@ def _test_attributes():
 
     import time
 
-    controller.set(HueLight, "Dining Room 2", "brightness", 0)
-    assert controller.get(HueLight, "Dining Room 2", "brightness") == 0
+    controller.set_attr(HueLight, "Dining Room 2", "brightness", 0)
+    assert controller.get_attr(HueLight, "Dining Room 2", "brightness") == 0
     time.sleep(1)
-    controller.set(HueLight, "Dining Room 2", "brightness", 254)
-    assert controller.get(HueLight, "Dining Room 2", "brightness") == 254
+    controller.set_attr(HueLight, "Dining Room 2", "brightness", 254)  # 254 is max for whatever reason
+    assert controller.get_attr(HueLight, "Dining Room 2", "brightness") == 254
 
 
 if __name__ == '__main__':
 
     controller = IotController()
 
-    bridge = HueBridge()
+    # bridge = HueBridge()
+    #
+    # for light in bridge.lights:
+    #     controller.add_device(HueLight(light.light_id))
+    #
+    # controller.add_device(IRSensor())
 
-    for light in bridge.lights:
-        controller.add_device(HueLight(light.light_id))
-
-    controller.add_device(IRSensor())
-
-    _test_attributes()
+    controller.set_routine(True, (1, 2, 3, 4))
