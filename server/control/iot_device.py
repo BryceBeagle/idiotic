@@ -37,12 +37,13 @@ class IotDevice:
         return self._uuid
 
     @uuid.setter
-    def uuid(self, id):
-        self._uuid = id
+    def uuid(self, id_):
+        self._uuid = id_
 
     # @attribute
     @property
     def name(self):
+        """Device name used for external access"""
         return self._name
 
     @name.setter
