@@ -34,19 +34,12 @@ class IotRoutine:
     def __call__(self, *args, **kwargs):
         """Trigger all events in routine"""
 
-        # Conditionals that apply to entire IotRoutine (event is []) must all pass
-        if not all(conditional() for conditional in self.conditionals if not self.conditionals[conditional]):
+        # All conditionals for routine must be true
+        if not all(self.conditionals):
             return
 
-        for conditional in self.conditionals:
-
-            # Conditional must be True
-            if not conditional():
-                return
-
-            # TODO: Use conditionals
-            for event in self.events:
-                event()
+        for event in self.events:
+            event()
 
     @property
     def trigger(self) -> IotTrigger:
@@ -92,58 +85,25 @@ class IotRoutine:
     @property
     def conditionals(self) -> Dict[Union[None, IotConditional], List[IotEvent]]:
         """Get conditionals pattern"""
+
         return self._conditionals
 
     @conditionals.setter
-    def conditionals(self,
-                     conditionals: Union[None,                                           # No conditionals
-                                         IotConditional,                                 # Single conditional
-                                         List[IotConditional],                           # Multiple conditionals
-                                         Dict[IotConditional, Union[IotEvent,            # Single paired conditional
-                                                                    List[IotEvent]]]]):  # Multiple paired conditionals
-        """Set conditionals
+    def conditionals(self, conditionals: Union[None, IotConditional, List[IotConditional]]):
 
-        Conditionals can either be tied to IotEvents within the IotRoutine, or to the entire
-        IotRoutine
-
-        # TODO: Support for if-else type conditionals
-
-        Takes a number of different formats:
-
-        None: No conditionals whatsoever.
-        IotConditional(s): Conditionals for entire IotRoutine.
-        Dict: Conditionals for IotEvents within the IotRoutine
-
-        """
         # No conditionals
         if conditionals is None:
-            self._conditionals = {None: []}
+            self._conditionals = [True]
 
-        # Single conditional for entire IotRoutine
+        # Single conditional
         elif isinstance(conditionals, IotConditional):
-            self._conditionals = {conditionals: []}
+            self._conditionals = [conditionals]
 
-        # List of conditionals for entire IotRoutine
+        # List of conditionals
         elif isinstance(conditionals, list):
-            self._conditionals = dict((conditional, []) for conditional in conditionals)
-
-        # Dict of conditionals and IotEvents
-        elif isinstance(conditionals, dict):
-            for key in conditionals:
-
-                # Single IotEvent
-                if isinstance(conditionals[key], IotEvent):
-                    conditionals[key] = [IotEvent]
-
-                # List of IotEvents
-                elif isinstance(conditionals[key], list):
-                    if not all(isinstance(item, IotEvent) for item in conditionals[key]):
-                        raise TypeError(f"Improper conditionals format")
-
-                else:
-                    raise ValueError(f"Improper conditionals format")
-
-                self._conditionals = conditionals
+            if not all(isinstance(conditional, IotConditional) for conditional in conditionals):
+                raise TypeError("conditionals must all be instances of IotConditional")
+            self._conditionals = conditionals
 
         else:
-            raise TypeError(f"Improper conditionals format")
+            raise TypeError("conditionals must all be instances of IotConditional")

@@ -1,10 +1,14 @@
-from collections import defaultdict
+from collections     import defaultdict
 
-from hue         import HueBridge, HueLight
-from ir_sensor   import IRSensor
+from hue             import HueBridge, HueLight
+from ir_sensor       import IRSensor
 
-from iot_device  import IotDevice
-from iot_routine import IotRoutine
+from iot_device      import IotDevice
+from iot_routine     import IotRoutine
+from iot_trigger     import IotTrigger
+from iot_conditional import IotConditional
+from iot_event       import IotEvent
+from iot_watch       import IotWatch
 
 
 class IotController:
@@ -97,15 +101,40 @@ def _test_attributes():
     assert controller.get_attr(HueLight, "Dining Room 2", "brightness") == 254
 
 
+def _test_conditionals():
+
+    value1 = lambda: controller.get_attr(HueLight, "Dining Room 1", "brightness")
+    value2 = lambda: controller.get_attr(HueLight, "Dining Room 2", "brightness")
+
+    print(f"Room1: {value1()} | Room2 {value2()}")
+    conditional = IotConditional(value1, "==", value2)
+    print(bool(conditional))
+
+    controller.set_attr(HueLight, "Dining Room 2", "brightness", 0)
+
+    print(f"Room1: {value1()} | Room2 {value2()}")
+    conditional = IotConditional(value1, "==", value2)
+    print(bool(conditional))
+
+
 if __name__ == '__main__':
 
     controller = IotController()
 
-    # bridge = HueBridge()
-    #
-    # for light in bridge.lights:
-    #     controller.add_device(HueLight(light.light_id))
-    #
-    # controller.add_device(IRSensor())
+    bridge = HueBridge()
 
-    controller.set_routine(True, (1, 2, 3, 4))
+    for light in bridge.lights:
+        controller.add_device(HueLight(light.light_id))
+
+    controller.add_device(IRSensor())
+
+    action_list = [lambda: controller.set_attr(HueLight, "Bryce's Room", "brightness", 0)]
+
+    value1 = lambda: controller.get_attr(HueLight, "Dining Room 1", "brightness")
+    value2 = lambda: controller.get_attr(HueLight, "Dining Room 2", "brightness")
+    conditional = IotConditional(value1, "==", value2)
+
+    watch = IotWatch(lambda: controller.get_attr(HueLight, "Dining Room 1", "brightness"), ">", 150)
+    trigger = IotTrigger(watch)
+
+    routine = IotRoutine(trigger, action_list, conditional)

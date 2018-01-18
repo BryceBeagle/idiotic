@@ -1,15 +1,26 @@
 from typing import Union, List, Callable
 
+from iot_conditional import IotConditional
+
 
 class IotEvent:
 
-    def __init__(self, actions):
+    def __init__(self,
+                 actions: Union[Callable, List[Callable]],
+                 conditionals: Union[None, IotConditional, List[IotConditional]] = None):
 
         self._actions = []
+        self._conditionals = []
 
         self.actions = actions
+        self.actions = conditionals
 
     def __call__(self, *args, **kwargs):
+
+        # All conditionals must be true for event to execute
+        if not all(self.conditionals):
+            return
+
         for action in self.actions:
             action()
 
@@ -31,3 +42,24 @@ class IotEvent:
             self._actions = actions
         else:
             raise TypeError("action is not a Callable or list of Callable")
+
+    def add_action(self, action: Callable, index: int = -1):
+        self.actions.insert(index, action)
+
+    def remove_action(self, index: int = -1, action: Union[None, Callable] = None):
+        """Remove action for action list.
+
+        Defaults to last action of list. If action is not none, it is popped from list.
+        """
+        if action is not None:
+            self.actions.remove(action)
+        else:
+            self.actions.pop(index)
+
+    @property
+    def conditionals(self):
+        return self._conditionals
+
+    @conditionals.setter
+    def conditionals(self, conditionals):
+        self._conditionals = conditionals

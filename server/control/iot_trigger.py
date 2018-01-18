@@ -1,6 +1,7 @@
 from typing import Union, Set, Iterable
 
-from iot_routine import IotRoutine
+# TODO: Fix cyclic import
+# from iot_routine import IotRoutine
 
 
 class IotTrigger:
@@ -24,14 +25,16 @@ class IotTrigger:
             routine()
 
     @property
-    def routines(self) -> Set[IotRoutine]:
+    def routines(self):  # -> Set[IotRoutine]:  TODO: Fix cyclic import
         """Get set of routines that are subscribed to this IotTrigger instance"""
         return self._routines
 
     @routines.setter
-    def routines(self, routines: Union[IotRoutine,
-                                       Iterable[IotRoutine]]):
+    def routines(self, routines):  # Union[IotRoutine,  TODO: Fix cyclic import
+                                   #       Iterable[IotRoutine]]):
         """Set routine set"""
+
+        from iot_routine import IotRoutine  # TODO: Fix cyclic import
 
         # Single IotRoutine
         if isinstance(routines, IotRoutine):
