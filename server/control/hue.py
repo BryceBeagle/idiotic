@@ -58,6 +58,14 @@ class HueLight(IotDevice):
         return self._light_id
 
     @attribute
+    def on(self):
+        return self._light.on
+
+    @on.setter
+    def on(self, on):
+        self._light.on = on
+
+    @attribute
     def brightness(self):
         return self._light.brightness
 
