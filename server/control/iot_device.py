@@ -1,3 +1,28 @@
+class _Attribute(property):
+    """Subclass of property object that allows properties to be subscribed to
+
+    Whenever the setter for the property is called, all subscribers are notified
+    """
+
+    def __init__(self, fget=None, fset=None, fdel=None, doc=None):
+        super().__init__(fget, fset, fdel, doc)
+
+        self.subscribers = set()
+
+    def __set__(self, key, value):
+
+        for subscriber in self.subscribers:
+            subscriber.alert(value)
+
+        return super().__set__(key, value)
+
+    def subscribe(self, trigger):
+        self.subscribers.add(trigger)
+
+    def unsubscribe(self, trigger):
+        self.subscribers.discard(trigger)
+
+
 class IotDevice:
 
     actions    = set()
@@ -26,7 +51,7 @@ class IotDevice:
     def _attribute(cls, func):
         cls.attributes.add(func.__name__)
 
-        func = property(func)
+        func = _Attribute(func)
 
         return func
 
