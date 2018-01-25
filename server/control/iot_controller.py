@@ -1,4 +1,5 @@
 from collections     import defaultdict
+from typing          import Union
 
 from hue             import HueBridge, HueLight
 from ir_sensor       import IRSensor
@@ -8,13 +9,13 @@ from iot_routine     import IotRoutine
 from iot_trigger     import IotTrigger
 from iot_conditional import IotConditional
 from iot_event       import IotEvent
-from iot_watch       import IotWatch
 
 
 class IotController:
 
     def __init__(self):
-        self.devices = defaultdict(dict)
+        self.device_names = defaultdict(dict)
+        self.device_uuids = {}
 
         self.routines = {None: None}
         """Registry of trigger:routine mappings
@@ -22,49 +23,88 @@ class IotController:
         None key corresponds to routines that do not have any triggers (ie. can only be triggered manually)
         """
 
-    def add_device(self, device: IotDevice):
-        """Create a a new IotDevice instance
+    def add_device(self, device: IotDevice) -> None:
+        """Add an IotDevice instance to the device dicts.
+
+        device_uuids is a dict of devices by uuid
+        device_names is a dict of devices by class type, then name
 
         :param device: Instance of IotDevice subclass
         :return: None
         """
 
-        class_type = device.__class__.__name__
+        # Dict of UUIDs
+        self.device_uuids[device.uuid] = device
 
-        # Use device's name if it has one, else its id()
-        name = str(id(device)) if device.name is None else device.name
+        # Dict of device types and names
+        self.device_names[device.__class__.__name__][device.name] = device
 
-        self.devices[class_type][name] = device
-
-    def get_attr(self, cls: type(IotDevice), name: str, attr: str):
+    def get_attr(self,
+                 attr: str,
+                 cls: type(IotDevice) = None,
+                 name: str = None,
+                 uuid: int = None):
         """Get an attribute from a device
 
-        :param cls:  IotDevice subclass
-        :param name: Name of instance of class
         :param attr: Name of desired attribute
+        :param cls:  [Optional] IotDevice subclass
+        :param name: [Optional] Name of device
+        :param uuid: [Optional] ID of device
         :return:     Value of attribute
+
+        uuid or cls must be specified, but not both. If cls is specified, name must be specified as well
         """
-
-        # TODO: Allow access using either id() or name
-
         if attr in cls.attributes:
 
-            device = self.devices[cls.__name__][name]
+            if uuid:
+                if cls: raise ValueError("Only one of uuid and cls must be specified")
+
+                device = self.device_uuids[uuid]
+
+            elif cls:
+                if not name: raise ValueError("If cls is specified, name must be as well")
+
+                device = self.device_names[cls.__name__][name]
+
+            else: raise ValueError("uuid or cls must be specified")
+
             return getattr(device, attr)
 
-    def set_attr(self, cls: type(IotDevice), name: str, attr: str, value):
+    def set_attr(self,
+                 attr: str,
+                 value,
+                 cls: type(IotDevice) = None,
+                 name: str = None,
+                 uuid: int = None):
         """Sets an attribute of an IotDevice instance to a value
 
-        :param cls:   IotDevice subclass
-        :param name:  Name of instance of class
         :param attr:  Name of attribute
         :param value: Value to set attribute to
+        :param cls:   [Optional] IotDevice subclass
+        :param name:  [Optional] Name of device
+        :param uuid:  [Optional] ID of device
         :return:      None
-        """
 
+        uuid or cls must be specified, but not both. If cls is specified, name must be specified as well
+        """
         if attr in cls.attributes:
-            device = self.devices[cls.__name__][name]
+
+            if uuid:
+                if cls: raise ValueError("Only one of uuid and cls must be specified")
+
+                device = self.device_uuids[uuid]
+
+            elif cls:
+                if not name: raise ValueError("If cls is specified, name must be as well")
+
+                device = self.device_names[cls.__name__][name]
+
+            else: raise ValueError("uuid or cls must be specified")
+
             setattr(device, attr, value)
+
+        else:
+            raise AttributeError(f"Attribute '{attr}' not accessible")
 
     def set_routine(self, trigger: IotTrigger, routine: IotRoutine):
         pass
@@ -76,7 +116,7 @@ def _test_random_brightness():
     import time
 
     lights = []
-    for light in controller.devices[HueLight]:
+    for light in controller.device_names[HueLight]:
         if 'Alex Room' in light.groups:
             lights.append((light, light.brightness))
     for _ in range(10):
@@ -103,17 +143,22 @@ def _test_attributes():
 
 def _test_conditionals():
 
-    value1 = lambda: controller.get_attr(HueLight, "Dining Room 1", "brightness")
-    value2 = lambda: controller.get_attr(HueLight, "Dining Room 2", "brightness")
+    controller.set_attr("on"        , True, cls=HueLight, name="Dining Room 1")
+    controller.set_attr("on"        , True, cls=HueLight, name="Dining Room 2")
+    controller.set_attr("brightness", 254 , cls=HueLight, name="Dining Room 1")
+    controller.set_attr("brightness", 254 , cls=HueLight, name="Dining Room 2")
+
+    value1 = lambda: controller.get_attr("brightness", cls=HueLight, name="Dining Room 1")
+    value2 = lambda: controller.get_attr("brightness", cls=HueLight, name="Dining Room 2")
+
+    conditional = IotConditional(value1, IotConditional.equals, value2)
 
     print(f"Room1: {value1()} | Room2 {value2()}")
-    conditional = IotConditional(value1, "==", value2)
     print(bool(conditional))
 
-    controller.set_attr(HueLight, "Dining Room 2", "brightness", 0)
+    controller.set_attr("brightness", 0, cls=HueLight, name="Dining Room 2")
 
     print(f"Room1: {value1()} | Room2 {value2()}")
-    conditional = IotConditional(value1, "==", value2)
     print(bool(conditional))
 
 
@@ -128,13 +173,14 @@ if __name__ == '__main__':
 
     controller.add_device(IRSensor())
 
-    action_list = [lambda: controller.set_attr(HueLight, "Bryce's Room", "brightness", 0)]
+    _test_conditionals()
 
-    value1 = lambda: controller.get_attr(HueLight, "Dining Room 1", "brightness")
-    value2 = lambda: controller.get_attr(HueLight, "Dining Room 2", "brightness")
-    conditional = IotConditional(value1, "==", value2)
+    action_list = [lambda: controller.set_attr("brightness", 0, cls=HueLight, name="Bryce's Room")]
 
-    watch = IotWatch(lambda: controller.get_attr(HueLight, "Dining Room 1", "brightness"), ">", 150)
-    trigger = IotTrigger(watch)
+    value1 = lambda: controller.get_attr("brightness", cls=HueLight, name="Dining Room 1")
+    value2 = lambda: controller.get_attr("brightness", cls=HueLight, name="Dining Room 2")
+    conditional = IotConditional(value1, IotConditional.lt_equals, value2)
+
+    trigger = IotTrigger(attr, IotTrigger.check_gt, 220)
 
     routine = IotRoutine(trigger, action_list, conditional)
