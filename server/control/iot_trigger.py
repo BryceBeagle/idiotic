@@ -1,51 +1,63 @@
-from typing import Union, Set, Iterable
-
-# TODO: Fix cyclic import
-# from iot_routine import IotRoutine
-
-
 class IotTrigger:
 
-    def __init__(self, watch_event=None):
-
-        self._routines = set()
+    def __init__(self, attr, check, value, parent):
         """
-        Set of IotRoutines that are subscribed to this trigger.
-        Must be updated whenever the IotRoutine updates its trigger [TODO: trigger set]
+        :param attr:   Attribute to subscribe to
+        :param parent: Parent IotRoutine to be triggered
         """
+        self.check = check
+        self.value = value
 
-        if watch_event is not None:
-            # Add IotTrigger instance to watch list of watch_event
-            # When watch_event is triggered, it will call self.trigger()
-            watch_event.subscribe(self)
+        self.parent = parent
+
+        self.subscribe(attr)
+
+    def subscribe(self, attr) -> None:
+        """Subscribe to attribute for state changes"""
+        attr.subscribe(self)
+
+    def alert(self, value) -> None:
+        """Called when attr's state changes
+
+        Calls self.trigger() if [conditional] is True
+
+        :param value: value of attr after state change
+        """
+        if self.check(value):
+            self.trigger()
 
     def trigger(self) -> None:
-        """Trigger all subscribed routines"""
-        for routine in self.routines:
-            routine()
+        """Call parent IotRoutine"""
+        self.parent()
 
-    @property
-    def routines(self):  # -> Set[IotRoutine]:  TODO: Fix cyclic import
-        """Get set of routines that are subscribed to this IotTrigger instance"""
-        return self._routines
+    def check_eq(self, attr_value):
+        """attr_value == value"""
+        return attr_value == self.value
 
-    @routines.setter
-    def routines(self, routines):  # Union[IotRoutine,  TODO: Fix cyclic import
-                                   #       Iterable[IotRoutine]]):
-        """Set routine set"""
+    def check_neq(self, attr_value):
+        """attr_value != value"""
+        return attr_value != self.value
 
-        from iot_routine import IotRoutine  # TODO: Fix cyclic import
+    def check_gt(self, attr_value):
+        """attr_value > value"""
+        return attr_value > self.value
 
-        # Single IotRoutine
-        if isinstance(routines, IotRoutine):
-            self._routines = {routines}
+    def check_gte(self, attr_value):
+        """attr_value >= value"""
+        return attr_value >= self.value
 
-        # Iterable (ie set, list) of IotRoutines
-        elif isinstance(routines, Iterable):
-            if not all(isinstance(routine, IotRoutine) for routine in routines):
-                raise TypeError("routines is not an instance or list of IotRoutine")
-            self._routines = set(routines)
+    def check_lt(self, attr_value):
+        """attr_value < value"""
+        return attr_value < self.value
 
-        # Invalid IotRoutine type
-        else:
-            raise TypeError("routines is not an instance or list of IotRoutine")
+    def check_lte(self, attr_value):
+        """attr_value <= value"""
+        return attr_value <= self.value
+
+    def check_true(self, attr_value):
+        """attr_value == bool(True)"""
+        return bool(attr_value)
+
+    def check_false(self, attr_value):
+        """attr_value == bool(False)"""
+        return not bool(attr_value)
