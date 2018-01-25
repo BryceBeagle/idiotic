@@ -6,7 +6,7 @@ The MCP9808 sensor is functional from -40°C ~ 125°C with an accuracy of ±0.5�
 using I2C (TWI). Temperature is measured every 30 seconds and a 5 minute rolling average is reported to the server every
 30 seconds.
 
-Temperature is reported in the following JSON format:
+Temperature is reported in °C the following JSON format:
 ```json
 {"temp" : "20.5"}
 ```
