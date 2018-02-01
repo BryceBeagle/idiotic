@@ -148,8 +148,8 @@ def _test_conditionals():
     controller.set_attr("brightness", 254 , cls=HueLight, name="Dining Room 1")
     controller.set_attr("brightness", 254 , cls=HueLight, name="Dining Room 2")
 
-    value1 = lambda: controller.get_attr("brightness", cls=HueLight, name="Dining Room 1")
-    value2 = lambda: controller.get_attr("brightness", cls=HueLight, name="Dining Room 2")
+    value1 = controller.get_attr("brightness", cls=HueLight, name="Dining Room 1")
+    value2 = controller.get_attr("brightness", cls=HueLight, name="Dining Room 2")
 
     conditional = IotConditional(value1, IotConditional.equals, value2)
 
@@ -175,12 +175,33 @@ if __name__ == '__main__':
 
     _test_conditionals()
 
-    action_list = [lambda: controller.set_attr("brightness", 0, cls=HueLight, name="Bryce's Room")]
+    action_list = [lambda: controller.set_attr("brightness", 0, cls=HueLight, name="Dining Room 2")]
+    events = [IotEvent(action_list)]
 
-    value1 = lambda: controller.get_attr("brightness", cls=HueLight, name="Dining Room 1")
-    value2 = lambda: controller.get_attr("brightness", cls=HueLight, name="Dining Room 2")
+    value1 = controller.get_attr("brightness", cls=HueLight, name="Dining Room 1")
+    value2 = controller.get_attr("brightness", cls=HueLight, name="Dining Room 2")
     conditional = IotConditional(value1, IotConditional.lt_equals, value2)
 
-    trigger = IotTrigger(attr, IotTrigger.check_gt, 220)
+    routine = IotRoutine(events, conditional)
 
-    routine = IotRoutine(trigger, action_list, conditional)
+    trigger = IotTrigger(routine, value1, IotTrigger.check_gt, 80)
+    controller.set_attr("brightness", 70, cls=HueLight, name="Dining Room 2")
+    controller.set_attr("brightness", 100, cls=HueLight, name="Dining Room 2")
+    value2()
+
+    # Room1: 254 | Room2 254
+    # True
+    # Room1: 0 | Room2 0
+    # True
+    # Subscribed to < iot_device._Attribute.__get__. < locals >._Inner object at 0x7fd90a6af3c8 >
+    # Checking 70
+    # Checking 100
+    # Triggered 100
+    # Checking 0
+
+
+
+
+
+
+

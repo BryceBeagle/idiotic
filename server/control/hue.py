@@ -143,10 +143,12 @@ class HueLight(IotDevice):
 
 if __name__ == '__main__':
     a = HueLight(9)
-    a.brightness = 5
-    print(a.groups)
-    a.groups = ['Living Room']
-    print(a.groups)
-    print(a.attributes)
+    b = HueLight(8)
 
-    pass
+    a.on = True
+
+    a.brightness = 254
+    print(a.brightness())
+    print(b.brightness())
+    a.brightness.subscribe(4)
+

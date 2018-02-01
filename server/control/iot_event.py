@@ -7,13 +7,13 @@ class IotEvent:
 
     def __init__(self,
                  actions: Union[Callable, List[Callable]],
-                 conditionals: Union[None, IotConditional, List[IotConditional]] = None):
+                 conditionals: Union[None, IotConditional, List[IotConditional]] = []):
 
         self._actions = []
         self._conditionals = []
 
         self.actions = actions
-        self.actions = conditionals
+        self.conditionals = conditionals
 
     def __call__(self, *args, **kwargs):
 

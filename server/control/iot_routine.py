@@ -17,7 +17,7 @@ class IotRoutine:
     IotRoutine
     """
 
-    def __init__(self, trigger=None, events=None, conditionals=None):
+    def __init__(self, events=None, conditionals=None):
 
         # Will be overridden by properties below, but defining her for PEP8 compliance
         self._trigger = None
@@ -25,7 +25,6 @@ class IotRoutine:
         self._conditionals = {None: []}
 
         # Use properties
-        self.trigger = trigger
         self.events = events
         self.conditionals = conditionals
 

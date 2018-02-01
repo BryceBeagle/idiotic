@@ -1,26 +1,65 @@
-class _Attribute(property):
-    """Subclass of property object that allows properties to be subscribed to
+import types
 
-    Whenever the setter for the property is called, all subscribers are notified
+class _Attribute:
+    """Attribute object that acts like a more powerful, and more confusing, property
+
+    class.func = 5   --> func.__set__(5) --> sets self._func to val
+    a = class.func   --> func.__get__    --> return func object
+    a = class.func() --> func.__call__   --> returns value of func
     """
 
-    def __init__(self, fget=None, fset=None, fdel=None, doc=None):
-        super().__init__(fget, fset, fdel, doc)
+    def __init__(self, fget, fset=None, fdel=None, doc=None, subscribers=set()):
 
-        self.subscribers = set()
+        self.fget = fget
+        self.fset = fset
+        self.fdel = fdel
 
-    def __set__(self, key, value):
+        if doc is None:
+            doc = fget.__doc__
+        self.__doc__ = doc
+
+        self.subscribers = subscribers
+
+    def __get__(self, owner, ownertype=None):
+
+        class _Inner(type(self)):
+
+            def __call__(instance):
+                return self.fget(owner)
+
+        self.__class__ = _Inner
+
+        return self
+
+    def __set__(self, owner, value):
+
+        if self.fset is None:
+            raise AttributeError("can't set attribute")
 
         for subscriber in self.subscribers:
             subscriber.alert(value)
 
-        return super().__set__(key, value)
+        self.fset(owner, value)
 
-    def subscribe(self, trigger):
-        self.subscribers.add(trigger)
+    def __delete__(self, obj):
+        if self.fdel is None:
+            raise AttributeError("can't delete attribute")
+        self.fdel(obj)
 
-    def unsubscribe(self, trigger):
-        self.subscribers.discard(trigger)
+    def getter(self, fget):
+        return type(self)(fget, self.fset, self.fdel, self.__doc__, self.subscribers)
+
+    def setter(self, fset):
+        return type(self)(self.fget, fset, self.fdel, self.__doc__, self.subscribers)
+
+    def deleter(self, fdel):
+        return type(self)(self.fget, self.fset, fdel, self.__doc__, self.subscribers)
+
+    def subscribe(self, subscriber):
+        self.subscribers.add(subscriber)
+
+    def unsubscribe(self, subscriber):
+        self.subscribers.discard(subscriber)
 
 
 class IotDevice:
