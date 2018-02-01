@@ -1,6 +1,6 @@
 from typing import Union, List, Callable
 
-from iot_conditional import IotConditional
+from control.iot_conditional import IotConditional
 
 
 class IotEvent:

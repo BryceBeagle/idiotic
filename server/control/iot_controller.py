@@ -1,14 +1,14 @@
 from collections     import defaultdict
 from typing          import Union
 
-from hue             import HueBridge, HueLight
-from ir_sensor       import IRSensor
+from control.hue             import HueBridge, HueLight
+from control.ir_sensor       import IRSensor
 
-from iot_device      import IotDevice
-from iot_routine     import IotRoutine
-from iot_trigger     import IotTrigger
-from iot_conditional import IotConditional
-from iot_event       import IotEvent
+from control.iot_device      import IotDevice
+from control.iot_routine     import IotRoutine
+from control.iot_trigger     import IotTrigger
+from control.iot_conditional import IotConditional
+from control.iot_event       import IotEvent
 
 
 class IotController:
@@ -47,7 +47,7 @@ class IotController:
         """Get an attribute from a device
 
         :param attr: Name of desired attribute
-        :param cls:  [Optional] IotDevice subclass
+        :param cls:  [Optional] IotDevice subclass or subclass.__name__
         :param name: [Optional] Name of device
         :param uuid: [Optional] ID of device
         :return:     Value of attribute
@@ -64,7 +64,10 @@ class IotController:
             elif cls:
                 if not name: raise ValueError("If cls is specified, name must be as well")
 
-                device = self.device_names[cls.__name__][name]
+                if isinstance(cls, IotDevice):
+                    cls = cls.__name__
+
+                device = self.device_names[cls][name]
 
             else: raise ValueError("uuid or cls must be specified")
 
@@ -166,10 +169,7 @@ if __name__ == '__main__':
 
     controller = IotController()
 
-    bridge = HueBridge()
-
-    for light in bridge.lights:
-        controller.add_device(HueLight(light.light_id))
+    bridge = HueBridge(controller)
 
     controller.add_device(IRSensor())
 

@@ -1,7 +1,7 @@
 import phue
 
-from iot_device import IotDevice
-from iot_device import action, attribute
+from control.iot_device import IotDevice
+from control.iot_device import action, attribute
 
 
 class HueBridge(phue.Bridge):
@@ -15,8 +15,12 @@ class HueBridge(phue.Bridge):
             cls.__instance = super().__new__(cls, *args, **kwargs)
         return HueBridge.__instance
 
-    def __init__(self):
+    def __init__(self, controller=None):
         super().__init__("192.168.1.202")  # TODO: Dynamic IP
+
+        if controller:
+            for light in self.lights:
+                controller.add_device(HueLight(light.light_id))
 
 
 class HueLight(IotDevice):
