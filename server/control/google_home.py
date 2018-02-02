@@ -1,5 +1,5 @@
-from iot_device import IotDevice
-from iot_device import action, attribute
+from control.iot_device import IotDevice
+from control.iot_device import action, attribute
 
 
 class GoogleHome(IotDevice):
