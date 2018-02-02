@@ -28,7 +28,7 @@ Below is an example JSON object:
     "value" : true
    }
 ],
-"get : [
+"get" : [
    {
     "id"    : "0x23e4abd4",
     "attr"  : "open"
@@ -43,15 +43,15 @@ Below is an example JSON object:
 
 IotDevices can be referred to either using the Class type and their name, or by just using their global UUID.
 `set` commands return their values in another JSON object with Class type and name, and UUID:
-```json
+```javascript
 {[{
     "class" : "DoorSensor",
     "name"  : "Back Door",
     "id"    : "0x4ab343cd",
     "attr"  : "open",
     "value" : false
-   },
-   {
+  },
+  {
     "class" : "HueLight",
     "name"  : "Dining Room 2",
     "id"    : "0x4ab353ad",
