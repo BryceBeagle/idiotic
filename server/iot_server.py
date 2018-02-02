@@ -46,13 +46,13 @@ def module_handler(module_class):
         {"set" : [
            {
             "id"    : <uuid of IotDevice instance>,
-            "attr"  : <attribute name>
-            "value" : <value>
+            "attr"  : <attribute name>,
+            "value" : <value>,
            },
            {
             "class" : <type(IotDevice())>,
             "name"  : <IotDevice().name>,
-            "attr"  : <attribute name>
+            "attr"  : <attribute name>,
             "value" : <value>
            }
         ],
