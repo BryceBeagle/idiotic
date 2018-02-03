@@ -14,10 +14,10 @@ Optional:
 The server listens for HTTP POST and GET requests to query and control different modules connected to the controller.
 These requests are sent to \[server IP\]/modules. Commands are embedded in a json object inside the body of the message.
 Below is an example JSON object:
-```json
+```javascript
 {"set" : [
    {
-    "id"    : 0x4ab343cd,
+    "id"    : "0x4ab343cd",
     "attr"  : "brightness",
     "value" : 254
    },
@@ -28,9 +28,9 @@ Below is an example JSON object:
     "value" : true
    }
 ],
-"get : [
+"get" : [
    {
-    "id"    : 0x23e4abd4,
+    "id"    : "0x23e4abd4",
     "attr"  : "open"
    },
    {
@@ -43,18 +43,18 @@ Below is an example JSON object:
 
 IotDevices can be referred to either using the Class type and their name, or by just using their global UUID.
 `set` commands return their values in another JSON object with Class type and name, and UUID:
-```json
+```javascript
 {[{
     "class" : "DoorSensor",
     "name"  : "Back Door",
-    "id"    : 0x4ab343cd,
+    "id"    : "0x4ab343cd",
     "attr"  : "open",
     "value" : false
-   },
-   {
+  },
+  {
     "class" : "HueLight",
     "name"  : "Dining Room 2",
-    "id"    : 0x4ab353ad,
+    "id"    : "0x4ab353ad",
     "attr"  : "saturation",
     "value" : 30
    }
