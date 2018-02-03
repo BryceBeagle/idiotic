@@ -1,3 +1,7 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
 # Google Docs files
 *.gdsheet
 *.gddoc
