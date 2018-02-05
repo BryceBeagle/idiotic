@@ -38,8 +38,8 @@ def hello():
 #
 #     return "OK"
 
-@app.route("/modules/<module_class>", methods=['POST'])
-def module_handler(module_class):
+@app.route("/modules/", methods=['POST'])
+def module_handler():
     """Set or get attribute of IotDevice
 
     json structure:
