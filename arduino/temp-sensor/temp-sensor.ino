@@ -1,30 +1,31 @@
 
 #include "Arduino.h"
 #include "Adafruit_MCP9808.h"
+#include "ESP8266_IoT.hpp"
 
-
-Adafruit_MCP9808 tempsensor = Adafruit_MCP9808();
+Adafruit_MCP9808 tempsensor;
+ESP8266_Module module("192.168.1.108:5000");
 
 void setup() {
 
-    Serial.begin(9600);
-    Serial.println("MCP9808");
+    Serial.begin(115200);
+    Serial.println("MCP9808 Init");
+
+    module.connectWiFi("FlipTables", "visit umbrella find shame");
 
     if (!tempsensor.begin(12, 13)) {
         Serial.println("Couldn't find MCP9808");
         while(1);
     }
     
-//    Wire.begin(12, 13);
-    
 }
 
 void loop() {
 
-    float c = tempsensor.readTempC();
-    float f = c * 9.0 / 5.0 + 32;
-    Serial.print("Temp: "); Serial.print(c); Serial.print("*C\t"); 
-    Serial.print(f); Serial.println("*F");
+    float temp = tempsensor.readTempC();
+    Serial.print(String(temp));
+    module.sendAttr("temperature", String(temp));
+    Serial.println(" (sent)");
+    delay(500);
 
-    
 }
