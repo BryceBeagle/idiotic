@@ -1,4 +1,4 @@
-import types
+from functools import partial
 
 class _Attribute:
     """Attribute object that acts like a more powerful, and more confusing, property
