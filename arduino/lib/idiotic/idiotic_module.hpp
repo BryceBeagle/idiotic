@@ -3,7 +3,8 @@
 
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
-
+#include <ArduinoJson.h>
+#include <Arduino.h>  // Works fine
 
 class Idiotic_Module {
 
@@ -16,8 +17,7 @@ class Idiotic_Module {
         Idiotic_Module(String hostname) : hostname(hostname), http() {}
         
         int connectWiFi(String ssid, String password);
-        int addSendAttr(String attr_name, String attr_value);
-        int sendAttrs();
+        int sendJson(String &buffer);
 
     private:
     
@@ -25,7 +25,5 @@ class Idiotic_Module {
         String _password;
     
 };
-
-
 
 #endif

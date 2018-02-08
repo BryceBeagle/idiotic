@@ -25,27 +25,17 @@ int Idiotic_Module::connectWiFi(String ssid, String password) {
     
 }
 
-int Idiotic_Module::addSendAttr(String attr_name, String attr_value) {
-
-    // NOTE: attr_value does not get strings placed around it automatically.
-    // To send a json string, put string characters inside passed String
+int Idiotic_Module::sendJson(String &buffer) {
 
     // TODO: Support https
-    
+
     this->http.begin("http://" + this->hostname + "/modules/");
     this->http.addHeader("Content-Type", "application/json");
 
-    String message = "{\"" + attr_name + "\" : " + attr_value + "}";
-
-    int httpCode = this->http.POST(message);
+    int httpCode = this->http.POST(buffer);
 
     this->http.end();
-    
+
     return httpCode;
-    
-}
 
-int Idiotic_Module::sendAttrs() {
-    
 }
-
