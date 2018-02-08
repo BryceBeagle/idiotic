@@ -3,7 +3,7 @@
 <eagle version="8.6.0">
 <drawing>
 <settings>
-<setting alwaysvectorfont="yes"/>
+<setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="0.01" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="5" altunitdist="mil" altunit="mil"/>
@@ -156,10 +156,6 @@
 </layers>
 <board>
 <plain>
-<wire x1="-0.254" y1="0" x2="23.856" y2="0" width="0" layer="20"/>
-<wire x1="23.856" y1="0" x2="23.856" y2="35.992" width="0" layer="20"/>
-<wire x1="23.856" y1="35.992" x2="-0.254" y2="35.992" width="0" layer="20"/>
-<wire x1="-0.254" y1="35.992" x2="-0.254" y2="0" width="0" layer="20"/>
 <wire x1="2.794" y1="0.762" x2="20.828" y2="0.762" width="0.6096" layer="20"/>
 <wire x1="20.828" y1="0.762" x2="23.114" y2="3.048" width="0.6096" layer="20"/>
 <wire x1="23.114" y1="3.048" x2="23.114" y2="33.02" width="0.6096" layer="20"/>
