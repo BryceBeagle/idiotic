@@ -1,6 +1,6 @@
 import types
 
-class IotTrigger:
+class IdioticTrigger:
 
     def __init__(self, routine, attr, check, value):
         """

@@ -1,11 +1,11 @@
 from typing import List, Dict, Union
 
-from control.iot_trigger import IotTrigger
-from control.iot_event import IotEvent
-from control.iot_conditional import IotConditional
+from control.idiotic_trigger import IdioticTrigger
+from control.idiotic_event import IdioticEvent
+from control.idiotic_conditional import IdioticConditional
 
 
-class IotRoutine:
+class IdioticRoutine:
     """Sequence of events
 
     Each IotRoutine has only one trigger, but multiple IotRoutines can have the same IotEvent, with
@@ -41,66 +41,66 @@ class IotRoutine:
             event()
 
     @property
-    def trigger(self) -> IotTrigger:
+    def trigger(self) -> IdioticTrigger:
         """Get trigger"""
         return self._trigger
 
     @trigger.setter
-    def trigger(self, trigger: IotTrigger) -> None:
+    def trigger(self, trigger: IdioticTrigger) -> None:
         """Set trigger"""
-        if not isinstance(trigger, IotTrigger):
+        if not isinstance(trigger, IdioticTrigger):
             raise Exception("trigger is not an instance of IotTrigger")
         self._trigger = trigger
 
     @property
-    def events(self) -> List[IotEvent]:
+    def events(self) -> List[IdioticEvent]:
         """Get events"""
         return self._events
 
     @events.setter
-    def events(self, events: Union[IotEvent, List[IotEvent]]) -> None:
+    def events(self, events: Union[IdioticEvent, List[IdioticEvent]]) -> None:
         """Set event(s)"""
-        if isinstance(events, IotEvent):
+        if isinstance(events, IdioticEvent):
             self._events = [events]
         elif isinstance(events, list):
-            if not all(isinstance(event, IotEvent) for event in events):
+            if not all(isinstance(event, IdioticEvent) for event in events):
                 raise Exception("event is not an instance of IotEvent")
             self._events = events
         else:
             raise Exception("event is not an instance of IotEvent")
 
-    def add_event(self, event: IotEvent) -> None:
+    def add_event(self, event: IdioticEvent) -> None:
         """Add another event"""
-        if not isinstance(event, IotEvent):  # TODO: Support for list of events?
+        if not isinstance(event, IdioticEvent):  # TODO: Support for list of events?
             raise Exception("event is not an instance of IotEvent")
         self._events.append(event)
 
-    def remove_event(self, event: IotEvent) -> None:
+    def remove_event(self, event: IdioticEvent) -> None:
         """Remove an event"""
-        if not isinstance(event, IotEvent):  # TODO: Support for list of events?
+        if not isinstance(event, IdioticEvent):  # TODO: Support for list of events?
             raise TypeError("event is not an instance of IotEvent")
         self._events.remove(event)
 
     @property
-    def conditionals(self) -> Dict[Union[None, IotConditional], List[IotEvent]]:
+    def conditionals(self) -> Dict[Union[None, IdioticConditional], List[IdioticEvent]]:
         """Get conditionals pattern"""
 
         return self._conditionals
 
     @conditionals.setter
-    def conditionals(self, conditionals: Union[None, IotConditional, List[IotConditional]]):
+    def conditionals(self, conditionals: Union[None, IdioticConditional, List[IdioticConditional]]):
 
         # No conditionals
         if conditionals is None:
             self._conditionals = [True]
 
         # Single conditional
-        elif isinstance(conditionals, IotConditional):
+        elif isinstance(conditionals, IdioticConditional):
             self._conditionals = [conditionals]
 
         # List of conditionals
         elif isinstance(conditionals, list):
-            if not all(isinstance(conditional, IotConditional) for conditional in conditionals):
+            if not all(isinstance(conditional, IdioticConditional) for conditional in conditionals):
                 raise TypeError("conditionals must all be instances of IotConditional")
             self._conditionals = conditionals
 

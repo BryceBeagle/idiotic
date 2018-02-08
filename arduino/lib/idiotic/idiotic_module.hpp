@@ -5,7 +5,7 @@
 #include <ESP8266HTTPClient.h>
 
 
-class ESP8266_Module {
+class Idiotic_Module {
 
     public:
 
@@ -13,7 +13,7 @@ class ESP8266_Module {
         String host;
         String hostname;
 
-        ESP8266_Module(String hostname) : hostname(hostname), http() {}
+        Idiotic_Module(String hostname) : hostname(hostname), http() {}
         
         int connectWiFi(String ssid, String password);
         int addSendAttr(String attr_name, String attr_value);

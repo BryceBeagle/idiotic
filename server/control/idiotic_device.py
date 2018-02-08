@@ -1,6 +1,6 @@
 import types
 
-class _Attribute:
+class _IdioticAttribute:
     """Attribute object that acts like a more powerful, and more confusing, property
 
     class.func = 5   --> func.__set__(5) --> sets self._func to val
@@ -62,7 +62,7 @@ class _Attribute:
         self.subscribers.discard(subscriber)
 
 
-class IotDevice:
+class IdioticDevice:
 
     actions    = set()
     attributes = set()
@@ -90,7 +90,7 @@ class IotDevice:
     def _attribute(cls, func):
         cls.attributes.add(func.__name__)
 
-        func = _Attribute(func)
+        func = _IdioticAttribute(func)
 
         return func
 
@@ -118,5 +118,5 @@ class IotDevice:
     actions.add(name)
 
 
-action    = IotDevice._action
-attribute = IotDevice._attribute
+action    = IdioticDevice._action
+attribute = IdioticDevice._attribute

@@ -1,10 +1,10 @@
-#include "ESP8266_IoT.hpp"
+#include "idiotic_module.hpp"
 
 #ifndef SERIAL_BAUD
     #define SERIAL_BAUD 115200
 #endif
 
-int ESP8266_Module::connectWiFi(String ssid, String password) {
+int Idiotic_Module::connectWiFi(String ssid, String password) {
 
     this->ssid = ssid;
     this->_password = password;
@@ -25,7 +25,7 @@ int ESP8266_Module::connectWiFi(String ssid, String password) {
     
 }
 
-int ESP8266_Module::addSendAttr(String attr_name, String attr_value) {
+int Idiotic_Module::addSendAttr(String attr_name, String attr_value) {
 
     // NOTE: attr_value does not get strings placed around it automatically.
     // To send a json string, put string characters inside passed String
@@ -45,7 +45,7 @@ int ESP8266_Module::addSendAttr(String attr_name, String attr_value) {
     
 }
 
-int ESP8266_Module::sendAttrs() {
+int Idiotic_Module::sendAttrs() {
     
 }
 

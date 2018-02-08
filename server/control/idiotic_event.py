@@ -1,13 +1,13 @@
 from typing import Union, List, Callable
 
-from control.iot_conditional import IotConditional
+from control.idiotic_conditional import IdioticConditional
 
 
-class IotEvent:
+class IdioticEvent:
 
     def __init__(self,
                  actions: Union[Callable, List[Callable]],
-                 conditionals: Union[None, IotConditional, List[IotConditional]] = []):
+                 conditionals: Union[None, IdioticConditional, List[IdioticConditional]] = []):
 
         self._actions = []
         self._conditionals = []

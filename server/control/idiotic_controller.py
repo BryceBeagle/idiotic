@@ -4,14 +4,14 @@ from typing          import Union
 from control.hue             import HueBridge, HueLight
 from control.ir_sensor       import IRSensor
 
-from control.iot_device      import IotDevice
-from control.iot_routine     import IotRoutine
-from control.iot_trigger     import IotTrigger
-from control.iot_conditional import IotConditional
-from control.iot_event       import IotEvent
+from control.idiotic_device      import IdioticDevice
+from control.idiotic_routine     import IdioticRoutine
+from control.idiotic_trigger     import IdioticTrigger
+from control.idiotic_conditional import IdioticConditional
+from control.idiotic_event       import IdioticEvent
 
 
-class IotController:
+class IdioticController:
 
     def __init__(self):
         self.device_names = defaultdict(dict)
@@ -23,7 +23,7 @@ class IotController:
         None key corresponds to routines that do not have any triggers (ie. can only be triggered manually)
         """
 
-    def add_device(self, device: IotDevice) -> None:
+    def add_device(self, device: IdioticDevice) -> None:
         """Add an IotDevice instance to the device dicts.
 
         device_uuids is a dict of devices by uuid
@@ -41,7 +41,7 @@ class IotController:
 
     def get_attr(self,
                  attr: str,
-                 cls: type(IotDevice) = None,
+                 cls: type(IdioticDevice) = None,
                  name: str = None,
                  uuid: int = None):
         """Get an attribute from a device
@@ -64,7 +64,7 @@ class IotController:
             elif cls:
                 if not name: raise ValueError("If cls is specified, name must be as well")
 
-                if isinstance(cls, IotDevice):
+                if isinstance(cls, IdioticDevice):
                     cls = cls.__name__
 
                 device = self.device_names[cls][name]
@@ -76,7 +76,7 @@ class IotController:
     def set_attr(self,
                  attr: str,
                  value,
-                 cls: type(IotDevice) = None,
+                 cls: type(IdioticDevice) = None,
                  name: str = None,
                  uuid: int = None):
         """Sets an attribute of an IotDevice instance to a value
@@ -109,7 +109,7 @@ class IotController:
         else:
             raise AttributeError(f"Attribute '{attr}' not accessible")
 
-    def set_routine(self, trigger: IotTrigger, routine: IotRoutine):
+    def set_routine(self, trigger: IdioticTrigger, routine: IdioticRoutine):
         pass
 
 
@@ -154,7 +154,7 @@ def _test_conditionals():
     value1 = controller.get_attr("brightness", cls=HueLight, name="Dining Room 1")
     value2 = controller.get_attr("brightness", cls=HueLight, name="Dining Room 2")
 
-    conditional = IotConditional(value1, IotConditional.equals, value2)
+    conditional = IdioticConditional(value1, IdioticConditional.equals, value2)
 
     print(f"Room1: {value1()} | Room2 {value2()}")
     print(bool(conditional))
@@ -167,7 +167,7 @@ def _test_conditionals():
 
 if __name__ == '__main__':
 
-    controller = IotController()
+    controller = IdioticController()
 
     bridge = HueBridge(controller)
 
@@ -176,15 +176,15 @@ if __name__ == '__main__':
     _test_conditionals()
 
     action_list = [lambda: controller.set_attr("brightness", 0, cls=HueLight, name="Dining Room 2")]
-    events = [IotEvent(action_list)]
+    events = [IdioticEvent(action_list)]
 
     value1 = controller.get_attr("brightness", cls=HueLight, name="Dining Room 1")
     value2 = controller.get_attr("brightness", cls=HueLight, name="Dining Room 2")
-    conditional = IotConditional(value1, IotConditional.lt_equals, value2)
+    conditional = IdioticConditional(value1, IdioticConditional.lt_equals, value2)
 
-    routine = IotRoutine(events, conditional)
+    routine = IdioticRoutine(events, conditional)
 
-    trigger = IotTrigger(routine, value1, IotTrigger.check_gt, 80)
+    trigger = IdioticTrigger(routine, value1, IdioticTrigger.check_gt, 80)
     controller.set_attr("brightness", 70, cls=HueLight, name="Dining Room 2")
     controller.set_attr("brightness", 100, cls=HueLight, name="Dining Room 2")
     value2()

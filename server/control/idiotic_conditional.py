@@ -1,7 +1,7 @@
 import warnings
 
 
-class IotConditional:
+class IdioticConditional:
 
     def __init__(self, value1, check, value2=None):
         self.value1 = value1

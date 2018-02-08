@@ -1,6 +1,6 @@
 **Introduction**
 
-`iot_server.py` is the entry point of the software portion of this project. It operates as the glue that holds the
+`idiotic_server.py` is the entry point of the software portion of this project. It operates as the glue that holds the
 Model, View and Controller together. It is run without arguments using Python 3 and has the following dependencies:
 
 Required:

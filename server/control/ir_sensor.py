@@ -1,8 +1,8 @@
-from control.iot_device import IotDevice
-from control.iot_device import action, attribute
+from control.idiotic_device import IdioticDevice
+from control.idiotic_device import action, attribute
 
 
-class IRSensor(IotDevice):
+class IRSensor(IdioticDevice):
 
     def __init__(self):
 

@@ -5,7 +5,7 @@ from   flask import Flask
 from   flask import request
 from   flask import make_response
 
-from control.iot_controller import IotController
+from control.idiotic_controller import IdioticController
 from control.hue import HueBridge, HueLight
 
 app = Flask(__name__)
@@ -15,7 +15,7 @@ app.config['DEBUG'] = True
 # https://pastebin.com/wpzqtMWK
 
 logger = logging.getLogger('gunicorn.error')
-controller = IotController()
+controller = IdioticController()
 bridge = HueBridge(controller)
 
 
