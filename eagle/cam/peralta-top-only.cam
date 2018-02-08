@@ -78,32 +78,6 @@
                     },
                     "board_outline": false,
                     "config": {
-                        "file_function": "Copper",
-                        "layer": 1,
-                        "layer_details": "mixed",
-                        "layer_type": "top"
-                    },
-                    "filename_format": "Bottom.art",
-                    "layers": [
-                        16,
-                        17,
-                        18
-                    ],
-                    "milling": false,
-                    "name": "Solder side",
-                    "polarity": "positive",
-                    "type": "gerber_layer"
-                },
-                {
-                    "advanced_options": {
-                        "mirror": false,
-                        "offset_x": 0,
-                        "offset_y": 0,
-                        "rotate": false,
-                        "upside_down": false
-                    },
-                    "board_outline": false,
-                    "config": {
                         "file_function": "Soldermask",
                         "layer_type": "top",
                         "layers": [
@@ -117,32 +91,6 @@
                     ],
                     "milling": false,
                     "name": "SolderMaskTop",
-                    "polarity": "negative",
-                    "type": "gerber_layer"
-                },
-                {
-                    "advanced_options": {
-                        "mirror": false,
-                        "offset_x": 0,
-                        "offset_y": 0,
-                        "rotate": false,
-                        "upside_down": false
-                    },
-                    "board_outline": false,
-                    "config": {
-                        "file_function": "Soldermask",
-                        "layer_type": "top",
-                        "layers": [
-                            30
-                        ],
-                        "polarity": "negative"
-                    },
-                    "filename_format": "SolderMaskBottom.art",
-                    "layers": [
-                        30
-                    ],
-                    "milling": false,
-                    "name": "SolderMaskBottom",
                     "polarity": "negative",
                     "type": "gerber_layer"
                 },
@@ -172,7 +120,7 @@
             "version": "X2"
         }
     ],
-    "timestamp": "2018-02-08T15:03:29",
+    "timestamp": "2018-02-08T15:03:47",
     "type": "EAGLE CAM job",
     "units": "metric",
     "version": "8.6.0"
