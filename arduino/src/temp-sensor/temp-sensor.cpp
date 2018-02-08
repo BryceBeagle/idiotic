@@ -3,12 +3,14 @@
 #include "Adafruit_MCP9808.h"
 #include "ESP8266_IoT.hpp"
 
+#define SERIAL_BAUD 115200
+
 Adafruit_MCP9808 tempsensor;
 ESP8266_Module module("192.168.1.108:5000");
 
 void setup() {
 
-    Serial.begin(115200);
+    Serial.begin(SERIAL_BAUD);
     Serial.println("MCP9808 Init");
 
     module.connectWiFi("FlipTables", "visit umbrella find shame");
@@ -24,8 +26,11 @@ void loop() {
 
     float temp = tempsensor.readTempC();
     Serial.print(String(temp));
-    module.sendAttr("temperature", String(temp));
+    module.addSendAttr("temperature", String(temp));
     Serial.println(" (sent)");
+
     delay(500);
+
+    module.sendAttrs();
 
 }

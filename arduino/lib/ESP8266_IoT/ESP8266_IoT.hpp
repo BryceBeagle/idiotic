@@ -16,7 +16,8 @@ class ESP8266_Module {
         ESP8266_Module(String hostname) : hostname(hostname), http() {}
         
         int connectWiFi(String ssid, String password);
-        int sendAttr(String attr_name, String attr_value);
+        int addSendAttr(String attr_name, String attr_value);
+        int sendAttrs();
 
     private:
     

@@ -1,11 +1,15 @@
 #include "ESP8266_IoT.hpp"
 
+#ifndef SERIAL_BAUD
+    #define SERIAL_BAUD 115200
+#endif
+
 int ESP8266_Module::connectWiFi(String ssid, String password) {
 
     this->ssid = ssid;
     this->_password = password;
 
-    Serial.begin(115200);  // TODO: Make more modular
+    Serial.begin(SERIAL_BAUD);
     WiFi.begin(ssid.c_str(), password.c_str());
 
     // Connect to WiFi network
@@ -21,7 +25,7 @@ int ESP8266_Module::connectWiFi(String ssid, String password) {
     
 }
 
-int ESP8266_Module::sendAttr(String attr_name, String attr_value) {
+int ESP8266_Module::addSendAttr(String attr_name, String attr_value) {
 
     // NOTE: attr_value does not get strings placed around it automatically.
     // To send a json string, put string characters inside passed String
@@ -41,6 +45,7 @@ int ESP8266_Module::sendAttr(String attr_name, String attr_value) {
     
 }
 
-
-
+int ESP8266_Module::sendAttrs() {
+    
+}
 
