@@ -22,3 +22,11 @@ __pycache__/
 
 # Zipped gerber files
 eagle/gerber/*/*.zip
+
+# PlatformIO build files
+/arduino/CMakeLists.txt
+/arduino/CMakeListsPrivate.txt
+
+# CLion files
+.idea/
+cmake-build-debug/
