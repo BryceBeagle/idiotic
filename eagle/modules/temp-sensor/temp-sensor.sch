@@ -158,20 +158,6 @@
 <libraries>
 <library name="IoT">
 <packages>
-<package name="8-MSOP">
-<wire x1="-1.2" y1="-1.2" x2="1.2" y2="-1.2" width="0.127" layer="21"/>
-<wire x1="1.2" y1="1.2" x2="-1.2" y2="1.2" width="0.127" layer="21"/>
-<wire x1="-1.2" y1="1.2" x2="-1.2" y2="-1.2" width="0.127" layer="21"/>
-<smd name="P$1" x="-2.2" y="0.975" dx="1.45" dy="0.45" layer="1"/>
-<smd name="P$2" x="-2.2" y="0.325" dx="1.45" dy="0.45" layer="1" rot="R180"/>
-<smd name="P$3" x="-2.2" y="-0.325" dx="1.45" dy="0.45" layer="1"/>
-<smd name="P$4" x="-2.2" y="-0.975" dx="1.45" dy="0.45" layer="1"/>
-<wire x1="1.2" y1="-1.2" x2="1.2" y2="1.2" width="0.127" layer="21"/>
-<smd name="P$5" x="2.2" y="0.975" dx="1.45" dy="0.45" layer="1"/>
-<smd name="P$6" x="2.2" y="0.325" dx="1.45" dy="0.45" layer="1"/>
-<smd name="P$7" x="2.2" y="-0.325" dx="1.45" dy="0.45" layer="1" rot="R180"/>
-<smd name="P$8" x="2.2" y="-0.975" dx="1.45" dy="0.45" layer="1" rot="R180"/>
-</package>
 <package name="ESP8266-07">
 <pad name="GPIO0" x="10" y="0" drill="1" diameter="1.2" shape="offset" rot="R180"/>
 <pad name="GPIO2" x="10" y="-2" drill="1" diameter="1.2" shape="offset" rot="R180"/>
@@ -250,20 +236,6 @@
 </package>
 </packages>
 <symbols>
-<symbol name="MCP9808">
-<wire x1="-7.62" y1="-5.08" x2="7.62" y2="-5.08" width="0.254" layer="94"/>
-<wire x1="7.62" y1="-5.08" x2="7.62" y2="7.62" width="0.254" layer="94"/>
-<wire x1="7.62" y1="7.62" x2="-7.62" y2="7.62" width="0.254" layer="94"/>
-<wire x1="-7.62" y1="7.62" x2="-7.62" y2="-5.08" width="0.254" layer="94"/>
-<pin name="SDA" x="-10.16" y="5.08" length="short"/>
-<pin name="SCL" x="-10.16" y="2.54" length="short"/>
-<pin name="ALERT" x="-10.16" y="0" length="short" direction="out"/>
-<pin name="GND" x="-10.16" y="-2.54" length="short" direction="pwr"/>
-<pin name="A2" x="10.16" y="-2.54" length="short" direction="in" rot="R180"/>
-<pin name="A1" x="10.16" y="0" length="short" direction="in" rot="R180"/>
-<pin name="A0" x="10.16" y="2.54" length="short" direction="in" rot="R180"/>
-<pin name="VDD" x="10.16" y="5.08" length="short" direction="pwr" rot="R180"/>
-</symbol>
 <symbol name="ESP8266-07">
 <pin name="VCC" x="-12.7" y="-7.62" visible="pin" length="short" direction="pwr"/>
 <pin name="GPIO13" x="-12.7" y="-5.08" visible="pin" length="short"/>
@@ -311,28 +283,6 @@
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="MCP9808">
-<gates>
-<gate name="G$1" symbol="MCP9808" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="8-MSOP">
-<connects>
-<connect gate="G$1" pin="A0" pad="P$7"/>
-<connect gate="G$1" pin="A1" pad="P$6"/>
-<connect gate="G$1" pin="A2" pad="P$5"/>
-<connect gate="G$1" pin="ALERT" pad="P$3"/>
-<connect gate="G$1" pin="GND" pad="P$4"/>
-<connect gate="G$1" pin="SCL" pad="P$2"/>
-<connect gate="G$1" pin="SDA" pad="P$1"/>
-<connect gate="G$1" pin="VDD" pad="P$8"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="ESP8266-07">
 <gates>
 <gate name="G$1" symbol="ESP8266-07" x="-5.08" y="5.08"/>
@@ -7587,6 +7537,65 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="idiotic">
+<packages>
+<package name="8-MSOP">
+<wire x1="-1.2" y1="-1.2" x2="1.2" y2="-1.2" width="0.127" layer="21"/>
+<wire x1="1.2" y1="1.2" x2="-1.2" y2="1.2" width="0.127" layer="21"/>
+<wire x1="-1.2" y1="1.2" x2="-1.2" y2="-1.2" width="0.127" layer="21"/>
+<smd name="P$1" x="-2.2" y="0.975" dx="1.45" dy="0.45" layer="1"/>
+<smd name="P$2" x="-2.2" y="0.325" dx="1.45" dy="0.45" layer="1" rot="R180"/>
+<smd name="P$3" x="-2.2" y="-0.325" dx="1.45" dy="0.45" layer="1"/>
+<smd name="P$4" x="-2.2" y="-0.975" dx="1.45" dy="0.45" layer="1"/>
+<wire x1="1.2" y1="-1.2" x2="1.2" y2="1.2" width="0.127" layer="21"/>
+<smd name="P$5" x="2.2" y="0.975" dx="1.45" dy="0.45" layer="1"/>
+<smd name="P$6" x="2.2" y="0.325" dx="1.45" dy="0.45" layer="1"/>
+<smd name="P$7" x="2.2" y="-0.325" dx="1.45" dy="0.45" layer="1" rot="R180"/>
+<smd name="P$8" x="2.2" y="-0.975" dx="1.45" dy="0.45" layer="1" rot="R180"/>
+<circle x="-0.762" y="0.762" radius="0.127" width="0.0508" layer="21"/>
+</package>
+</packages>
+<symbols>
+<symbol name="MCP9808">
+<wire x1="-7.62" y1="-5.08" x2="7.62" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-5.08" x2="7.62" y2="7.62" width="0.254" layer="94"/>
+<wire x1="7.62" y1="7.62" x2="-7.62" y2="7.62" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="7.62" x2="-7.62" y2="-5.08" width="0.254" layer="94"/>
+<pin name="SDA" x="-10.16" y="5.08" length="short"/>
+<pin name="SCL" x="-10.16" y="2.54" length="short"/>
+<pin name="ALERT" x="-10.16" y="0" length="short" direction="out"/>
+<pin name="GND" x="-10.16" y="-2.54" length="short" direction="pwr"/>
+<pin name="A2" x="10.16" y="-2.54" length="short" direction="in" rot="R180"/>
+<pin name="A1" x="10.16" y="0" length="short" direction="in" rot="R180"/>
+<pin name="A0" x="10.16" y="2.54" length="short" direction="in" rot="R180"/>
+<pin name="VDD" x="10.16" y="5.08" length="short" direction="pwr" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="MCP9808">
+<gates>
+<gate name="G$1" symbol="MCP9808" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="8-MSOP">
+<connects>
+<connect gate="G$1" pin="A0" pad="P$7"/>
+<connect gate="G$1" pin="A1" pad="P$6"/>
+<connect gate="G$1" pin="A2" pad="P$5"/>
+<connect gate="G$1" pin="ALERT" pad="P$3"/>
+<connect gate="G$1" pin="GND" pad="P$4"/>
+<connect gate="G$1" pin="SCL" pad="P$2"/>
+<connect gate="G$1" pin="SDA" pad="P$1"/>
+<connect gate="G$1" pin="VDD" pad="P$8"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -7597,7 +7606,7 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 </class>
 </classes>
 <parts>
-<part name="U$1" library="IoT" deviceset="MCP9808" device=""/>
+<part name="U$1" library="idiotic" deviceset="MCP9808" device=""/>
 <part name="U$2" library="IoT" deviceset="ESP8266-07" device="SMD"/>
 <part name="C1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="1uF"/>
 <part name="C2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="1uF"/>
