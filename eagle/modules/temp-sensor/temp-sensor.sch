@@ -156,234 +156,6 @@
 </layers>
 <schematic xreflabel="%F%N/%S.%C%R" xrefpart="/%S.%C%R">
 <libraries>
-<library name="IoT">
-<packages>
-<package name="ESP8266-07">
-<pad name="GPIO0" x="10" y="0" drill="1" diameter="1.2" shape="offset" rot="R180"/>
-<pad name="GPIO2" x="10" y="-2" drill="1" diameter="1.2" shape="offset" rot="R180"/>
-<pad name="GPIO15" x="10" y="-4" drill="1" diameter="1.2" shape="offset" rot="R180"/>
-<pad name="GND" x="10" y="-6" drill="1" diameter="1.2" shape="offset" rot="R180"/>
-<pad name="GPIO4" x="10" y="2" drill="1" diameter="1.2" shape="offset" rot="R180"/>
-<pad name="GPIO5" x="10" y="4" drill="1" diameter="1.2" shape="offset" rot="R180"/>
-<pad name="RXD0" x="10" y="6" drill="1" diameter="1.2" shape="offset" rot="R180"/>
-<pad name="TXD0" x="10" y="8" drill="1" diameter="1.2" shape="offset" rot="R180"/>
-<pad name="RST" x="-6" y="8" drill="1" diameter="1.2" shape="offset"/>
-<pad name="ADC" x="-6" y="6" drill="1" diameter="1.2" shape="offset"/>
-<pad name="EN" x="-6" y="4" drill="1" diameter="1.2" shape="offset"/>
-<pad name="GPIO14" x="-6" y="0" drill="1" diameter="1.2" shape="offset"/>
-<pad name="GPIO16" x="-6" y="2" drill="1" diameter="1.2" shape="offset"/>
-<pad name="GPIO12" x="-6" y="-2" drill="1" diameter="1.2" shape="offset"/>
-<pad name="GPIO13" x="-6" y="-4" drill="1" diameter="1.2" shape="offset"/>
-<pad name="VCC" x="-6" y="-6" drill="1" diameter="1.2" shape="offset"/>
-<wire x1="-6" y1="-7" x2="10" y2="-7" width="0.127" layer="21"/>
-<wire x1="10" y1="-7" x2="10" y2="13" width="0.127" layer="21"/>
-<wire x1="10" y1="13" x2="-6" y2="13" width="0.127" layer="21"/>
-<wire x1="-6" y1="13" x2="-6" y2="-7" width="0.127" layer="21"/>
-<text x="3.46" y="11.4" size="1.016" layer="25" rot="R180">ESP8266-07</text>
-</package>
-<package name="ESP8266-07-HEADER">
-<pad name="VCC" x="-6.5" y="-7" drill="0.7" diameter="1.5"/>
-<pad name="GPIO13" x="-6.5" y="-5" drill="0.7" diameter="1.5"/>
-<pad name="GPIO12" x="-6.5" y="-3" drill="0.7" diameter="1.5"/>
-<pad name="GPIO14" x="-6.5" y="-1" drill="0.7" diameter="1.5"/>
-<pad name="GPIO16" x="-6.5" y="1" drill="0.7" diameter="1.5"/>
-<pad name="EN" x="-6.5" y="3" drill="0.7" diameter="1.5"/>
-<pad name="ADC" x="-6.5" y="5" drill="0.7" diameter="1.5"/>
-<pad name="GND" x="6.5" y="-7" drill="0.7" diameter="1.5"/>
-<pad name="GPIO15" x="6.5" y="-5" drill="0.7" diameter="1.5"/>
-<pad name="GPIO2" x="6.5" y="-3" drill="0.7" diameter="1.5"/>
-<pad name="GPIO0" x="6.5" y="-1" drill="0.7" diameter="1.5"/>
-<pad name="GPIO4" x="6.5" y="1" drill="0.7" diameter="1.5"/>
-<pad name="GPIO5" x="6.5" y="3" drill="0.7" diameter="1.5"/>
-<pad name="RXD0" x="6.5" y="5" drill="0.7" diameter="1.5"/>
-<wire x1="-8" y1="-9.5" x2="-8" y2="11.7" width="0.127" layer="21"/>
-<wire x1="-8" y1="-9.5" x2="8" y2="-9.5" width="0.127" layer="21"/>
-<wire x1="8" y1="-9.5" x2="8" y2="11.7" width="0.127" layer="21"/>
-<wire x1="-8" y1="11.7" x2="8" y2="11.7" width="0.127" layer="21"/>
-<pad name="RST" x="-6.5" y="7" drill="0.7" diameter="1.5"/>
-<pad name="TXD0" x="6.5" y="7" drill="0.7" diameter="1.5"/>
-</package>
-<package name="MICROUSB">
-<wire x1="-4.7" y1="0" x2="-4.7" y2="4.8" width="0.127" layer="21"/>
-<wire x1="-4.7" y1="4.8" x2="-4.7" y2="5.05" width="0.127" layer="21"/>
-<wire x1="-4.7" y1="5.05" x2="4.7" y2="5.05" width="0.127" layer="21"/>
-<wire x1="4.7" y1="5.05" x2="4.7" y2="4.8" width="0.127" layer="21"/>
-<smd name="RX" x="0" y="0.675" dx="1.35" dy="0.4" layer="1" rot="R90"/>
-<smd name="P$6" x="-3.1" y="0.8" dx="1.6" dy="2.1" layer="1" rot="R90"/>
-<wire x1="4.7" y1="4.8" x2="4.7" y2="0" width="0.127" layer="21"/>
-<wire x1="-4.7" y1="0" x2="4.7" y2="0" width="0.127" layer="21"/>
-<smd name="P$1" x="3.1" y="0.8" dx="1.6" dy="2.1" layer="1" rot="R90"/>
-<smd name="P$2" x="3.8" y="3.35" dx="1.9" dy="1.8" layer="1"/>
-<smd name="P$3" x="-3.8" y="3.35" dx="1.9" dy="1.8" layer="1"/>
-<smd name="P$5" x="-1.2" y="3.35" dx="1.9" dy="1.8" layer="1"/>
-<smd name="P$7" x="1.2" y="3.35" dx="1.9" dy="1.8" layer="1"/>
-<smd name="TX" x="0.65" y="0.675" dx="1.35" dy="0.4" layer="1" rot="R90"/>
-<smd name="VCC" x="1.3" y="0.675" dx="1.35" dy="0.4" layer="1" rot="R90"/>
-<smd name="GND" x="-1.3" y="0.675" dx="1.35" dy="0.4" layer="1" rot="R90"/>
-<smd name="DEBUG" x="-0.65" y="0.675" dx="1.35" dy="0.4" layer="1" rot="R90"/>
-<text x="0" y="1.905" size="0.4064" layer="2" rot="R180" align="center">MICRO USB</text>
-<wire x1="-4.7" y1="4.8" x2="4.7" y2="4.8" width="0.127" layer="21"/>
-</package>
-<package name="SOT-223">
-<wire x1="-3.25" y1="-1.75" x2="3.25" y2="-1.75" width="0.127" layer="21"/>
-<wire x1="3.25" y1="-1.75" x2="3.25" y2="1.75" width="0.127" layer="21"/>
-<wire x1="3.25" y1="1.75" x2="-3.25" y2="1.75" width="0.127" layer="21"/>
-<wire x1="-3.25" y1="1.75" x2="-3.25" y2="-1.75" width="0.127" layer="21"/>
-<smd name="P$1" x="0" y="3.1" dx="2.2" dy="3.5" layer="1" rot="R90"/>
-<smd name="P$2" x="0" y="-3.1" dx="1.2" dy="2.2" layer="1"/>
-<smd name="P$3" x="-2.3" y="-3.1" dx="2.2" dy="1.2" layer="1" rot="R90"/>
-<smd name="P$4" x="2.3" y="-3.1" dx="1.2" dy="2.2" layer="1"/>
-</package>
-</packages>
-<symbols>
-<symbol name="ESP8266-07">
-<pin name="VCC" x="-12.7" y="-7.62" visible="pin" length="short" direction="pwr"/>
-<pin name="GPIO13" x="-12.7" y="-5.08" visible="pin" length="short"/>
-<pin name="GPIO12" x="-12.7" y="-2.54" visible="pin" length="short"/>
-<pin name="GPIO14" x="-12.7" y="0" visible="pin" length="short"/>
-<pin name="GPIO16" x="-12.7" y="2.54" visible="pin" length="short"/>
-<pin name="EN" x="-12.7" y="5.08" visible="pin" length="short" direction="in"/>
-<pin name="ADC" x="-12.7" y="7.62" visible="pin" length="short" direction="in"/>
-<pin name="RST" x="-12.7" y="10.16" visible="pin" length="short" direction="in"/>
-<pin name="GND" x="12.7" y="-7.62" visible="pin" length="short" direction="pwr" rot="R180"/>
-<pin name="RXD0" x="12.7" y="7.62" visible="pin" length="short" rot="R180"/>
-<pin name="TXD0" x="12.7" y="10.16" visible="pin" length="short" rot="R180"/>
-<pin name="GPIO5" x="12.7" y="5.08" visible="pin" length="short" rot="R180"/>
-<pin name="GPIO4" x="12.7" y="2.54" visible="pin" length="short" rot="R180"/>
-<pin name="GPIO0" x="12.7" y="0" visible="pin" length="short" rot="R180"/>
-<pin name="GPIO2" x="12.7" y="-2.54" visible="pin" length="short" rot="R180"/>
-<pin name="GPIO15" x="12.7" y="-5.08" visible="pin" length="short" rot="R180"/>
-<wire x1="-10.16" y1="-10.16" x2="10.16" y2="-10.16" width="0.254" layer="94"/>
-<wire x1="10.16" y1="-10.16" x2="10.16" y2="17.78" width="0.254" layer="94"/>
-<wire x1="10.16" y1="17.78" x2="-10.16" y2="17.78" width="0.254" layer="94"/>
-<wire x1="-10.16" y1="17.78" x2="-10.16" y2="-10.16" width="0.254" layer="94"/>
-<text x="-7.62" y="12.7" size="1.27" layer="94">ESP8266-07</text>
-</symbol>
-<symbol name="MICROUSB">
-<wire x1="-7.62" y1="0" x2="7.62" y2="0" width="0.254" layer="94"/>
-<wire x1="-7.62" y1="0" x2="-7.62" y2="2.54" width="0.254" layer="94"/>
-<wire x1="-7.62" y1="2.54" x2="-5.08" y2="5.08" width="0.254" layer="94"/>
-<wire x1="-5.08" y1="5.08" x2="5.08" y2="5.08" width="0.254" layer="94"/>
-<wire x1="5.08" y1="5.08" x2="7.62" y2="2.54" width="0.254" layer="94"/>
-<wire x1="7.62" y1="2.54" x2="7.62" y2="0" width="0.254" layer="94"/>
-<pin name="GND" x="-5.08" y="-2.54" visible="pin" length="short" direction="pwr" rot="R90"/>
-<pin name="DEBUG" x="-2.54" y="-2.54" visible="pin" length="short" rot="R90"/>
-<pin name="TX" x="0" y="-2.54" visible="pin" length="short" rot="R90"/>
-<pin name="RX" x="2.54" y="-2.54" visible="pin" length="short" rot="R90"/>
-<pin name="VCC" x="5.08" y="-2.54" visible="pin" length="short" direction="pwr" rot="R90"/>
-</symbol>
-<symbol name="AZ1117E">
-<wire x1="5.08" y1="5.08" x2="-5.08" y2="5.08" width="0.254" layer="94"/>
-<wire x1="-5.08" y1="5.08" x2="-5.08" y2="-5.08" width="0.254" layer="94"/>
-<wire x1="-5.08" y1="-5.08" x2="5.08" y2="-5.08" width="0.254" layer="94"/>
-<wire x1="5.08" y1="-5.08" x2="5.08" y2="5.08" width="0.254" layer="94"/>
-<pin name="GND" x="-2.54" y="-7.62" visible="pin" length="short" direction="pwr" rot="R90"/>
-<pin name="IN" x="2.54" y="-7.62" visible="pin" length="short" direction="in" rot="R90"/>
-<pin name="OUT" x="0" y="-7.62" visible="pin" length="short" direction="out" rot="R90"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="ESP8266-07">
-<gates>
-<gate name="G$1" symbol="ESP8266-07" x="-5.08" y="5.08"/>
-</gates>
-<devices>
-<device name="SMD" package="ESP8266-07">
-<connects>
-<connect gate="G$1" pin="ADC" pad="ADC"/>
-<connect gate="G$1" pin="EN" pad="EN"/>
-<connect gate="G$1" pin="GND" pad="GND"/>
-<connect gate="G$1" pin="GPIO0" pad="GPIO0"/>
-<connect gate="G$1" pin="GPIO12" pad="GPIO12"/>
-<connect gate="G$1" pin="GPIO13" pad="GPIO13"/>
-<connect gate="G$1" pin="GPIO14" pad="GPIO14"/>
-<connect gate="G$1" pin="GPIO15" pad="GPIO15"/>
-<connect gate="G$1" pin="GPIO16" pad="GPIO16"/>
-<connect gate="G$1" pin="GPIO2" pad="GPIO2"/>
-<connect gate="G$1" pin="GPIO4" pad="GPIO4"/>
-<connect gate="G$1" pin="GPIO5" pad="GPIO5"/>
-<connect gate="G$1" pin="RST" pad="RST"/>
-<connect gate="G$1" pin="RXD0" pad="RXD0"/>
-<connect gate="G$1" pin="TXD0" pad="TXD0"/>
-<connect gate="G$1" pin="VCC" pad="VCC"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="HEADER" package="ESP8266-07-HEADER">
-<connects>
-<connect gate="G$1" pin="ADC" pad="ADC"/>
-<connect gate="G$1" pin="EN" pad="EN"/>
-<connect gate="G$1" pin="GND" pad="GND"/>
-<connect gate="G$1" pin="GPIO0" pad="GPIO0"/>
-<connect gate="G$1" pin="GPIO12" pad="GPIO12"/>
-<connect gate="G$1" pin="GPIO13" pad="GPIO13"/>
-<connect gate="G$1" pin="GPIO14" pad="GPIO14"/>
-<connect gate="G$1" pin="GPIO15" pad="GPIO15"/>
-<connect gate="G$1" pin="GPIO16" pad="GPIO16"/>
-<connect gate="G$1" pin="GPIO2" pad="GPIO2"/>
-<connect gate="G$1" pin="GPIO4" pad="GPIO4"/>
-<connect gate="G$1" pin="GPIO5" pad="GPIO5"/>
-<connect gate="G$1" pin="RST" pad="RST"/>
-<connect gate="G$1" pin="RXD0" pad="RXD0"/>
-<connect gate="G$1" pin="TXD0" pad="TXD0"/>
-<connect gate="G$1" pin="VCC" pad="VCC"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="MICROUSB">
-<gates>
-<gate name="G$1" symbol="MICROUSB" x="0" y="2.54"/>
-</gates>
-<devices>
-<device name="609-4613-1-ND" package="MICROUSB">
-<connects>
-<connect gate="G$1" pin="DEBUG" pad="DEBUG"/>
-<connect gate="G$1" pin="GND" pad="GND"/>
-<connect gate="G$1" pin="RX" pad="RX"/>
-<connect gate="G$1" pin="TX" pad="TX"/>
-<connect gate="G$1" pin="VCC" pad="VCC"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="AZ1117E">
-<description>&lt;b&gt;AZ1117E&lt;/b&gt; - 3.3 volt regulator
-
-&lt;p&gt;Technical Specifications:
-&lt;ul&gt;
-&lt;li&gt;Max Current 1.3 A&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Connect 1.0 uF cap from GND to IN&lt;br/&gt;
-Connect 1.0 uF cap from GND to OUT&lt;/p&gt;</description>
-<gates>
-<gate name="G$1" symbol="AZ1117E" x="-2.54" y="-2.54"/>
-</gates>
-<devices>
-<device name="" package="SOT-223">
-<connects>
-<connect gate="G$1" pin="GND" pad="P$3" route="any"/>
-<connect gate="G$1" pin="IN" pad="P$4"/>
-<connect gate="G$1" pin="OUT" pad="P$1 P$2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="rcl" urn="urn:adsk.eagle:library:334">
 <description>&lt;b&gt;Resistors, Capacitors, Inductors&lt;/b&gt;&lt;p&gt;
 Based on the previous libraries:
@@ -7537,9 +7309,63 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="idiotic">
+<library name="idiotic-regulators">
 <packages>
-<package name="8-MSOP">
+<package name="SOT-223">
+<wire x1="-3.25" y1="-1.75" x2="3.25" y2="-1.75" width="0.127" layer="21"/>
+<wire x1="3.25" y1="-1.75" x2="3.25" y2="1.75" width="0.127" layer="21"/>
+<wire x1="3.25" y1="1.75" x2="-3.25" y2="1.75" width="0.127" layer="21"/>
+<wire x1="-3.25" y1="1.75" x2="-3.25" y2="-1.75" width="0.127" layer="21"/>
+<smd name="P$1" x="0" y="3.1" dx="2.2" dy="3.5" layer="1" rot="R90"/>
+<smd name="P$2" x="0" y="-3.1" dx="1.2" dy="2.2" layer="1"/>
+<smd name="P$3" x="-2.3" y="-3.1" dx="2.2" dy="1.2" layer="1" rot="R90"/>
+<smd name="P$4" x="2.3" y="-3.1" dx="1.2" dy="2.2" layer="1"/>
+</package>
+</packages>
+<symbols>
+<symbol name="AZ1117E">
+<wire x1="5.08" y1="5.08" x2="-5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="5.08" x2="-5.08" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-5.08" x2="5.08" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-5.08" x2="5.08" y2="5.08" width="0.254" layer="94"/>
+<pin name="GND" x="-2.54" y="-7.62" visible="pin" length="short" direction="pwr" rot="R90"/>
+<pin name="IN" x="2.54" y="-7.62" visible="pin" length="short" direction="in" rot="R90"/>
+<pin name="OUT" x="0" y="-7.62" visible="pin" length="short" direction="out" rot="R90"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="AZ1117E">
+<description>&lt;b&gt;AZ1117E&lt;/b&gt; - 3.3 volt regulator
+
+&lt;p&gt;Technical Specifications:
+&lt;ul&gt;
+&lt;li&gt;Max Current 1.3 A&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Connect 1.0 uF cap from GND to IN&lt;br/&gt;
+Connect 1.0 uF cap from GND to OUT&lt;/p&gt;</description>
+<gates>
+<gate name="G$1" symbol="AZ1117E" x="-2.54" y="-2.54"/>
+</gates>
+<devices>
+<device name="" package="SOT-223">
+<connects>
+<connect gate="G$1" pin="GND" pad="P$3" route="any"/>
+<connect gate="G$1" pin="IN" pad="P$4"/>
+<connect gate="G$1" pin="OUT" pad="P$1 P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+<library name="idiotic-sensors">
+<packages>
+<package name="MSOP-8">
 <wire x1="-1.2" y1="-1.2" x2="1.2" y2="-1.2" width="0.127" layer="21"/>
 <wire x1="1.2" y1="1.2" x2="-1.2" y2="1.2" width="0.127" layer="21"/>
 <wire x1="-1.2" y1="1.2" x2="-1.2" y2="-1.2" width="0.127" layer="21"/>
@@ -7577,7 +7403,7 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <gate name="G$1" symbol="MCP9808" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="8-MSOP">
+<device name="" package="MSOP-8">
 <connects>
 <connect gate="G$1" pin="A0" pad="P$7"/>
 <connect gate="G$1" pin="A1" pad="P$6"/>
@@ -7587,6 +7413,196 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <connect gate="G$1" pin="SCL" pad="P$2"/>
 <connect gate="G$1" pin="SDA" pad="P$1"/>
 <connect gate="G$1" pin="VDD" pad="P$8"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+<library name="idiotic-connectors">
+<packages>
+<package name="MICROUSB">
+<wire x1="-4.7" y1="0" x2="-4.7" y2="4.8" width="0.127" layer="21"/>
+<wire x1="-4.7" y1="4.8" x2="-4.7" y2="5.05" width="0.127" layer="21"/>
+<wire x1="-4.7" y1="5.05" x2="4.7" y2="5.05" width="0.127" layer="21"/>
+<wire x1="4.7" y1="5.05" x2="4.7" y2="4.8" width="0.127" layer="21"/>
+<smd name="RX" x="0" y="0.675" dx="1.35" dy="0.4" layer="1" rot="R90"/>
+<smd name="P$6" x="-3.1" y="0.8" dx="1.6" dy="2.1" layer="1" rot="R90"/>
+<wire x1="4.7" y1="4.8" x2="4.7" y2="0" width="0.127" layer="21"/>
+<wire x1="-4.7" y1="0" x2="4.7" y2="0" width="0.127" layer="21"/>
+<smd name="P$1" x="3.1" y="0.8" dx="1.6" dy="2.1" layer="1" rot="R90"/>
+<smd name="P$2" x="3.8" y="3.35" dx="1.9" dy="1.8" layer="1"/>
+<smd name="P$3" x="-3.8" y="3.35" dx="1.9" dy="1.8" layer="1"/>
+<smd name="P$5" x="-1.2" y="3.35" dx="1.9" dy="1.8" layer="1"/>
+<smd name="P$7" x="1.2" y="3.35" dx="1.9" dy="1.8" layer="1"/>
+<smd name="TX" x="0.65" y="0.675" dx="1.35" dy="0.4" layer="1" rot="R90"/>
+<smd name="VCC" x="1.3" y="0.675" dx="1.35" dy="0.4" layer="1" rot="R90"/>
+<smd name="GND" x="-1.3" y="0.675" dx="1.35" dy="0.4" layer="1" rot="R90"/>
+<smd name="DEBUG" x="-0.65" y="0.675" dx="1.35" dy="0.4" layer="1" rot="R90"/>
+<text x="0" y="1.905" size="0.4064" layer="2" rot="R180" align="center">MICRO USB</text>
+<wire x1="-4.7" y1="4.8" x2="4.7" y2="4.8" width="0.127" layer="21"/>
+</package>
+</packages>
+<symbols>
+<symbol name="MICROUSB">
+<wire x1="-7.62" y1="0" x2="7.62" y2="0" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="0" x2="-7.62" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="2.54" x2="-5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="5.08" x2="5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="5.08" y1="5.08" x2="7.62" y2="2.54" width="0.254" layer="94"/>
+<wire x1="7.62" y1="2.54" x2="7.62" y2="0" width="0.254" layer="94"/>
+<pin name="GND" x="-5.08" y="-2.54" visible="pin" length="short" direction="pwr" rot="R90"/>
+<pin name="DEBUG" x="-2.54" y="-2.54" visible="pin" length="short" rot="R90"/>
+<pin name="TX" x="0" y="-2.54" visible="pin" length="short" rot="R90"/>
+<pin name="RX" x="2.54" y="-2.54" visible="pin" length="short" rot="R90"/>
+<pin name="VCC" x="5.08" y="-2.54" visible="pin" length="short" direction="pwr" rot="R90"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="MICROUSB">
+<gates>
+<gate name="G$1" symbol="MICROUSB" x="0" y="2.54"/>
+</gates>
+<devices>
+<device name="609-4613-1-ND" package="MICROUSB">
+<connects>
+<connect gate="G$1" pin="DEBUG" pad="DEBUG"/>
+<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="RX" pad="RX"/>
+<connect gate="G$1" pin="TX" pad="TX"/>
+<connect gate="G$1" pin="VCC" pad="VCC"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+<library name="idiotic-microcontrollers">
+<packages>
+<package name="ESP8266-07">
+<pad name="GPIO0" x="10" y="0" drill="1" diameter="1.2" shape="offset" rot="R180"/>
+<pad name="GPIO2" x="10" y="-2" drill="1" diameter="1.2" shape="offset" rot="R180"/>
+<pad name="GPIO15" x="10" y="-4" drill="1" diameter="1.2" shape="offset" rot="R180"/>
+<pad name="GND" x="10" y="-6" drill="1" diameter="1.2" shape="offset" rot="R180"/>
+<pad name="GPIO4" x="10" y="2" drill="1" diameter="1.2" shape="offset" rot="R180"/>
+<pad name="GPIO5" x="10" y="4" drill="1" diameter="1.2" shape="offset" rot="R180"/>
+<pad name="RXD0" x="10" y="6" drill="1" diameter="1.2" shape="offset" rot="R180"/>
+<pad name="TXD0" x="10" y="8" drill="1" diameter="1.2" shape="offset" rot="R180"/>
+<pad name="RST" x="-6" y="8" drill="1" diameter="1.2" shape="offset"/>
+<pad name="ADC" x="-6" y="6" drill="1" diameter="1.2" shape="offset"/>
+<pad name="EN" x="-6" y="4" drill="1" diameter="1.2" shape="offset"/>
+<pad name="GPIO14" x="-6" y="0" drill="1" diameter="1.2" shape="offset"/>
+<pad name="GPIO16" x="-6" y="2" drill="1" diameter="1.2" shape="offset"/>
+<pad name="GPIO12" x="-6" y="-2" drill="1" diameter="1.2" shape="offset"/>
+<pad name="GPIO13" x="-6" y="-4" drill="1" diameter="1.2" shape="offset"/>
+<pad name="VCC" x="-6" y="-6" drill="1" diameter="1.2" shape="offset"/>
+<wire x1="-6" y1="-7" x2="10" y2="-7" width="0.127" layer="21"/>
+<wire x1="10" y1="-7" x2="10" y2="13" width="0.127" layer="21"/>
+<wire x1="10" y1="13" x2="-6" y2="13" width="0.127" layer="21"/>
+<wire x1="-6" y1="13" x2="-6" y2="-7" width="0.127" layer="21"/>
+<text x="3.46" y="11.4" size="1.016" layer="25" rot="R180">ESP8266-07</text>
+</package>
+<package name="ESP8266-07-HEADER">
+<pad name="VCC" x="-6.5" y="-7" drill="0.7" diameter="1.5"/>
+<pad name="GPIO13" x="-6.5" y="-5" drill="0.7" diameter="1.5"/>
+<pad name="GPIO12" x="-6.5" y="-3" drill="0.7" diameter="1.5"/>
+<pad name="GPIO14" x="-6.5" y="-1" drill="0.7" diameter="1.5"/>
+<pad name="GPIO16" x="-6.5" y="1" drill="0.7" diameter="1.5"/>
+<pad name="EN" x="-6.5" y="3" drill="0.7" diameter="1.5"/>
+<pad name="ADC" x="-6.5" y="5" drill="0.7" diameter="1.5"/>
+<pad name="GND" x="6.5" y="-7" drill="0.7" diameter="1.5"/>
+<pad name="GPIO15" x="6.5" y="-5" drill="0.7" diameter="1.5"/>
+<pad name="GPIO2" x="6.5" y="-3" drill="0.7" diameter="1.5"/>
+<pad name="GPIO0" x="6.5" y="-1" drill="0.7" diameter="1.5"/>
+<pad name="GPIO4" x="6.5" y="1" drill="0.7" diameter="1.5"/>
+<pad name="GPIO5" x="6.5" y="3" drill="0.7" diameter="1.5"/>
+<pad name="RXD0" x="6.5" y="5" drill="0.7" diameter="1.5"/>
+<wire x1="-8" y1="-9.5" x2="-8" y2="11.7" width="0.127" layer="21"/>
+<wire x1="-8" y1="-9.5" x2="8" y2="-9.5" width="0.127" layer="21"/>
+<wire x1="8" y1="-9.5" x2="8" y2="11.7" width="0.127" layer="21"/>
+<wire x1="-8" y1="11.7" x2="8" y2="11.7" width="0.127" layer="21"/>
+<pad name="RST" x="-6.5" y="7" drill="0.7" diameter="1.5"/>
+<pad name="TXD0" x="6.5" y="7" drill="0.7" diameter="1.5"/>
+</package>
+</packages>
+<symbols>
+<symbol name="ESP8266-07">
+<pin name="VCC" x="-12.7" y="-7.62" visible="pin" length="short" direction="pwr"/>
+<pin name="GPIO13" x="-12.7" y="-5.08" visible="pin" length="short"/>
+<pin name="GPIO12" x="-12.7" y="-2.54" visible="pin" length="short"/>
+<pin name="GPIO14" x="-12.7" y="0" visible="pin" length="short"/>
+<pin name="GPIO16" x="-12.7" y="2.54" visible="pin" length="short"/>
+<pin name="EN" x="-12.7" y="5.08" visible="pin" length="short" direction="in"/>
+<pin name="ADC" x="-12.7" y="7.62" visible="pin" length="short" direction="in"/>
+<pin name="RST" x="-12.7" y="10.16" visible="pin" length="short" direction="in"/>
+<pin name="GND" x="12.7" y="-7.62" visible="pin" length="short" direction="pwr" rot="R180"/>
+<pin name="RXD0" x="12.7" y="7.62" visible="pin" length="short" rot="R180"/>
+<pin name="TXD0" x="12.7" y="10.16" visible="pin" length="short" rot="R180"/>
+<pin name="GPIO5" x="12.7" y="5.08" visible="pin" length="short" rot="R180"/>
+<pin name="GPIO4" x="12.7" y="2.54" visible="pin" length="short" rot="R180"/>
+<pin name="GPIO0" x="12.7" y="0" visible="pin" length="short" rot="R180"/>
+<pin name="GPIO2" x="12.7" y="-2.54" visible="pin" length="short" rot="R180"/>
+<pin name="GPIO15" x="12.7" y="-5.08" visible="pin" length="short" rot="R180"/>
+<wire x1="-10.16" y1="-10.16" x2="10.16" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-10.16" x2="10.16" y2="17.78" width="0.254" layer="94"/>
+<wire x1="10.16" y1="17.78" x2="-10.16" y2="17.78" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="17.78" x2="-10.16" y2="-10.16" width="0.254" layer="94"/>
+<text x="-7.62" y="12.7" size="1.27" layer="94">ESP8266-07</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="ESP8266-07">
+<gates>
+<gate name="G$1" symbol="ESP8266-07" x="-5.08" y="5.08"/>
+</gates>
+<devices>
+<device name="SMD" package="ESP8266-07">
+<connects>
+<connect gate="G$1" pin="ADC" pad="ADC"/>
+<connect gate="G$1" pin="EN" pad="EN"/>
+<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="GPIO0" pad="GPIO0"/>
+<connect gate="G$1" pin="GPIO12" pad="GPIO12"/>
+<connect gate="G$1" pin="GPIO13" pad="GPIO13"/>
+<connect gate="G$1" pin="GPIO14" pad="GPIO14"/>
+<connect gate="G$1" pin="GPIO15" pad="GPIO15"/>
+<connect gate="G$1" pin="GPIO16" pad="GPIO16"/>
+<connect gate="G$1" pin="GPIO2" pad="GPIO2"/>
+<connect gate="G$1" pin="GPIO4" pad="GPIO4"/>
+<connect gate="G$1" pin="GPIO5" pad="GPIO5"/>
+<connect gate="G$1" pin="RST" pad="RST"/>
+<connect gate="G$1" pin="RXD0" pad="RXD0"/>
+<connect gate="G$1" pin="TXD0" pad="TXD0"/>
+<connect gate="G$1" pin="VCC" pad="VCC"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="HEADER" package="ESP8266-07-HEADER">
+<connects>
+<connect gate="G$1" pin="ADC" pad="ADC"/>
+<connect gate="G$1" pin="EN" pad="EN"/>
+<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="GPIO0" pad="GPIO0"/>
+<connect gate="G$1" pin="GPIO12" pad="GPIO12"/>
+<connect gate="G$1" pin="GPIO13" pad="GPIO13"/>
+<connect gate="G$1" pin="GPIO14" pad="GPIO14"/>
+<connect gate="G$1" pin="GPIO15" pad="GPIO15"/>
+<connect gate="G$1" pin="GPIO16" pad="GPIO16"/>
+<connect gate="G$1" pin="GPIO2" pad="GPIO2"/>
+<connect gate="G$1" pin="GPIO4" pad="GPIO4"/>
+<connect gate="G$1" pin="GPIO5" pad="GPIO5"/>
+<connect gate="G$1" pin="RST" pad="RST"/>
+<connect gate="G$1" pin="RXD0" pad="RXD0"/>
+<connect gate="G$1" pin="TXD0" pad="TXD0"/>
+<connect gate="G$1" pin="VCC" pad="VCC"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -7606,12 +7622,12 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 </class>
 </classes>
 <parts>
-<part name="U$1" library="idiotic" deviceset="MCP9808" device=""/>
-<part name="U$2" library="IoT" deviceset="ESP8266-07" device="SMD"/>
+<part name="U$1" library="idiotic-sensors" deviceset="MCP9808" device=""/>
+<part name="U$2" library="idiotic-microcontrollers" deviceset="ESP8266-07" device="SMD"/>
 <part name="C1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="1uF"/>
 <part name="C2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="1uF"/>
-<part name="U$3" library="IoT" deviceset="MICROUSB" device="609-4613-1-ND"/>
-<part name="U$4" library="IoT" deviceset="AZ1117E" device=""/>
+<part name="U$3" library="idiotic-connectors" deviceset="MICROUSB" device="609-4613-1-ND"/>
+<part name="U$4" library="idiotic-regulators" deviceset="AZ1117E" device=""/>
 <part name="R1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="M0805" package3d_urn="urn:adsk.eagle:package:23556/1" value="10k"/>
 <part name="R2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="M0805" package3d_urn="urn:adsk.eagle:package:23556/1" value="10k"/>
 </parts>
