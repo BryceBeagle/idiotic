@@ -257,6 +257,21 @@
 <text x="0.8" y="1" size="0.6096" layer="1">–</text>
 <text x="0.8" y="-1.6" size="0.6096" layer="1">+</text>
 </package>
+<package name="SOP-8">
+<smd name="P$1" x="-1.905" y="2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
+<smd name="P$2" x="-0.635" y="2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
+<smd name="P$3" x="0.635" y="2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
+<smd name="P$4" x="1.905" y="2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
+<smd name="P$5" x="-1.905" y="-2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
+<smd name="P$6" x="-0.635" y="-2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
+<smd name="P$7" x="0.635" y="-2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
+<smd name="P$8" x="1.905" y="-2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
+<wire x1="-2.45" y1="2" x2="2.45" y2="2" width="0.127" layer="21"/>
+<wire x1="2.45" y1="2" x2="2.45" y2="-2" width="0.127" layer="21"/>
+<wire x1="2.45" y1="-2" x2="-2.45" y2="-2" width="0.127" layer="21"/>
+<wire x1="-2.45" y1="-2" x2="-2.45" y2="2" width="0.127" layer="21"/>
+<smd name="P$9" x="0" y="0" dx="2.5" dy="2.5" layer="1"/>
+</package>
 </packages>
 <symbols>
 <symbol name="LM3940">
@@ -403,6 +418,17 @@
 <pin name="~2" x="-7.62" y="-2.54" length="short" direction="in"/>
 <pin name="-" x="7.62" y="2.54" length="short" direction="out" rot="R180"/>
 <pin name="+" x="7.62" y="-2.54" length="short" direction="out" rot="R180"/>
+</symbol>
+<symbol name="DS9068_FIXED">
+<wire x1="-7.62" y1="0" x2="-7.62" y2="15.24" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="15.24" x2="10.16" y2="15.24" width="0.254" layer="94"/>
+<wire x1="10.16" y1="15.24" x2="10.16" y2="0" width="0.254" layer="94"/>
+<wire x1="10.16" y1="0" x2="-7.62" y2="0" width="0.254" layer="94"/>
+<pin name="VIN" x="-10.16" y="12.7" length="short" direction="pwr"/>
+<pin name="SHDN" x="-10.16" y="7.62" length="short" direction="in"/>
+<pin name="GND" x="-10.16" y="2.54" length="short" direction="pwr"/>
+<pin name="SENSE" x="12.7" y="2.54" length="short" direction="in" rot="R180"/>
+<pin name="VOUT" x="12.7" y="12.7" length="short" direction="out" rot="R180"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -647,6 +673,25 @@ Connect 1.0 uF cap from GND to OUT&lt;/p&gt;</description>
 <connect gate="G$1" pin="-" pad="P$3"/>
 <connect gate="G$1" pin="~1" pad="P$1"/>
 <connect gate="G$1" pin="~2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="DS9068">
+<gates>
+<gate name="G$1" symbol="DS9068_FIXED" x="-2.54" y="-7.62"/>
+</gates>
+<devices>
+<device name="SOP-8" package="SOP-8">
+<connects>
+<connect gate="G$1" pin="GND" pad="P$6 P$7 P$9"/>
+<connect gate="G$1" pin="SENSE" pad="P$2"/>
+<connect gate="G$1" pin="SHDN" pad="P$5"/>
+<connect gate="G$1" pin="VIN" pad="P$8"/>
+<connect gate="G$1" pin="VOUT" pad="P$1"/>
 </connects>
 <technologies>
 <technology name=""/>
