@@ -83,7 +83,7 @@
 <smd name="P$3" x="-2.3" y="-3.1" dx="2.2" dy="1.2" layer="1" rot="R90"/>
 <smd name="P$4" x="2.3" y="-3.1" dx="1.2" dy="2.2" layer="1"/>
 </package>
-<package name="LP2980-N">
+<package name="SOT-23">
 <wire x1="0" y1="-0.8" x2="2.9" y2="-0.8" width="0.127" layer="21"/>
 <wire x1="2.9" y1="-0.8" x2="2.9" y2="0.8" width="0.127" layer="21"/>
 <wire x1="2.9" y1="0.8" x2="0" y2="0.8" width="0.127" layer="21"/>
@@ -200,7 +200,7 @@ Connect 1.0 uF cap from GND to OUT&lt;/p&gt;</description>
 <gate name="G$1" symbol="LP2980-N" x="-7.62" y="-7.62"/>
 </gates>
 <devices>
-<device name="" package="LP2980-N">
+<device name="" package="SOT-23">
 <connects>
 <connect gate="G$1" pin="GND" pad="GND"/>
 <connect gate="G$1" pin="ON/OFF" pad="ON/OFF"/>
