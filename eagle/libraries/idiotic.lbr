@@ -228,7 +228,7 @@
 <wire x1="7.6" y1="-6.5" x2="7.6" y2="8.75" width="0.127" layer="49"/>
 <wire x1="7.6" y1="8.75" x2="-1" y2="8.75" width="0.127" layer="49"/>
 </package>
-<package name="8-MSOP">
+<package name="MSOP-8">
 <wire x1="-1.2" y1="-1.2" x2="1.2" y2="-1.2" width="0.127" layer="21"/>
 <wire x1="1.2" y1="1.2" x2="-1.2" y2="1.2" width="0.127" layer="21"/>
 <wire x1="-1.2" y1="1.2" x2="-1.2" y2="-1.2" width="0.127" layer="21"/>
@@ -619,7 +619,7 @@ Connect 1.0 uF cap from GND to OUT&lt;/p&gt;</description>
 <gate name="G$1" symbol="MCP9808" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="8-MSOP">
+<device name="" package="MSOP-8">
 <connects>
 <connect gate="G$1" pin="A0" pad="P$7"/>
 <connect gate="G$1" pin="A1" pad="P$6"/>
