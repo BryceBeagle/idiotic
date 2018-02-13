@@ -64,7 +64,7 @@
 <layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
-<layer number="93" name="Pins" color="2" fill="1" visible="no" active="yes"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="94" name="Symbols" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes"/>
@@ -73,10 +73,53 @@
 </layers>
 <library>
 <packages>
+<package name="CPC1017N">
+<smd name="P$2" x="-1.27" y="2.25" dx="0.55" dy="1.45" layer="1" rot="R180"/>
+<smd name="P$1" x="1.27" y="2.25" dx="0.55" dy="1.45" layer="1" rot="R180"/>
+<smd name="P$3" x="-1.27" y="-2.25" dx="0.55" dy="1.45" layer="1" rot="R180"/>
+<smd name="P$4" x="1.27" y="-2.25" dx="0.55" dy="1.45" layer="1" rot="R180"/>
+<wire x1="-2.05" y1="1.35" x2="2.05" y2="1.35" width="0.127" layer="21"/>
+<wire x1="2.05" y1="1.35" x2="2.05" y2="-1.35" width="0.127" layer="21"/>
+<wire x1="2.05" y1="-1.35" x2="-2.05" y2="-1.35" width="0.127" layer="21"/>
+<wire x1="-2.05" y1="-1.35" x2="-2.05" y2="1.35" width="0.127" layer="21"/>
+<wire x1="1.4" y1="0.85" x2="1.4" y2="0.6" width="0.127" layer="21"/>
+<wire x1="1.4" y1="0.6" x2="1.7" y2="0.6" width="0.127" layer="21"/>
+<wire x1="1.7" y1="0.6" x2="1.7" y2="0.9" width="0.127" layer="21"/>
+<wire x1="1.7" y1="0.9" x2="1.4" y2="0.9" width="0.127" layer="21"/>
+</package>
 </packages>
 <symbols>
+<symbol name="CPC1017N">
+<wire x1="-10.16" y1="-5.08" x2="-10.16" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="5.08" x2="10.16" y2="5.08" width="0.254" layer="94"/>
+<wire x1="10.16" y1="5.08" x2="10.16" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-5.08" x2="-10.16" y2="-5.08" width="0.254" layer="94"/>
+<pin name="CTRL+" x="-12.7" y="2.54" length="short" direction="pwr"/>
+<pin name="CTRL-" x="-12.7" y="-2.54" length="short" direction="pwr"/>
+<pin name="LOAD2" x="12.7" y="-2.54" length="short" rot="R180"/>
+<pin name="LOAD1" x="12.7" y="2.54" length="short" rot="R180"/>
+</symbol>
 </symbols>
 <devicesets>
+<deviceset name="CPC1017N">
+<description>http://www.ixysic.com/home/pdfs.nsf/www/CPC1017N.pdf/$file/CPC1017N.pdf</description>
+<gates>
+<gate name="G$1" symbol="CPC1017N" x="-2.54" y="0"/>
+</gates>
+<devices>
+<device name="" package="CPC1017N">
+<connects>
+<connect gate="G$1" pin="CTRL+" pad="P$1"/>
+<connect gate="G$1" pin="CTRL-" pad="P$2"/>
+<connect gate="G$1" pin="LOAD1" pad="P$3"/>
+<connect gate="G$1" pin="LOAD2" pad="P$4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 </drawing>
