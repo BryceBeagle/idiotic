@@ -102,6 +102,8 @@
 </symbols>
 <devicesets>
 <deviceset name="MB4S">
+<description>Datasheet:
+https://www.vishay.com/docs/88661/mb2s.pdf</description>
 <gates>
 <gate name="G$1" symbol="MB4S" x="0" y="0"/>
 </gates>
