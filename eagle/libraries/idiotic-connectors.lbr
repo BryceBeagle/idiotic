@@ -227,12 +227,12 @@
 <devices>
 <device name="AVX9706-6" package="AVX9706-6">
 <connects>
-<connect gate="G$1" pin="1" pad="P$1"/>
-<connect gate="G$1" pin="2" pad="P$2"/>
-<connect gate="G$1" pin="3" pad="P$3"/>
-<connect gate="G$1" pin="4" pad="P$4"/>
-<connect gate="G$1" pin="5" pad="P$5"/>
-<connect gate="G$1" pin="6" pad="P$6"/>
+<connect gate="G$1" pin="1" pad="P$1 P$7"/>
+<connect gate="G$1" pin="2" pad="P$2 P$8"/>
+<connect gate="G$1" pin="3" pad="P$3 P$9"/>
+<connect gate="G$1" pin="4" pad="P$4 P$10"/>
+<connect gate="G$1" pin="5" pad="P$5 P$11"/>
+<connect gate="G$1" pin="6" pad="P$6 P$12"/>
 </connects>
 <technologies>
 <technology name=""/>
