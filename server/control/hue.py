@@ -1,7 +1,7 @@
 import phue
 
 from control.idiotic_device import IdioticDevice
-from control.idiotic_device import action, attribute
+from control.idiotic_device import action, Attribute
 
 
 class HueBridge(phue.Bridge):
@@ -49,7 +49,7 @@ class HueLight(IdioticDevice):
     def dim_lights(self):
         pass
 
-    @attribute
+    @Attribute
     def room(self):
         return self._room
 
@@ -57,11 +57,11 @@ class HueLight(IdioticDevice):
     def room(self, room):
         self._room = room
 
-    @attribute
+    @Attribute
     def light_id(self):
         return self._light_id
 
-    @attribute
+    @Attribute
     def on(self):
         return self._light.on
 
@@ -69,7 +69,7 @@ class HueLight(IdioticDevice):
     def on(self, on):
         self._light.on = on
 
-    @attribute
+    @Attribute
     def brightness(self):
         return self._light.brightness
 
@@ -77,7 +77,7 @@ class HueLight(IdioticDevice):
     def brightness(self, brightness):
         self._light.brightness = brightness
 
-    @attribute
+    @Attribute
     def hue(self):
         return self._light.hue
 
@@ -85,7 +85,7 @@ class HueLight(IdioticDevice):
     def hue(self, hue):
         self._light.hue = hue
 
-    @attribute
+    @Attribute
     def saturation(self):
         return self._light.saturation
 
@@ -93,7 +93,7 @@ class HueLight(IdioticDevice):
     def saturation(self, saturation):
         self._light.saturation = saturation
 
-    @attribute
+    @Attribute
     def groups(self):
         return [group['name'] for group in self.bridge.get_group().values()
                 if str(self._light_id) in group['lights']]
@@ -149,10 +149,10 @@ if __name__ == '__main__':
     a = HueLight(9)
     b = HueLight(8)
 
-    a.on = True
+    a.on.set(True)
 
-    a.brightness = 254
-    print(a.brightness())
-    print(b.brightness())
+    a.brightness.set(254)
+    print(a.brightness.get())
+    print(b.brightness.get())
     a.brightness.subscribe(4)
 

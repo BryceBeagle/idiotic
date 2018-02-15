@@ -1,65 +1,68 @@
 import types
 
-class _IdioticAttribute:
-    """Attribute object that acts like a more powerful, and more confusing, property
 
-    class.func = 5   --> func.__set__(5) --> sets self._func to val
-    a = class.func   --> func.__get__    --> return func object
-    a = class.func() --> func.__call__   --> returns value of func
+class Attribute:
+    """Decorator for functions within an IdioticDevice instance
+
+    When the set() method is called, each subscribed IdioticTrigger's alert() method is called.
+    IdioticTriggers can subscribe by calling the .subscribe() method and unsubscribe by calling the .unsubscribe()
+    method.
+
+    Uses some python magic to return a descriptor. The __get__ dundie is required to create an instance of the
+    inner class post initialization. To be honest, I'm not quite sure how it works.
+
+    TODO: Populate IdioticDevice.attributes list
     """
 
-    def __init__(self, fget, fset=None, fdel=None, doc=None, subscribers=set()):
-
+    def __init__(self, fget):
         self.fget = fget
-        self.fset = fset
-        self.fdel = fdel
+        self.fset = None
 
-        if doc is None:
-            doc = fget.__doc__
-        self.__doc__ = doc
+    def __get__(self, owner, obj_type=None):
+        return self._Inner(owner, self.fget, self.fset)
 
-        self.subscribers = subscribers
+    class _Inner:
 
-    def __get__(self, owner, ownertype=None):
+        def __init__(self, owner, fget, fset=None, subscribers=set()):
+            """Initialize a """
+            self.owner = owner
 
-        class _Inner(type(self)):
+            self.fget = fget
+            self.fset = fset
 
-            def __call__(instance):
-                return self.fget(owner)
+            self.subscribers = subscribers
 
-        self.__class__ = _Inner
+        def get(self):
+            return self.fget(self.owner)
 
-        return self
+        def set(self, value, notify=True):
+            """Set value of attribute and notify subscribers
 
-    def __set__(self, owner, value):
+            A silent set can be performed by setting notify=False"""
 
-        if self.fset is None:
-            raise AttributeError("can't set attribute")
+            if notify:
+                for subscriber in self.subscribers:
+                    subscriber.alert(value)
 
-        for subscriber in self.subscribers:
-            subscriber.alert(value)
+            return self.fset(self.owner, value)
 
-        self.fset(owner, value)
+        def getter(self, fget):
+            print(self)
+            return type(self)(fget, self.fset, self.subscribers)
 
-    def __delete__(self, obj):
-        if self.fdel is None:
-            raise AttributeError("can't delete attribute")
-        self.fdel(obj)
+        def setter(self, fset):
+            print(self)
+            return type(self)(self.fget, fset, self.subscribers)
 
-    def getter(self, fget):
-        return type(self)(fget, self.fset, self.fdel, self.__doc__, self.subscribers)
+        def subscribe(self, subscriber):
+            self.subscribers.add(subscriber)
+
+        def unsubscribe(self, subscriber):
+            self.subscribers.discard(subscriber)
 
     def setter(self, fset):
-        return type(self)(self.fget, fset, self.fdel, self.__doc__, self.subscribers)
-
-    def deleter(self, fdel):
-        return type(self)(self.fget, self.fset, fdel, self.__doc__, self.subscribers)
-
-    def subscribe(self, subscriber):
-        self.subscribers.add(subscriber)
-
-    def unsubscribe(self, subscriber):
-        self.subscribers.discard(subscriber)
+        self.fset = fset
+        return self
 
 
 class IdioticDevice:
@@ -83,14 +86,6 @@ class IdioticDevice:
     @classmethod
     def _action(cls, func):
         cls.actions.add(func.__name__)
-
-        return func
-
-    @classmethod
-    def _attribute(cls, func):
-        cls.attributes.add(func.__name__)
-
-        func = _IdioticAttribute(func)
 
         return func
 
@@ -119,4 +114,3 @@ class IdioticDevice:
 
 
 action    = IdioticDevice._action
-attribute = IdioticDevice._attribute

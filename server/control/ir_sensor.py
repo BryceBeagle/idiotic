@@ -1,5 +1,5 @@
 from control.idiotic_device import IdioticDevice
-from control.idiotic_device import action, attribute
+from control.idiotic_device import action, Attribute
 
 
 class IRSensor(IdioticDevice):
