@@ -1,4 +1,4 @@
-**Introduction**
+# Introduction
 
 `idiotic_server.py` is the entry point of the software portion of this project. It operates as the glue that holds the
 Model, View and Controller together. It is run without arguments using Python 3 and has the following dependencies:
@@ -60,3 +60,57 @@ IotDevices can be referred to either using the Class type and their name, or by 
    }
 ]}
 ```
+
+# Creating a new IdioticDevice
+
+Creating a new IdioticDevice is simple. First, create a new python file in the `control/idiotic_devices` directory.
+Use the following snippet as a template for the file:
+```python
+from control.idiotic_device import IdioticDevice
+from control.idiotic_device import action, Attribute
+
+class MyDeviceName(IdioticDevice):
+
+    def __init__(opt_param=None, opt_param2=None):
+        self.param = opt_param
+
+
+    @Attribute
+    def my_attribute():
+
+        my_attribute = some_function_to_get_value_from_device_hardware()
+
+        return my_attribute
+
+    @my_attribute.setter
+    def my_attribute(value):
+
+        some_function_to_set_value_on_device_hardware(value)
+
+    @Action
+    def my_action(param_for_action):
+
+        some_function_to_tell_device_to_do_something(param_for_action)
+
+```
+
+IdioticDevices consist of two main components: Attributes and Actions. Attributes represent singular values and states,
+while Actions are meant to be used to perform something a little more in depth. For example, the brightness of a Hue
+Light would be an attribute, and a command used to make the bulb strobe between 3 colors would be an Action.
+
+## Attributes
+
+Attributes have a getter and/or a setter function and their definition is meant to mimic that of properties. However,
+they are not descriptor objects and set using `my_attribute.set(value)` and queried using `my_attribute.get()`.
+
+To create an attribute, tag a function using the `@Attribute` decorator. This turns the following function into the
+getter method for an instance of an Attribute class. To create a setter for the Attribute use a `@my_attribute.setter`
+decorator.
+
+Using the @Attribute decorator is required to allow other Routines to access and set the the data inside the attribute.
+Attributes are also enumerated on the UI **\[Very much TODO\]**.
+
+## Actions
+
+Actions are not as complicated as as attributes and only have a single method. However, the `@Action` decorator must be
+used to tell Idiotic to enumerate the Action and allow Routines to call it.
