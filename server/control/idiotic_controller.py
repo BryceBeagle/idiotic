@@ -1,13 +1,11 @@
 from collections     import defaultdict
-from typing          import Union
 
-from control.hue             import HueBridge, HueLight
-from control.ir_sensor       import IRSensor
+from control.idiotic_devices.hue import HueBridge
+from control.idiotic_devices.ir_sensor import IRSensor
 
 from control.idiotic_device      import IdioticDevice
 from control.idiotic_routine     import IdioticRoutine
 from control.idiotic_trigger     import IdioticTrigger
-from control.idiotic_conditional import IdioticConditional
 from control.idiotic_event       import IdioticEvent
 
 

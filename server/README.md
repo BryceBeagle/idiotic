@@ -73,7 +73,7 @@ class MyDeviceName(IdioticDevice):
 
     def __init__(opt_param=None, opt_param2=None):
         self.param = opt_param
-
+        self.param2 = opt_param2
 
     @Attribute
     def my_attribute():
@@ -107,7 +107,7 @@ To create an attribute, tag a function using the `@Attribute` decorator. This tu
 getter method for an instance of an Attribute class. To create a setter for the Attribute use a `@my_attribute.setter`
 decorator.
 
-Using the @Attribute decorator is required to allow other Routines to access and set the the data inside the attribute.
+Using the `@Attribute` decorator is required to allow IdioticRoutines to access and set the the data inside the attribute.
 Attributes are also enumerated on the UI **\[Very much TODO\]**.
 
 ## Actions

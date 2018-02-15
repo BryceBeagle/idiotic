@@ -6,7 +6,7 @@ from   flask import request
 from   flask import make_response
 
 from control.idiotic_controller import IdioticController
-from control.hue import HueBridge, HueLight
+from control.idiotic_devices.hue import HueBridge
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -80,7 +80,7 @@ def module_handler():
         for get_cmd in req_json['set']:
             attr  = get_cmd["attr" ]
             value = get_cmd["value"]
-            klass = HueLight  # get_cmd["class"] if "class" in get_cmd else None
+            klass = get_cmd["class"] if "class" in get_cmd else None
             name  = get_cmd["name" ] if "name"  in get_cmd else None
             id    = get_cmd["id"   ] if "id"    in get_cmd else None
 

@@ -149,7 +149,13 @@ if __name__ == '__main__':
     a = HueLight(9)
     b = HueLight(8)
 
+    class Test:
+        def alert(self, value):
+            print("test")
+
     a.on.set(True)
+    a.on.subscribe(Test())
+
 
     a.brightness.set(254)
     print(a.brightness.get())

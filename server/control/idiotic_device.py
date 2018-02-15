@@ -8,61 +8,52 @@ class Attribute:
     IdioticTriggers can subscribe by calling the .subscribe() method and unsubscribe by calling the .unsubscribe()
     method.
 
-    Uses some python magic to return a descriptor. The __get__ dundie is required to create an instance of the
-    inner class post initialization. To be honest, I'm not quite sure how it works.
+    Uses some python magic to return a descriptor. The __get__ dundie is required to set the owner post init
 
     TODO: Populate IdioticDevice.attributes list
     """
+    def __init__(self, fget, fset=None, subscribers=set(), owner=None):
 
-    def __init__(self, fget):
         self.fget = fget
-        self.fset = None
+        self.fset = fset
+
+        self.subscribers = subscribers
+
+        self.owner = owner
 
     def __get__(self, owner, obj_type=None):
-        return self._Inner(owner, self.fget, self.fset)
+        if not self.owner:
+            attr_temp = type(self)(self.fget, self.fset, self.subscribers, owner=owner)
+            setattr(owner, self.fget.__name__, attr_temp)
+        return getattr(owner, self.fget.__name__)
 
-    class _Inner:
+    def get(self):
+        return self.fget(self.owner)
 
-        def __init__(self, owner, fget, fset=None, subscribers=set()):
-            """Initialize a """
-            self.owner = owner
+    def set(self, value, notify=True):
+        """Set value of attribute and notify subscribers
 
-            self.fget = fget
-            self.fset = fset
+        A silent set can be performed by setting notify=False"""
 
-            self.subscribers = subscribers
+        ret = self.fset(self.owner, value)
 
-        def get(self):
-            return self.fget(self.owner)
+        if notify:
+            for subscriber in self.subscribers:
+                subscriber.alert(value)
 
-        def set(self, value, notify=True):
-            """Set value of attribute and notify subscribers
+        return ret
 
-            A silent set can be performed by setting notify=False"""
-
-            if notify:
-                for subscriber in self.subscribers:
-                    subscriber.alert(value)
-
-            return self.fset(self.owner, value)
-
-        def getter(self, fget):
-            print(self)
-            return type(self)(fget, self.fset, self.subscribers)
-
-        def setter(self, fset):
-            print(self)
-            return type(self)(self.fget, fset, self.subscribers)
-
-        def subscribe(self, subscriber):
-            self.subscribers.add(subscriber)
-
-        def unsubscribe(self, subscriber):
-            self.subscribers.discard(subscriber)
+    def getter(self, fget):
+        return type(self)(fget, self.fset, self.subscribers)
 
     def setter(self, fset):
-        self.fset = fset
-        return self
+        return type(self)(self.fget, fset, self.subscribers)
+
+    def subscribe(self, subscriber):
+        self.subscribers.add(subscriber)
+
+    def unsubscribe(self, subscriber):
+        self.subscribers.discard(subscriber)
 
 
 class IdioticDevice:
@@ -74,10 +65,6 @@ class IdioticDevice:
 
         self._uuid = None
         self._name = None
-
-    # TODO: Restrict access to only actions and attributes for non-class members
-    def __getattribute__(self, item):
-        return object.__getattribute__(self, item)
 
     @classmethod
     def get_actions(cls):
