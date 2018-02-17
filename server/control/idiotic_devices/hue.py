@@ -1,15 +1,16 @@
 import phue
 
 from control.idiotic_device import IdioticDevice
-from control.idiotic_device import action, Attribute
+from control.idiotic_device import Action, Attribute
 
 
 class HueBridge(phue.Bridge):
-    """"""
+    """Singleton object for the Hue Bridge"""
 
     __instance = None
 
     def __new__(cls, *args, **kwargs):
+        """Returns the current HueBridge object if it exists, otherwise creates a new one and returns it"""
 
         if cls.__instance is None:
             cls.__instance = super().__new__(cls, *args, **kwargs)
@@ -41,11 +42,11 @@ class HueLight(IdioticDevice):
 
         self._light_id = light_id
 
-    @action
+    @Action
     def pulse_lights(self):
         pass
 
-    @action
+    @Action
     def dim_lights(self):
         pass
 
@@ -143,6 +144,13 @@ class HueLight(IdioticDevice):
         # New groups
         for group in groups:
             self.bridge.create_group(group, [self.light_id])
+
+
+class Temp(HueLight):
+
+    @Action
+    def test(self):
+        pass
 
 
 if __name__ == '__main__':

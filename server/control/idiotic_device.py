@@ -1,4 +1,4 @@
-import types
+import inspect
 
 
 class Attribute:
@@ -22,10 +22,15 @@ class Attribute:
         self.owner = owner
 
     def __get__(self, owner, obj_type=None):
+
         if not self.owner:
+
+            owner.attributes.add(self.fget.__name__)
             attr_temp = type(self)(self.fget, self.fset, self.subscribers, owner=owner)
             setattr(owner, self.fget.__name__, attr_temp)
+
         return getattr(owner, self.fget.__name__)
+
 
     def get(self):
         return self.fget(self.owner)
@@ -56,6 +61,14 @@ class Attribute:
         self.subscribers.discard(subscriber)
 
 
+def Action(func):
+    """Add function to function's class' list of Actions"""
+
+    # test = get_class_that_defined_method(func)
+
+    return func
+
+
 class IdioticDevice:
 
     actions    = set()
@@ -70,15 +83,7 @@ class IdioticDevice:
     def get_actions(cls):
         return cls.actions
 
-    @classmethod
-    def _action(cls, func):
-        cls.actions.add(func.__name__)
-
-        return func
-
-    # TODO: Get decorators working within class using magic
-    # @attribute
-    @property
+    @Attribute
     def uuid(self):
         return self._uuid
 
@@ -86,8 +91,7 @@ class IdioticDevice:
     def uuid(self, id_):
         self._uuid = id_
 
-    # @attribute
-    @property
+    @Attribute
     def name(self):
         """Device name used for external access"""
         return self._name
@@ -95,9 +99,3 @@ class IdioticDevice:
     @name.setter
     def name(self, name):
         self._name = name
-
-    actions.add(uuid)
-    actions.add(name)
-
-
-action    = IdioticDevice._action
