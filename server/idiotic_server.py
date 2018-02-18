@@ -1,9 +1,7 @@
 import logging
 import json
 
-from   flask import Flask
-from   flask import request
-from   flask import make_response
+from   flask import Flask, abort, make_response, request
 
 from control.idiotic_controller import IdioticController
 from control.idiotic_devices.hue import HueBridge
@@ -23,20 +21,6 @@ bridge = HueBridge(controller)
 def hello():
     return "Test 2"
 
-
-# @app.route("/modules/door")
-# def door_handler():
-#
-#     logger.error("Test")
-#
-#     req = request.get_json(silent=True, force=True)
-#
-#     print("Request: \n {}".format(json.dumps(req, indent=4)))
-#
-#     with open('state', 'w+') as fi:
-#         fi.write(req['status'] + "\n")
-#
-#     return "OK"
 
 @app.route("/modules/", methods=['POST'])
 def module_handler():
@@ -76,6 +60,10 @@ def module_handler():
 
     req_json = request.get_json()
 
+    # Ensure set and/or get in Json body
+    if 'set' not in req_json and 'get' not in req_json:
+        abort(501, "Request must have a get and/or a set key in Json body")
+
     if 'set' in req_json:
         for get_cmd in req_json['set']:
             attr  = get_cmd["attr" ]
@@ -107,7 +95,12 @@ def module_handler():
             # TODO: Use error response
             assert id or (klass and name)
 
-            value = controller.get_attr(attr, klass, name, id)()
+            if id:
+                # Get value using uuid. Makes use of controller's __getitem__ magic method
+                value = controller[id].get()
+            else:
+                # Get value using uuid. Makes use of controller's __getattr__ magic method
+                value = getattr(controller, klass)[name].get()
 
             # TODO: Respond with _both_ id and class+name
             resp.append({"id"    : id,
@@ -115,35 +108,6 @@ def module_handler():
                          "name"  : name,
                          "attr"  : attr,
                          "value" : value})
-
-
-@app.route('/webhook', methods=['POST'])
-def webhook():
-
-    req = request.get_json(silent=True, force=True)
-
-    print("Request: \n {}".format(json.dumps(req, indent=4)))
-
-    res = {"speech"        : "the door is {}".format(get_door_state()),
-           "displayText"   : ""                                       ,
-           "data"          : {}                                       ,
-           "contextOut"    : []                                       ,
-           "source"        : "Your mom"                               ,
-           "followupEvent" : {}                                       }
-
-    r = make_response(json.dumps(res))
-    r.headers['Content-Type'] = 'application/json'
-
-    return r
-
-
-def get_door_state():
-    with open('state') as fi:
-        state = fi.readline()
-
-    print("State: {}".format(state))
-
-    return state
 
 
 if __name__ == "__main__":
