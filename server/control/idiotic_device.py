@@ -1,6 +1,3 @@
-import inspect
-
-
 class Attribute:
     """Decorator for functions within an IdioticDevice instance
 
@@ -25,12 +22,10 @@ class Attribute:
 
         if not self.owner:
 
-            owner.attributes.add(self.fget.__name__)
             attr_temp = type(self)(self.fget, self.fset, self.subscribers, owner=owner)
             setattr(owner, self.fget.__name__, attr_temp)
 
         return getattr(owner, self.fget.__name__)
-
 
     def get(self):
         return self.fget(self.owner)
@@ -61,27 +56,24 @@ class Attribute:
         self.subscribers.discard(subscriber)
 
 
-def Action(func):
+class Action:
     """Add function to function's class' list of Actions"""
 
     # test = get_class_that_defined_method(func)
 
-    return func
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, *args, **kwargs):
+        return self.func(*args, **kwargs)
 
 
 class IdioticDevice:
-
-    actions    = set()
-    attributes = set()
 
     def __init__(self):
 
         self._uuid = None
         self._name = None
-
-    @classmethod
-    def get_actions(cls):
-        return cls.actions
 
     @Attribute
     def uuid(self):
@@ -99,3 +91,19 @@ class IdioticDevice:
     @name.setter
     def name(self, name):
         self._name = name
+
+    @classmethod
+    def get_attributes(cls):
+        attributes = set()
+        for name, obj in cls.__dict__.items():
+            if isinstance(obj, Attribute):
+                attributes.add(name)
+        return attributes
+
+    @classmethod
+    def get_actions(cls):
+        actions = set()
+        for name, obj in cls.__dict__.items():
+            if isinstance(obj, Action):
+                actions.add(name)
+        return actions

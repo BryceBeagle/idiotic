@@ -161,6 +161,12 @@ if __name__ == '__main__':
         def alert(self, value):
             print("test")
 
+    print(a.get_attributes())
+    print(a.get_actions())
+    print(HueLight.get_actions())
+    print(HueLight.get_attributes())
+
+
     a.on.set(True)
     a.on.subscribe(Test())
 
