@@ -15,15 +15,15 @@ class Idiotic_Module {
         String hostname;
 
         Idiotic_Module(String hostname) : hostname(hostname), http() {}
-        
+
         int connectWiFi(String ssid, String password);
         int sendJson(String &buffer);
 
     private:
-    
+
         HTTPClient http;
         String _password;
-    
+
 };
 
-#endif
+#endif // THERMOSTAT_H
