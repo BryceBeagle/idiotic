@@ -3,7 +3,13 @@
 
 #define SERIAL_BAUD 115200
 
-Idiotic_Module module("192.168.1.108:5000");
+#define WIFI_SSID "FlipTables"
+#define WIFI_PASSWORD "visit umbrella find shame"
+
+const String kServerName = "192.168.1.108";
+const String kServerPort = ":5000";
+
+Idiotic_Module module(kServerName + kServerPort);
 Thermostat thermostat(12, 14, 13);
 
 void setup() {
@@ -11,7 +17,9 @@ void setup() {
     Serial.begin(SERIAL_BAUD);
     Serial.println("MCP9808 Init");
 
-    module.connectWiFi("FlipTables", "visit umbrella find shame");
+    module.connectWiFi(WIFI_SSID, WIFI_PASSWORD);
+
+//    module.initISR(5000, &Thermostat::get_active_device);
 
 }
 

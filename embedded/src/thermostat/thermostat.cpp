@@ -2,37 +2,26 @@
 #include "thermostat.hpp"
 
 Thermostat::Thermostat(uint8_t fan_pin, uint8_t ac_pin, uint8_t heat_pin) :
-        fan_pin(fan_pin), ac_pin(ac_pin), heat_pin(heat_pin) {
+fan_pin(fan_pin), ac_pin(ac_pin), heat_pin(heat_pin) {
 
-    pinMode(fan_pin, OUTPUT);
-    digitalWrite(fan_pin, kOff);
-
-    pinMode(ac_pin, OUTPUT);
-    digitalWrite(ac_pin, kOff);
-
-    pinMode(heat_pin, OUTPUT);
-    digitalWrite(heat_pin, kOff);
-
+    // Turn off all pins during init
+    digitalWrite(fan_pin , LOW);
+    digitalWrite(ac_pin  , LOW);
+    digitalWrite(heat_pin, LOW);
+    active_device = kNone;
 }
 
-Thermostat::State Thermostat::get_state(Device device) {
-    switch (device) {
-        case kFan : return (State) digitalRead(fan_pin);
-        case kAC : return (State) digitalRead(ac_pin);
-        case kHeat : return (State) digitalRead(heat_pin);
-    }
+Thermostat::Device Thermostat::get_active_device() {
+    return active_device;
 }
 
-void Thermostat::set_state(Device device, State state) {
-    switch (device) {
-        case kFan :
-            fan_state = state;
-            digitalWrite(fan_pin, state);
-        case kAC :
-            ac_state = state;
-            digitalWrite(ac_pin, state);
-        case kHeat :
-            heat_state = state;
-            digitalWrite(heat_pin, state);
-    }
+
+void Thermostat::set_active_device(Device device) {
+
+    // Turn on a device
+    digitalWrite(fan_pin , device == kFan  ? HIGH : LOW);
+    digitalWrite(ac_pin  , device == kAC   ? HIGH : LOW);
+    digitalWrite(heat_pin, device == kHeat ? HIGH : LOW);
+    active_device = device;
 }
+
