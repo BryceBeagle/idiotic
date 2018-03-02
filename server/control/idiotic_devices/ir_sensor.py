@@ -1,5 +1,5 @@
 from control.idiotic_device import IdioticDevice
-from control.idiotic_device import action, Attribute
+from control.idiotic_device import Action, Attribute
 
 
 class IRSensor(IdioticDevice):
@@ -10,10 +10,10 @@ class IRSensor(IdioticDevice):
 
         self.signals = {}
 
-    @action
+    @Action
     def add_signal(self, name, signal):
         self.signals[name] = signal
 
-    @action
+    @Action
     def send_signal(self, name):
         pass

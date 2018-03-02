@@ -11,8 +11,9 @@ fan_pin(fan_pin), ac_pin(ac_pin), heat_pin(heat_pin) {
     active_device = kNone;
 }
 
-Thermostat::Device Thermostat::get_active_device() {
-    return active_device;
+String Thermostat::get_active_device() {
+    return String("Test");
+//    return active_device;
 }
 
 

@@ -13,7 +13,7 @@ class Thermostat {
         Device active_device = kNone;
 
         void set_active_device(Device device);
-        Device get_active_device();
+        String get_active_device();
 
 };
 

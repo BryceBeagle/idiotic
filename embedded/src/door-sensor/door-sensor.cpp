@@ -3,8 +3,8 @@
 
 const char* ssid = "FlipTables";
 const char* password = "visit umbrella find shame";
-const char* host = "brycebeagle.com";  // AWS
-//const char* host = "192.168.1.108:5000"; // griefcake
+//const char* host = "brycebeagle.com";  // AWS
+const char* host = "192.168.1.108:5000"; // griefcake
 
 String mac = "xxxx";
 
@@ -18,14 +18,18 @@ HTTPClient http;
 void alarmRequest(String statusVal) {
 
     HTTPClient http;
-    
+
+    Serial.println("TEST");
+
     http.begin("http://" + String(host) + "/modules/door");
     http.addHeader("Content-Type", "application/json");
     
     String message = "{\"status\":\"" + String(statusVal) + "\"}";
     
     int httpCode = http.POST(message);
-    
+
+    Serial.println(httpCode);
+
     http.end();
 }
 

@@ -1,29 +1,56 @@
 #ifndef ESP8266_IoT_H
 #define ESP8266_IoT_H
 
+#include <vector>
+#include <map>
+
+#include <Ticker.h>
+
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
-#include <Arduino.h>  // Works fine
+#include <Arduino.h>
 
-class Idiotic_Module {
+#include <WebSocketsClient.h>
+
+
+#define WEB_SOCKET_HEARTBEAT 25000
+
+
+class IdioticModule {
 
     public:
 
-        String ssid;
-        String host;
-        String hostname;
+        String ssid, hostname, port;
 
-        Idiotic_Module(String hostname) : hostname(hostname), http() {}
+        IdioticModule() {};
 
-        int connectWiFi(String ssid, String password);
-        int sendJson(String &buffer);
+        void connectWiFi(String ssid, String password, String hostname);
+        void connectWiFi(String ssid, String password);
+
+        void beginSocket(String host, uint16_t port);
+        void socketLoop();
+
+        // Map is used for a number of reasons:
+        //    Server can request the value of a key, and module knows what to run
+        //        to get it
+        //    Module can iterate over map and populate and send a Json object with
+        //        keys mapped to values
+        std::map<String, std::function<JsonVariant()>> funcs;
+        void dataLoop();
+        void sendJson(String &buffer);
 
     private:
 
-        HTTPClient http;
+        WebSocketsClient *_web_socket;
+        bool _socket_is_connected = false;
+        uint64_t _last_heartbeat = 0;
+
         String _password;
 
+        void _handleSocketRequest(WStype_t type, uint8_t * payload, size_t length);
+
 };
+
 
 #endif // THERMOSTAT_H

@@ -1,5 +1,5 @@
 from control.idiotic_device import IdioticDevice
-from control.idiotic_device import action, attribute
+from control.idiotic_device import Action, Attribute
 
 
 class DoorSensor(IdioticDevice):
@@ -10,7 +10,7 @@ class DoorSensor(IdioticDevice):
 
         self._state = None
 
-    @attribute
+    @Attribute
     def state(self):
         return self._state
 

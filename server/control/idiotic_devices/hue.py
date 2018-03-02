@@ -175,4 +175,3 @@ if __name__ == '__main__':
     print(a.brightness.get())
     print(b.brightness.get())
     a.brightness.subscribe(4)
-
