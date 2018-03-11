@@ -70,7 +70,10 @@ def handle_json(ws):
 
         if 'set' in req_json:
             for attr, value in req_json['set'].items():
-                getattr(controller[req_json['uuid']], attr).update(value)
+                try:
+                    getattr(controller[req_json['uuid']], attr).update(value)
+                except (AttributeError, TypeError):
+                    logging.error(f"Attribute {attr} does not exist or has no update function")
 
 
 @app.route("/")

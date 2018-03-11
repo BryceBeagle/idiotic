@@ -23,7 +23,7 @@ class Attribute:
 
         if not self.owner:
 
-            attr_temp = type(self)(self.fget, self.update, self.fset, self.subscribers, owner=owner)
+            attr_temp = type(self)(self.fget, self.fupdate, self.fset, self.subscribers, owner=owner)
             setattr(owner, self.fget.__name__, attr_temp)
 
         return getattr(owner, self.fget.__name__)
@@ -36,6 +36,8 @@ class Attribute:
 
         A silent update can be performed by setting notify=False"""
 
+        # TODO: Alert user if fupdate is None
+
         ret = self.fupdate(self.owner, value)
 
         if notify:
@@ -46,7 +48,7 @@ class Attribute:
 
     def getter(self, fget):
         """Get value last reported to IdioticServer"""
-        return type(self)(fget, self.fset, self.subscribers)
+        return type(self)(fget, self.fupdate, self.fset, self.subscribers)
 
     def updater(self, fupdate):
         """Update the value that IdioticServer knows about"""
@@ -87,7 +89,7 @@ class IdioticDevice:
     def uuid(self):
         return self._uuid
 
-    @uuid.setter
+    @uuid.updater
     def uuid(self, uuid):
         self._uuid = uuid
 
@@ -96,7 +98,7 @@ class IdioticDevice:
         """Device name used for external access"""
         return self._name
 
-    @name.setter
+    @name.updater
     def name(self, name):
         self._name = name
 
@@ -104,7 +106,7 @@ class IdioticDevice:
     def ws(self):
         return self._ws
 
-    @ws.setter
+    @ws.updater
     def ws(self, ws):
         self._ws = ws
 

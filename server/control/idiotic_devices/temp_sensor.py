@@ -15,7 +15,7 @@ class TempSensor(IdioticDevice):
     def temp(self):
         return self._temp
 
-    @temp.setter
+    @temp.updater
     def temp(self, temp):
         self._temp = temp
 
