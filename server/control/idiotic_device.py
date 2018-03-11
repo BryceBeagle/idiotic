@@ -9,9 +9,10 @@ class Attribute:
 
     TODO: Populate IdioticDevice.attributes list
     """
-    def __init__(self, fget, fset=None, subscribers=set(), owner=None):
+    def __init__(self, fget, fupdate=None, fset=None, subscribers=set(), owner=None):
 
         self.fget = fget
+        self.fupdate = fupdate
         self.fset = fset
 
         self.subscribers = subscribers
@@ -22,7 +23,7 @@ class Attribute:
 
         if not self.owner:
 
-            attr_temp = type(self)(self.fget, self.fset, self.subscribers, owner=owner)
+            attr_temp = type(self)(self.fget, self.update, self.fset, self.subscribers, owner=owner)
             setattr(owner, self.fget.__name__, attr_temp)
 
         return getattr(owner, self.fget.__name__)
@@ -30,12 +31,12 @@ class Attribute:
     def get(self):
         return self.fget(self.owner)
 
-    def set(self, value, notify=True):
-        """Set value of attribute and notify subscribers
+    def update(self, value, notify=True):
+        """Update value of attribute and notify subscribers
 
-        A silent set can be performed by setting notify=False"""
+        A silent update can be performed by setting notify=False"""
 
-        ret = self.fset(self.owner, value)
+        ret = self.fupdate(self.owner, value)
 
         if notify:
             for subscriber in self.subscribers:
@@ -44,10 +45,16 @@ class Attribute:
         return ret
 
     def getter(self, fget):
+        """Get value last reported to IdioticServer"""
         return type(self)(fget, self.fset, self.subscribers)
 
+    def updater(self, fupdate):
+        """Update the value that IdioticServer knows about"""
+        return type(self)(self.fget, fupdate, self.fset, self.subscribers)
+
     def setter(self, fset):
-        return type(self)(self.fget, fset, self.subscribers)
+        """Instruct IdioticDevice to set attribute value"""
+        return type(self)(self.fget, self.fupdate, fset, self.subscribers)
 
     def subscribe(self, subscriber):
         self.subscribers.add(subscriber)
@@ -74,14 +81,15 @@ class IdioticDevice:
 
         self._uuid = None
         self._name = None
+        self._ws = None
 
     @Attribute
     def uuid(self):
         return self._uuid
 
     @uuid.setter
-    def uuid(self, id_):
-        self._uuid = id_
+    def uuid(self, uuid):
+        self._uuid = uuid
 
     @Attribute
     def name(self):
@@ -91,6 +99,14 @@ class IdioticDevice:
     @name.setter
     def name(self, name):
         self._name = name
+
+    @Attribute
+    def ws(self):
+        return self._ws
+
+    @ws.setter
+    def ws(self, ws):
+        self._ws = ws
 
     @classmethod
     def get_attributes(cls):

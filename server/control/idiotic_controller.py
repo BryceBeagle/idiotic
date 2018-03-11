@@ -1,12 +1,9 @@
-from collections     import defaultdict
+from collections import defaultdict
 
-from control.idiotic_devices.hue import HueBridge
-from control.idiotic_devices.ir_sensor import IRSensor
-
-from control.idiotic_device      import IdioticDevice
-from control.idiotic_routine     import IdioticRoutine
-from control.idiotic_trigger     import IdioticTrigger
-from control.idiotic_event       import IdioticEvent
+from control.idiotic_device import IdioticDevice
+from control.idiotic_routine import IdioticRoutine
+from control.idiotic_trigger import IdioticTrigger
+from control.idiotic_event import IdioticEvent
 
 
 class IdioticController:
@@ -31,8 +28,28 @@ class IdioticController:
         if uuid in self.device_uuids:
             return self.device_uuids[uuid]
 
+    def new_ws_device(self, klass: str, uuid: str, ws):
+        """ Create a new IdioticDevice that relies on websockets
+        :param klass: IdioticDevice class type
+        :param uuid: UUID of IdioticDevice (likely MAC address)
+        :param ws: Websocket instance
+        :return:
+        """
+        try:
+            # Import class and instantiate an instance of it. Note the instantiation at the end
+            mod = __import__('idiotic_devices', globals(), locals(), [klass], 1)
+            dev = getattr(mod, klass)()
+        except ImportError:
+            print(f"Error importing {klass} from idiotic_devices")
+            return None
+
+        dev.ws.update(ws)
+        dev.uuid.update(uuid)
+
+        self.add_device(dev)
+
     def add_device(self, device: IdioticDevice) -> None:
-        """Add an IotDevice instance to the device dicts.
+        """Add an existing IotDevice instance to the device dicts.
 
         device_uuids is a dict of devices by uuid
         device_names is a dict of devices by class type, then name
@@ -42,13 +59,16 @@ class IdioticController:
         """
 
         # Dict of UUIDs
-        self.device_uuids[device.uuid] = device
+        self.device_uuids[device.uuid.get()] = device
 
         # Dict of device types and names
-        self.device_names[device.__class__.__name__][device.name] = device
+        self.device_names[device.__class__.__name__][device.name.get()] = device
 
 
 if __name__ == '__main__':
+
+    from .idiotic_devices.hue import HueBridge
+    from .idiotic_devices import IRSensor
 
     controller = IdioticController()
 

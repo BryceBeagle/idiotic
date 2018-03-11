@@ -7,7 +7,6 @@
     #define SERIAL_BAUD 115200
 #endif
 
-
 void IdioticModule::connectWiFi(String ssid, String password, String hostname) {
 
     WiFi.hostname(hostname);
@@ -38,120 +37,24 @@ void IdioticModule::connectWiFi(String ssid, String password) {
 }
 
 
-void IdioticModule::sendJson(String &buffer) {
-
-//    // TODO: Support https
-//
-//    HTTPClient* http = new HTTPClient();
-//
-//    http->begin("http://" + hostname + port + "/modules");
-//    http->addHeader("Content-Type", "application/json");
-//
-//    int httpCode = http->POST(buffer);
-//    http->end();
-//
-//    return httpCode;
-
-    Serial.println("Sending: 42[\"json\"," + buffer + "]");
-    _web_socket->sendTXT("42[\"json\"," + buffer + "]");
-
-}
-
-
-void IdioticModule::dataLoop() {
-
-    if (_socket_is_connected) {
-
-        int num_entries = funcs.size();
-        DynamicJsonBuffer jsonBuffer(JSON_ARRAY_SIZE(num_entries)
-                                     + (num_entries + 1) * JSON_OBJECT_SIZE(1));
-        JsonObject &setObject = jsonBuffer.createObject();
-        JsonArray &setArray = setObject.createNestedArray("set");
-
-        std::map < String, std::function < JsonVariant() >> ::iterator
-        it;
-
-        for (it = funcs.begin(); it != funcs.end(); it++) {
-            JsonObject &tempObj = setArray.createNestedObject();
-            tempObj[it->first] = it->second();
-        }
-
-        // Convert Json into String for printing and sending
-        String buffer;
-        setObject.printTo(buffer);
-
-        // Print Json to Serial for debugging
-        //    Serial.println(buffer);
-
-        // Send Json as body of HTTP POST Request
-        sendJson(buffer);
-
-    }
-
-    else {
-        Serial.println("Socket not connected. Retrying");
-    }
-
-}
-
-void testCallback(WStype_t type, uint8_t *payload, size_t length) {
-
-    switch (type) {
-
-        case WStype_DISCONNECTED: {
-            Serial.printf("[WSc] Disconnected!\n");
-            break;
-        }
-        case WStype_CONNECTED: {
-            Serial.printf("[WSc] Connected to url: %s\n", payload);
-            break;
-        }
-        case WStype_TEXT: {
-            Serial.printf("[WSc] Payload received: %s\n", payload);
-            break;
-        }
-        default: {
-            Serial.printf("[WSc] Unexpected payload type: %s\n", payload);
-        }
-    }
-
-}
-
-
-
 void IdioticModule::beginSocket(String host, uint16_t port) {
 
     _web_socket = new WebSocketsClient;
-    _web_socket->beginSocketIO(host, port);
+    _web_socket->begin(host, port, "/embedded");
 
-    delay(5000);
-
-//    _web_socket->onEvent(testCallback);
-    _web_socket->onEvent(std::bind(&IdioticModule::_handleSocketRequest, this,
+    _web_socket->onEvent(std::bind(&IdioticModule::_handleSocketEvent, this,
                                    std::placeholders::_1,
                                    std::placeholders::_2,
                                    std::placeholders::_3));
+
+    _web_socket->setReconnectInterval(5000);
+
 }
 
 
-void IdioticModule::socketLoop() {
-
-//    _web_socket->loop();
-
-    if (_socket_is_connected) {
-
-        // TODO: Is this necessary with the messages being sent?
-        // Send heartbeat
-        uint64_t now = millis();
-        if ((now - _last_heartbeat) > WEB_SOCKET_HEARTBEAT) {
-            _last_heartbeat = now;
-            _web_socket->sendTXT("2");
-        }
-    }
-}
-
-
-void IdioticModule::_handleSocketRequest(WStype_t type, uint8_t *payload, size_t length) {
+void IdioticModule::_handleSocketEvent(WStype_t type,
+                                       uint8_t *payload,
+                                       size_t length) {
 
     switch (type) {
 
@@ -163,6 +66,9 @@ void IdioticModule::_handleSocketRequest(WStype_t type, uint8_t *payload, size_t
         case WStype_CONNECTED: {
             Serial.printf("[WSc] Connected to url: %s\n", payload);
             _socket_is_connected = true;
+
+            _send_hello_message();
+
             break;
         }
         case WStype_TEXT: {
@@ -172,5 +78,95 @@ void IdioticModule::_handleSocketRequest(WStype_t type, uint8_t *payload, size_t
         default: {
             Serial.printf("[WSc] Unexpected payload type: %s\n", payload);
         }
+    }
+}
+
+
+void IdioticModule::_send_hello_message() {
+
+    if (uuid = "") {
+        uuid = WiFi.softAPmacAddress();
+    }
+
+    DynamicJsonBuffer jsonBuffer(JSON_OBJECT_SIZE(3));
+    JsonObject &helloObject = jsonBuffer.createObject();
+    helloObject["hello"] = 0;  // Value doesn't matter and shouldn't be used
+    helloObject["class"] = class_type;
+    helloObject["uuid"] = uuid;
+
+    // Convert Json into String for printing and sending
+    String buffer;
+    helloObject.printTo(buffer);
+
+    // Print Json to Serial for debugging
+    Serial.println(buffer);
+
+    _web_socket->sendTXT(buffer);
+
+}
+
+
+const char *IdioticModule::get_name() {
+    return "1.2";
+//    return String("TEST NAME");
+}
+
+
+void IdioticModule::set_name() {
+//    return 1.2;
+    // TODO
+}
+
+
+const char * IdioticModule::get_class() {
+    return "TempSensor";
+//    return String("TEST NAME");}
+}
+
+
+void IdioticModule::set_class() {
+    // TODO
+}
+
+
+void IdioticModule::dataLoop() {
+
+    if (_socket_is_connected) {
+
+        Serial.printf("1############");
+
+        int num_entries = funcs.size(); // TODO: Only size of entries with .get
+
+        DynamicJsonBuffer jsonBuffer(JSON_OBJECT_SIZE(3)
+                                     + JSON_OBJECT_SIZE(num_entries));
+        JsonObject &root = jsonBuffer.createObject();
+
+        root["uuid"] = uuid;
+        root["class"] = class_type;
+
+        JsonObject &setObject = root.createNestedObject("set");
+
+        std::map<String, function_map>::iterator it;
+        for (it = funcs.begin(); it != funcs.end(); it++) {
+
+            if (it->second.get != nullptr) {
+                setObject[it->first] = it->second.get();
+            }
+        }
+
+        // Convert Json into String for printing and sending
+        String buffer;
+        root.printTo(buffer);
+
+        // Print Json to Serial for debugging
+        Serial.println(buffer);
+
+        // Send Json using socket
+        _web_socket->sendTXT(buffer);
+
+    }
+
+    else {
+        Serial.println("Socket not connected. Retrying");
     }
 }

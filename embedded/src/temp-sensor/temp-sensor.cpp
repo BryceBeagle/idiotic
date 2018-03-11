@@ -10,7 +10,7 @@
 const char* kServerHost = "192.168.1.108";
 const int   kServerPort = 5000;
 
-IdioticModule module;
+IdioticModule module("TempSensor");
 Adafruit_MCP9808 tempsensor;
 
 void setup() {
@@ -23,14 +23,20 @@ void setup() {
 
     tempsensor.begin(12, 13);
 
-    module.funcs["temp"] = [&]() {return tempsensor.readTempC();};
+    module.funcs["temp"] = {
+            .get = [&] {return tempsensor.readTempC();}
+    };
+    module.funcs["temp2"] = {
+            .get = [&] {return tempsensor.readTempC();}
+    };
 
 }
 
 
 void loop() {
 
-//    module.socketLoop();
-//    module.dataLoop();
+    module.dataLoop();
+
+    delay(2000);
 
 }

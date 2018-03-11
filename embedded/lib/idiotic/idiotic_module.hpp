@@ -1,5 +1,5 @@
-#ifndef ESP8266_IoT_H
-#define ESP8266_IoT_H
+#ifndef ESP8266_IDIOTIC_H
+#define ESP8266_IDIOTIC_H
 
 #include <vector>
 #include <map>
@@ -14,31 +14,39 @@
 #include <WebSocketsClient.h>
 
 
-#define WEB_SOCKET_HEARTBEAT 25000
-
-
 class IdioticModule {
 
     public:
 
         String ssid, hostname, port;
+        String class_type;
+        String uuid;
 
-        IdioticModule() {};
+        IdioticModule(String class_type): class_type(class_type) {}
 
         void connectWiFi(String ssid, String password, String hostname);
         void connectWiFi(String ssid, String password);
 
         void beginSocket(String host, uint16_t port);
-        void socketLoop();
+
+        typedef struct {
+            std::function<JsonVariant()> get;
+            std::function<void()> set;
+            std::function<void()> action;
+        } function_map;
 
         // Map is used for a number of reasons:
         //    Server can request the value of a key, and module knows what to run
         //        to get it
         //    Module can iterate over map and populate and send a Json object with
         //        keys mapped to values
-        std::map<String, std::function<JsonVariant()>> funcs;
+        std::map<String, function_map> funcs;
         void dataLoop();
-        void sendJson(String &buffer);
+
+        const char *get_name();
+        void set_name();
+        const char *get_class();
+        void set_class();
 
     private:
 
@@ -48,9 +56,10 @@ class IdioticModule {
 
         String _password;
 
-        void _handleSocketRequest(WStype_t type, uint8_t * payload, size_t length);
+        void _handleSocketEvent(WStype_t type, uint8_t *payload, size_t length);
+        void _send_hello_message();
 
 };
 
 
-#endif // THERMOSTAT_H
+#endif // ESP8266_IDIOTIC_H
