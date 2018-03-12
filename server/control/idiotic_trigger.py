@@ -17,6 +17,8 @@ class IdioticTrigger:
         self.attr = attr
         self.subscribe(attr)
 
+        self.active = False
+
     def __repr__(self):
         string = f"Subscribed to: {self.attr.fget.__name__}\n"
         string += f"Check: {self.check.__name__}\n"
@@ -37,9 +39,14 @@ class IdioticTrigger:
         :param value: value of attr after state change
         """
         print(f"Checking {value}")
-        if self.check(value):
-            print(f"Triggered {value}")
-            self.trigger()
+        check = self.check(value)
+        if check != self.active:
+            if check:
+                print(f"Triggered {value}")
+                self.trigger()
+                self.active = True
+            else:
+                self.active = False
 
     def trigger(self) -> None:
         """Call parent IotRoutine"""

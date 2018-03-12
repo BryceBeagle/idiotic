@@ -59,7 +59,10 @@ class IdioticController:
         """
 
         # Dict of UUIDs
-        self.device_uuids[device.uuid.get()] = device
+        if device.uuid.get() is not None:
+            self.device_uuids[device.uuid.get()] = device
+        else:
+            print(f"Warning: device {device} has no uuid")
 
         # Dict of device types and names
         self.device_names[device.__class__.__name__][device.name.get()] = device

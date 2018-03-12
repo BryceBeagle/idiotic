@@ -36,7 +36,7 @@ class HueLight(IdioticDevice):
 
         if light_id is not None:
             self._light = self.bridge[light_id]
-            self.name = self._light.name
+            self._name = self._light.name
         else:
             self._light = None
 
@@ -54,7 +54,7 @@ class HueLight(IdioticDevice):
     def room(self):
         return self._room
 
-    @room.setter
+    @room.updater
     def room(self, room):
         self._room = room
 
@@ -66,7 +66,7 @@ class HueLight(IdioticDevice):
     def on(self):
         return self._light.on
 
-    @on.setter
+    @on.updater
     def on(self, on):
         self._light.on = on
 
@@ -82,7 +82,7 @@ class HueLight(IdioticDevice):
     def hue(self):
         return self._light.hue
 
-    @hue.setter
+    @hue.updater
     def hue(self, hue):
         self._light.hue = hue
 
@@ -90,7 +90,7 @@ class HueLight(IdioticDevice):
     def saturation(self):
         return self._light.saturation
 
-    @saturation.setter
+    @saturation.updater
     def saturation(self, saturation):
         self._light.saturation = saturation
 

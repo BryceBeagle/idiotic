@@ -9,13 +9,13 @@ class Attribute:
 
     TODO: Populate IdioticDevice.attributes list
     """
-    def __init__(self, fget, fupdate=None, fset=None, subscribers=set(), owner=None):
+    def __init__(self, fget, fupdate=None, fset=None, owner=None):
 
         self.fget = fget
         self.fupdate = fupdate
         self.fset = fset
 
-        self.subscribers = subscribers
+        self.subscribers = set()
 
         self.owner = owner
 
@@ -23,7 +23,7 @@ class Attribute:
 
         if not self.owner:
 
-            attr_temp = type(self)(self.fget, self.fupdate, self.fset, self.subscribers, owner=owner)
+            attr_temp = type(self)(self.fget, self.fupdate, self.fset, owner=owner)
             setattr(owner, self.fget.__name__, attr_temp)
 
         return getattr(owner, self.fget.__name__)
@@ -46,17 +46,21 @@ class Attribute:
 
         return ret
 
+    def set(self, value):
+        """Set value using fset"""
+        return self.fset(self.owner, value)
+
     def getter(self, fget):
         """Get value last reported to IdioticServer"""
-        return type(self)(fget, self.fupdate, self.fset, self.subscribers)
+        return type(self)(fget, self.fupdate, self.fset)
 
     def updater(self, fupdate):
         """Update the value that IdioticServer knows about"""
-        return type(self)(self.fget, fupdate, self.fset, self.subscribers)
+        return type(self)(self.fget, fupdate, self.fset)
 
     def setter(self, fset):
         """Instruct IdioticDevice to set attribute value"""
-        return type(self)(self.fget, self.fupdate, fset, self.subscribers)
+        return type(self)(self.fget, self.fupdate, fset)
 
     def subscribe(self, subscriber):
         self.subscribers.add(subscriber)

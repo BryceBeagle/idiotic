@@ -61,7 +61,9 @@ def handle_json(ws):
         # Module just started up
         if 'hello' in req_json:
             controller.new_ws_device(req_json['class'], req_json['uuid'], ws)
-            pass
+
+            # TODO: Remove
+            configure_events()
 
         # Otherwise, it needs a set or a get
         elif 'set' not in req_json and 'get' not in req_json:
@@ -79,6 +81,32 @@ def handle_json(ws):
 @app.route("/")
 def hello():
     return "Hello World"
+
+
+def configure_events():
+
+    from control.idiotic_routine import IdioticRoutine
+    from control.idiotic_trigger import IdioticTrigger
+    from control.idiotic_event import IdioticEvent
+
+    from control.idiotic_devices.hue import HueBridge
+
+    HueBridge(controller)
+
+    dr1 = controller.HueLight["Living Room 2"]
+    temp_sensor = controller["62:01:94:31:6A:EA"]
+
+    action_warm = [lambda: dr1.brightness.set(254)]
+    action_cold = [lambda: dr1.brightness.set(0)]
+
+    event_warm = IdioticEvent(action_warm)
+    event_cold = IdioticEvent(action_cold)
+
+    routine_warm = IdioticRoutine(event_warm)
+    routine_cold = IdioticRoutine(event_cold)
+
+    trigger_warm = IdioticTrigger(routine_warm, temp_sensor.temp, IdioticTrigger.check_gt, 30)
+    trigger_cold = IdioticTrigger(routine_cold, temp_sensor.temp, IdioticTrigger.check_lt, 30)
 
 
 if __name__ == "__main__":
