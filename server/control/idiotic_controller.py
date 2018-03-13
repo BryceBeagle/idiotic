@@ -28,8 +28,12 @@ class IdioticController:
         if uuid in self.device_uuids:
             return self.device_uuids[uuid]
 
-    def new_ws_device(self, klass: str, uuid: str, ws):
-        """ Create a new IdioticDevice that relies on websockets
+    def __contains__(self, uuid):
+        """Return True if self.device_uuids contains uuid"""
+        return uuid in self.device_uuids
+
+    def new_device(self, klass: str, uuid: str, ws=None):
+        """Create a new IdioticDevice
         :param klass: IdioticDevice class type
         :param uuid: UUID of IdioticDevice (likely MAC address)
         :param ws: Websocket instance

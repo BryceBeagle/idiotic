@@ -60,10 +60,14 @@ def handle_json(ws):
 
         # Module just started up
         if 'hello' in req_json:
-            controller.new_ws_device(req_json['class'], req_json['uuid'], ws)
 
-            # TODO: Remove
-            configure_events()
+            # Use existing device instance if already exists
+            if req_json['uuid'] in controller:
+                controller[req_json['uuid']].ws.update(ws)
+
+            # Otherwise, create one
+            else:
+                controller.new_device(req_json['class'], req_json['uuid'], ws)
 
         # Otherwise, it needs a set or a get
         elif 'set' not in req_json and 'get' not in req_json:
@@ -83,7 +87,14 @@ def hello():
     return "Hello World"
 
 
-def configure_events():
+if __name__ == "__main__":
+
+    from gevent import pywsgi
+    from geventwebsocket.handler import WebSocketHandler
+    from werkzeug.debug import DebuggedApplication
+    from werkzeug.serving import run_with_reloader
+
+
 
     from control.idiotic_routine import IdioticRoutine
     from control.idiotic_trigger import IdioticTrigger
@@ -92,6 +103,8 @@ def configure_events():
     from control.idiotic_devices.hue import HueBridge
 
     HueBridge(controller)
+
+    controller.new_device("TempSensor", "62:01:94:31:6A:EA")
 
     dr1 = controller.HueLight["Living Room 2"]
     temp_sensor = controller["62:01:94:31:6A:EA"]
@@ -109,12 +122,8 @@ def configure_events():
     trigger_cold = IdioticTrigger(routine_cold, temp_sensor.temp, IdioticTrigger.check_lt, 30)
 
 
-if __name__ == "__main__":
 
-    from gevent import pywsgi
-    from geventwebsocket.handler import WebSocketHandler
-    from werkzeug.debug import DebuggedApplication
-    from werkzeug.serving import run_with_reloader
+
 
     server = pywsgi.WSGIServer(('0.0.0.0', 5000), DebuggedApplication(app, True),
                                handler_class=WebSocketHandler)
