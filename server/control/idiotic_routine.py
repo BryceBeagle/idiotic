@@ -40,20 +40,20 @@ class IdioticRoutine:
         for event in self.events:
             event()
 
-    def __repr__(self):
-        trigger_string = '\t' + repr(self.trigger).replace("\n", "\n    ")
-        string  = f"Trigger:\n{trigger_string}\n"
-
-        string += "Conditionals:\n"
-        for conditional in self.conditionals:
-            cond_string = repr(conditional).replace("\n", "\n    ")
-            string += f"    {cond_string}\n"
-
-        string += "Events:\n"
-        for event in self.events:
-            string += f"    {event}\n"
-
-        return string
+    # def __repr__(self):
+    #     trigger_string = '\t' + repr(self.trigger).replace("\n", "\n    ")
+    #     string  = f"Trigger:\n{trigger_string}\n"
+    #
+    #     string += "Conditionals:\n"
+    #     for conditional in self.conditionals:
+    #         cond_string = repr(conditional).replace("\n", "\n    ")
+    #         string += f"    {cond_string}\n"
+    #
+    #     string += "Events:\n"
+    #     for event in self.events:
+    #         string += f"    {event}\n"
+    #
+    #     return string
 
     @property
     def trigger(self) -> IdioticTrigger:

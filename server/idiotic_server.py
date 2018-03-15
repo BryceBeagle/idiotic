@@ -94,37 +94,6 @@ if __name__ == "__main__":
     from werkzeug.debug import DebuggedApplication
     from werkzeug.serving import run_with_reloader
 
-
-
-    from control.idiotic_routine import IdioticRoutine
-    from control.idiotic_trigger import IdioticTrigger
-    from control.idiotic_event import IdioticEvent
-
-    from control.idiotic_devices.hue import HueBridge
-
-    HueBridge(controller)
-
-    controller.new_device("TempSensor", "62:01:94:31:6A:EA")
-
-    dr1 = controller.HueLight["Living Room 2"]
-    temp_sensor = controller["62:01:94:31:6A:EA"]
-
-    action_warm = [lambda: dr1.brightness.set(254)]
-    action_cold = [lambda: dr1.brightness.set(0)]
-
-    event_warm = IdioticEvent(action_warm)
-    event_cold = IdioticEvent(action_cold)
-
-    routine_warm = IdioticRoutine(event_warm)
-    routine_cold = IdioticRoutine(event_cold)
-
-    trigger_warm = IdioticTrigger(routine_warm, temp_sensor.temp, IdioticTrigger.check_gt, 30)
-    trigger_cold = IdioticTrigger(routine_cold, temp_sensor.temp, IdioticTrigger.check_lt, 30)
-
-
-
-
-
     server = pywsgi.WSGIServer(('0.0.0.0', 5000), DebuggedApplication(app, True),
                                handler_class=WebSocketHandler)
     run_with_reloader(server.serve_forever())

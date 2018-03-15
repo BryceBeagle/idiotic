@@ -1,0 +1,34 @@
+{
+  "Living room temp on": {
+    "trigger": {
+      "device": {
+        "uuid": "62:01:94:31:6A:EA",
+        "class": null,
+        "name": null
+      },
+      "attribute": "temp",
+      "check": "check_gt",
+      "value": 30
+    },
+    "conditional": null,
+    "events": [
+      "Living Room 1 on"
+    ]
+  },
+  "Living room temp off": {
+    "trigger": {
+      "device": {
+        "uuid": "62:01:94:31:6A:EA",
+        "class": null,
+        "name": null
+      },
+      "attribute": "temp",
+      "check": "check_lte",
+      "value": 30
+    },
+    "conditional": null,
+    "events": [
+      "Living Room 1 off"
+    ]
+  }
+}

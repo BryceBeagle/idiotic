@@ -1,0 +1,30 @@
+{
+  "Living Room 1 on": {
+    "conditionals": null,
+    "actions": [
+      {
+        "device": {
+          "uuid": null,
+          "class": "HueLight",
+          "name": "Living Room 2"
+        },
+        "attribute": "brightness",
+        "value": 254
+      }
+    ]
+  },
+  "Living Room 1 off": {
+    "conditionals": null,
+    "actions": [
+      {
+        "device": {
+          "uuid": null,
+          "class": "HueLight",
+          "name": "Living Room 2"
+        },
+        "attribute": "brightness",
+        "value": 0
+      }
+    ]
+  }
+}

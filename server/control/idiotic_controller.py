@@ -1,22 +1,30 @@
 from collections import defaultdict
+import json
 
-from control.idiotic_device import IdioticDevice
-from control.idiotic_routine import IdioticRoutine
-from control.idiotic_trigger import IdioticTrigger
-from control.idiotic_event import IdioticEvent
+from .idiotic_device import IdioticDevice
+from .idiotic_routine import IdioticRoutine
+from .idiotic_trigger import IdioticTrigger
+from .idiotic_event import IdioticEvent
+
+from .idiotic_devices.hue import HueBridge
 
 
 class IdioticController:
 
     def __init__(self):
+
         self.device_names = defaultdict(dict)
         self.device_uuids = {}
 
-        self.routines = {None: None}
-        """Registry of trigger:routine mappings
-        
-        None key corresponds to routines that do not have any triggers (ie. can only be triggered manually)
-        """
+        HueBridge(self)  # TODO: This shouldn't be hardcoded
+
+        self.events = {}
+        self.routines = {}
+
+        # Load json configurations
+        self.create_devices_from_json('model/devices.json')
+        self.create_events_from_json('model/events.json')
+        self.create_routines_from_json('model/routines.json')
 
     def __getattr__(self, device_type):
         """Used when getting dict of IdioticDevices of device_type"""
@@ -31,6 +39,73 @@ class IdioticController:
     def __contains__(self, uuid):
         """Return True if self.device_uuids contains uuid"""
         return uuid in self.device_uuids
+
+    def create_devices_from_json(self, filename: str):
+        """Create IdioticDevice instances using json configuration"""
+        with open(filename) as fi:
+            devices = json.load(fi)
+
+        for klass_name, klass_data in devices.items():
+            for device in klass_data:
+                if device['uuid'] is None:
+                    raise NotImplementedError("null uuids in device json config files not supported")
+                self.new_device(klass_name, device['uuid'])
+
+    def create_events_from_json(self, filename: str):
+        """"Create IdioticEvent instances using json configuration"""
+
+        with open(filename) as fi:
+            events = json.load(fi)
+
+        for event_name, event_data in events.items():
+            actions = []
+            for action in event_data['actions']:
+
+                if action['device']['uuid'] is not None:
+                    device = self.device_uuids[action['device']['uuid']]
+
+                else:
+                    class_dict = self.device_names[action['device']['class']]
+                    device = class_dict[action['device']['name']]
+
+                attribute = action['attribute']
+                value = action['value']
+
+                # https://stackoverflow.com/a/10452819/8134178
+                actions.append(lambda device=device,
+                                      attribute=attribute,
+                                      value=value:
+                               getattr(device, attribute).set(value))
+
+            # TODO: Conditionals
+
+            self.events[event_name] = IdioticEvent(actions)
+
+    def create_routines_from_json(self, filename: str):
+        """"Create IdioticEvent instances using json configuration"""
+
+        with open(filename) as fi:
+            routines = json.load(fi)
+
+        for routine_name, routine_data in routines.items():
+            events = [self.events[event] for event in routine_data['events']]
+
+            routine = IdioticRoutine(events, None)  # TODO: Conditionals
+
+            trigger = routine_data['trigger']
+
+            if trigger['device']['uuid']:
+                trig_dev = self.device_uuids[trigger['device']['uuid']]
+            else:
+                klass = trigger['device']['class']
+                name = trigger['device']['name']
+                trig_dev = self.device_names[klass][name]
+
+            attr = getattr(trig_dev, trigger['attribute'])
+
+            IdioticTrigger(routine, attr, trigger['check'], trigger['value'])
+
+            self.routines[routine_name] = routine
 
     def new_device(self, klass: str, uuid: str, ws=None):
         """Create a new IdioticDevice
@@ -74,12 +149,9 @@ class IdioticController:
 
 if __name__ == '__main__':
 
-    from .idiotic_devices.hue import HueBridge
     from .idiotic_devices import IRSensor
 
     controller = IdioticController()
-
-    bridge = HueBridge(controller)
 
     controller.add_device(IRSensor())
 
@@ -87,15 +159,16 @@ if __name__ == '__main__':
     dr1 = controller.HueLight["Dining Room 1"]
     dr2 = controller.HueLight["Dining Room 2"]
 
-    # Create event
-    actions = [lambda: dr1.brightness.set(254 - dr1.brightness.get())]  # Invert brightness
+    # Create event (Invert brightness)
+    actions = [lambda: dr1.brightness.set(254 - dr1.brightness.get())]
     event = IdioticEvent(actions)
 
     # Create routine
     routine = IdioticRoutine(event)
 
     # Subscribe routine using IdioticTrigger
-    trigger = IdioticTrigger(routine, dr2.brightness, IdioticTrigger.check_gt, 100)  # dr2.brightness > 100
+    trigger = IdioticTrigger(routine,
+                             dr2.brightness, IdioticTrigger.check_gt, 100)
 
     dr2.brightness.set(100)
     dr2.brightness.set(254)

@@ -6,9 +6,14 @@ class IdioticTrigger:
     def __init__(self, routine, attr, check, value):
         """
         :param attr:   Attribute to subscribe to
-        :param parent: Parent IotRoutine to be triggered
         """
-        self.check = types.MethodType(check, self)
+        # Allows for both str and class function to be passed
+        # TODO: This feels clunky
+        if isinstance(check, str):
+            self.check = getattr(self, check)
+        else:
+            self.check = types.MethodType(check, self)
+
         self.value = value
 
         self.routine = routine
@@ -19,12 +24,12 @@ class IdioticTrigger:
 
         self.active = False
 
-    def __repr__(self):
-        string = f"Subscribed to: {self.attr.fget.__name__}\n"
-        string += f"Check: {self.check.__name__}\n"
-        string += f"Value: {self.value}"
-
-        return string
+    # def __repr__(self):
+    #     string = f"Subscribed to: {self.attr.fget.__name__}\n"
+    #     string += f"Check: {self.check.__name__}\n"
+    #     string += f"Value: {self.value}"
+    #
+    #     return string
 
     def subscribe(self, attr) -> None:
         """Subscribe to attribute for state changes"""
