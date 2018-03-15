@@ -25,20 +25,6 @@ class IdioticEvent:
         for action in self.actions:
             action()
 
-    # def __repr__(self):
-    #
-    #     string = "[Future Event Name]\n"
-    #
-    #     string += "    Conditionals\n"
-    #     for conditional in self.conditionals:
-    #         string += f"        {conditional}\n"
-    #
-    #     string += "    Actions:\n"
-    #     for action  in self.actions:
-    #         string += f"        {inspect.getsource(action)}\n"
-    #
-    #     return string
-
     @property
     def actions(self) -> List[Callable]:
         return self._actions

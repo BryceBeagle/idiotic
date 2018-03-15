@@ -24,13 +24,6 @@ class IdioticTrigger:
 
         self.active = False
 
-    # def __repr__(self):
-    #     string = f"Subscribed to: {self.attr.fget.__name__}\n"
-    #     string += f"Check: {self.check.__name__}\n"
-    #     string += f"Value: {self.value}"
-    #
-    #     return string
-
     def subscribe(self, attr) -> None:
         """Subscribe to attribute for state changes"""
         print(f"Subscribed to {attr}")
