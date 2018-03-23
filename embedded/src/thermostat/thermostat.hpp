@@ -12,8 +12,8 @@ class Thermostat {
         enum Device {kNone, kFan, kAC, kHeat};
         Device active_device = kNone;
 
-        void set_active_device(Device device);
-        String get_active_device();
+        void setMode(Device device);
+        Device getMode();
 
 };
 

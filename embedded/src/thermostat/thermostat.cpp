@@ -11,13 +11,13 @@ fan_pin(fan_pin), ac_pin(ac_pin), heat_pin(heat_pin) {
     active_device = kNone;
 }
 
-String Thermostat::get_active_device() {
-    return String("Test");
+Thermostat::Device Thermostat::getMode() {
+    return active_device;
 //    return active_device;
 }
 
 
-void Thermostat::set_active_device(Device device) {
+void Thermostat::setMode(Device device) {
 
     // Turn on a device
     digitalWrite(fan_pin , device == kFan  ? HIGH : LOW);
