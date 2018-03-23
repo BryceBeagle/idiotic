@@ -431,19 +431,19 @@
 <library name="idiotic-regulators">
 <packages>
 <package name="SOP-8">
-<smd name="P$1" x="-1.905" y="2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$2" x="-0.635" y="2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$3" x="0.635" y="2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$4" x="1.905" y="2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$5" x="-1.905" y="-2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$6" x="-0.635" y="-2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$7" x="0.635" y="-2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$8" x="1.905" y="-2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<wire x1="-2.45" y1="2" x2="2.45" y2="2" width="0.127" layer="21"/>
-<wire x1="2.45" y1="2" x2="2.45" y2="-2" width="0.127" layer="21"/>
-<wire x1="2.45" y1="-2" x2="-2.45" y2="-2" width="0.127" layer="21"/>
-<wire x1="-2.45" y1="-2" x2="-2.45" y2="2" width="0.127" layer="21"/>
-<smd name="P$9" x="0" y="0" dx="2.5" dy="2.5" layer="1"/>
+<smd name="P$4" x="-2.75" y="-1.905" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$3" x="-2.75" y="-0.635" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$2" x="-2.75" y="0.635" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$1" x="-2.75" y="1.905" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$5" x="2.75" y="-1.905" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$6" x="2.75" y="-0.635" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$7" x="2.75" y="0.635" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$8" x="2.75" y="1.905" dx="1" dy="0.5" layer="1" rot="R180"/>
+<wire x1="-2" y1="-2.45" x2="-2" y2="2.45" width="0.127" layer="21"/>
+<wire x1="-2" y1="2.45" x2="2" y2="2.45" width="0.127" layer="21"/>
+<wire x1="2" y1="2.45" x2="2" y2="-2.45" width="0.127" layer="21"/>
+<wire x1="2" y1="-2.45" x2="-2" y2="-2.45" width="0.127" layer="21"/>
+<smd name="P$9" x="0" y="0" dx="2.5" dy="2.5" layer="1" rot="R90"/>
 </package>
 </packages>
 <symbols>
@@ -8152,9 +8152,9 @@ https://www.vishay.com/docs/88661/mb2s.pdf</description>
 <attribute name="VALUE" x="13.208" y="-19.685" size="1.778" layer="96" rot="MR180"/>
 </instance>
 <instance part="U$8" gate="G$1" x="-45.72" y="30.48" rot="MR0"/>
-<instance part="C4" gate="G$1" x="38.1" y="27.94" smashed="yes" rot="R180">
-<attribute name="NAME" x="35.941" y="26.416" size="1.778" layer="95" rot="R270"/>
-<attribute name="VALUE" x="33.401" y="34.036" size="1.778" layer="96" rot="R270"/>
+<instance part="C4" gate="G$1" x="43.18" y="27.94" smashed="yes" rot="R180">
+<attribute name="NAME" x="41.021" y="26.416" size="1.778" layer="95" rot="R270"/>
+<attribute name="VALUE" x="38.481" y="34.036" size="1.778" layer="96" rot="R270"/>
 </instance>
 <instance part="U$9" gate="G$1" x="-53.34" y="-96.52"/>
 <instance part="JP1" gate="A" x="-35.56" y="-91.44" rot="R180"/>
@@ -8216,16 +8216,16 @@ https://www.vishay.com/docs/88661/mb2s.pdf</description>
 <junction x="63.5" y="35.56"/>
 <wire x1="58.42" y1="30.48" x2="58.42" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="35.56" x2="63.5" y2="35.56" width="0.1524" layer="91"/>
-<wire x1="58.42" y1="30.48" x2="43.18" y2="30.48" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="30.48" x2="43.18" y2="35.56" width="0.1524" layer="91"/>
-<wire x1="33.02" y1="35.56" x2="33.02" y2="30.48" width="0.1524" layer="91"/>
-<pinref part="U$7" gate="G$1" pin="-"/>
-<wire x1="33.02" y1="30.48" x2="30.48" y2="30.48" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="35.56" x2="38.1" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="58.42" y1="30.48" x2="45.72" y2="30.48" width="0.1524" layer="91"/>
+<wire x1="45.72" y1="30.48" x2="45.72" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="45.72" y1="35.56" x2="43.18" y2="35.56" width="0.1524" layer="91"/>
 <pinref part="C4" gate="G$1" pin="2"/>
-<wire x1="38.1" y1="35.56" x2="33.02" y2="35.56" width="0.1524" layer="91"/>
-<wire x1="38.1" y1="33.02" x2="38.1" y2="35.56" width="0.1524" layer="91"/>
-<junction x="38.1" y="35.56"/>
+<wire x1="43.18" y1="35.56" x2="35.56" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="33.02" x2="43.18" y2="35.56" width="0.1524" layer="91"/>
+<junction x="43.18" y="35.56"/>
+<pinref part="U$7" gate="G$1" pin="+"/>
+<wire x1="30.48" y1="25.4" x2="35.56" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="35.56" y1="25.4" x2="35.56" y2="35.56" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -8310,16 +8310,16 @@ https://www.vishay.com/docs/88661/mb2s.pdf</description>
 <wire x1="58.42" y1="20.32" x2="58.42" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="15.24" x2="58.42" y2="20.32" width="0.1524" layer="91"/>
 <junction x="58.42" y="20.32"/>
-<wire x1="58.42" y1="25.4" x2="43.18" y2="25.4" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="25.4" x2="43.18" y2="20.32" width="0.1524" layer="91"/>
-<pinref part="U$7" gate="G$1" pin="+"/>
-<wire x1="30.48" y1="25.4" x2="33.02" y2="25.4" width="0.1524" layer="91"/>
-<wire x1="33.02" y1="25.4" x2="33.02" y2="20.32" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="20.32" x2="38.1" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="58.42" y1="25.4" x2="45.72" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="45.72" y1="25.4" x2="45.72" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="45.72" y1="20.32" x2="43.18" y2="20.32" width="0.1524" layer="91"/>
 <pinref part="C4" gate="G$1" pin="1"/>
-<wire x1="38.1" y1="20.32" x2="33.02" y2="20.32" width="0.1524" layer="91"/>
-<wire x1="38.1" y1="25.4" x2="38.1" y2="20.32" width="0.1524" layer="91"/>
-<junction x="38.1" y="20.32"/>
+<wire x1="43.18" y1="20.32" x2="33.02" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="25.4" x2="43.18" y2="20.32" width="0.1524" layer="91"/>
+<junction x="43.18" y="20.32"/>
+<pinref part="U$7" gate="G$1" pin="-"/>
+<wire x1="30.48" y1="30.48" x2="33.02" y2="30.48" width="0.1524" layer="91"/>
+<wire x1="33.02" y1="30.48" x2="33.02" y2="20.32" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U$4" gate="G$1" pin="GND"/>

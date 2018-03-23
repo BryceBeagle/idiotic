@@ -96,19 +96,19 @@
 <text x="0.4" y="-0.1" size="0.254" layer="1" ratio="0">&gt;Name</text>
 </package>
 <package name="SOP-8">
-<smd name="P$1" x="-1.905" y="2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$2" x="-0.635" y="2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$3" x="0.635" y="2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$4" x="1.905" y="2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$5" x="-1.905" y="-2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$6" x="-0.635" y="-2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$7" x="0.635" y="-2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<smd name="P$8" x="1.905" y="-2.75" dx="1" dy="0.5" layer="1" rot="R90"/>
-<wire x1="-2.45" y1="2" x2="2.45" y2="2" width="0.127" layer="21"/>
-<wire x1="2.45" y1="2" x2="2.45" y2="-2" width="0.127" layer="21"/>
-<wire x1="2.45" y1="-2" x2="-2.45" y2="-2" width="0.127" layer="21"/>
-<wire x1="-2.45" y1="-2" x2="-2.45" y2="2" width="0.127" layer="21"/>
-<smd name="P$9" x="0" y="0" dx="2.5" dy="2.5" layer="1"/>
+<smd name="P$4" x="-2.75" y="-1.905" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$3" x="-2.75" y="-0.635" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$2" x="-2.75" y="0.635" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$1" x="-2.75" y="1.905" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$5" x="2.75" y="-1.905" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$6" x="2.75" y="-0.635" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$7" x="2.75" y="0.635" dx="1" dy="0.5" layer="1" rot="R180"/>
+<smd name="P$8" x="2.75" y="1.905" dx="1" dy="0.5" layer="1" rot="R180"/>
+<wire x1="-2" y1="-2.45" x2="-2" y2="2.45" width="0.127" layer="21"/>
+<wire x1="-2" y1="2.45" x2="2" y2="2.45" width="0.127" layer="21"/>
+<wire x1="2" y1="2.45" x2="2" y2="-2.45" width="0.127" layer="21"/>
+<wire x1="2" y1="-2.45" x2="-2" y2="-2.45" width="0.127" layer="21"/>
+<smd name="P$9" x="0" y="0" dx="2.5" dy="2.5" layer="1" rot="R90"/>
 </package>
 <package name="TO-220">
 <pad name="GND" x="0" y="0" drill="1.27" diameter="1.905"/>
