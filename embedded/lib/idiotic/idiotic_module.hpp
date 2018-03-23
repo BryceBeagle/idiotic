@@ -29,10 +29,13 @@ class IdioticModule {
 
         void beginSocket(String host, uint16_t port);
 
+        // TODO: use implicit null field init to somehow avoid
+        // "sorry, unimplemented: non-trivial designated initializers not
+        // supported"
         typedef struct {
             std::function<JsonVariant()> get;
-            std::function<void()> set;
-            std::function<void()> action;
+            void (*set)(const char *);  // TODO: allow lambdas
+            void (*behavior)(const char *);  // TODO: allow lambdas
         } function_map;
 
         // Map is used for a number of reasons:
@@ -43,11 +46,6 @@ class IdioticModule {
         std::map<String, function_map> funcs;
         void dataLoop();
 
-        const char *get_name();
-        void set_name();
-        const char *get_class();
-        void set_class();
-
     private:
 
         WebSocketsClient *_web_socket;
@@ -56,8 +54,11 @@ class IdioticModule {
 
         String _password;
 
-        void _handleSocketEvent(WStype_t type, uint8_t *payload, size_t length);
-        void _send_hello_message();
+        void _handleSocketEvent(WStype_t type, uint8_t *payload,
+                                size_t length);
+        void _sendHelloMessage();
+
+        void _parsePayload(char *payload);
 
 };
 

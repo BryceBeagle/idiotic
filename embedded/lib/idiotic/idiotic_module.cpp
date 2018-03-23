@@ -67,12 +67,13 @@ void IdioticModule::_handleSocketEvent(WStype_t type,
             Serial.printf("[WSc] Connected to url: %s\n", payload);
             _socket_is_connected = true;
 
-            _send_hello_message();
+            _sendHelloMessage();
 
             break;
         }
         case WStype_TEXT: {
             Serial.printf("[WSc] Payload received: %s\n", payload);
+            _parsePayload((char *)payload);
             break;
         }
         default: {
@@ -82,7 +83,7 @@ void IdioticModule::_handleSocketEvent(WStype_t type,
 }
 
 
-void IdioticModule::_send_hello_message() {
+void IdioticModule::_sendHelloMessage() {
 
     if (uuid = "") {
         uuid = WiFi.softAPmacAddress();
@@ -105,35 +106,9 @@ void IdioticModule::_send_hello_message() {
 
 }
 
-
-const char *IdioticModule::get_name() {
-    return "1.2";
-//    return String("TEST NAME");
-}
-
-
-void IdioticModule::set_name() {
-//    return 1.2;
-    // TODO
-}
-
-
-const char * IdioticModule::get_class() {
-    return "TempSensor";
-//    return String("TEST NAME");}
-}
-
-
-void IdioticModule::set_class() {
-    // TODO
-}
-
-
 void IdioticModule::dataLoop() {
 
     if (_socket_is_connected) {
-
-        Serial.printf("1############");
 
         int num_entries = funcs.size(); // TODO: Only size of entries with .get
 
@@ -144,7 +119,7 @@ void IdioticModule::dataLoop() {
         root["uuid"] = uuid;
         root["class"] = class_type;
 
-        JsonObject &setObject = root.createNestedObject("set");
+        JsonObject &setObject = root.createNestedObject("update");
 
         std::map<String, function_map>::iterator it;
         for (it = funcs.begin(); it != funcs.end(); it++) {
@@ -169,4 +144,22 @@ void IdioticModule::dataLoop() {
     else {
         Serial.println("Socket not connected. Retrying");
     }
+}
+
+void IdioticModule::_parsePayload(char *payload) {
+
+    DynamicJsonBuffer parseBuffer(2*JSON_OBJECT_SIZE(1) + 20);
+    JsonObject &root = parseBuffer.parseObject(payload);
+
+    if (root.containsKey("behavior")) {
+        JsonObject &behaviors = root["behavior"];
+        for (JsonObject::iterator i = behaviors.begin();i != behaviors.end();
+             ++i) {
+            funcs[i->key].behavior(i->value.as<char *>());
+        }
+    }
+    if (root.containsKey("get")) {
+        // TODO
+    }
+
 }
