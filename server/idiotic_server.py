@@ -62,6 +62,7 @@ def handle_json(ws):
         if 'hello' in req_json:
 
             # Use existing device instance if already exists
+            # TODO: Change device type if device "hello"s as a different type
             if req_json['uuid'] in controller:
                 controller[req_json['uuid']].ws.update(ws)
 
@@ -70,16 +71,17 @@ def handle_json(ws):
                 controller.new_device(req_json['class'], req_json['uuid'], ws)
 
         # Otherwise, it needs a set or a get
-        elif 'set' not in req_json and 'get' not in req_json:
+        elif 'update' not in req_json and 'get' not in req_json:
             print(f"Invalid message: {message}")
             continue
 
-        if 'set' in req_json:
-            for attr, value in req_json['set'].items():
+        if 'update' in req_json:
+            for attr, value in req_json['update'].items():
                 try:
                     getattr(controller[req_json['uuid']], attr).update(value)
                 except (AttributeError, TypeError):
-                    logging.error(f"Attribute {attr} does not exist or has no update function")
+                    logging.error(f"Attribute {attr} does not exist or has no "
+                                  f"update function")
 
 
 @app.route("/")

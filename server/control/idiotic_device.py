@@ -69,16 +69,26 @@ class Attribute:
         self.subscribers.discard(subscriber)
 
 
-class Action:
+class Behavior:
     """Add function to function's class' list of Actions"""
 
     # test = get_class_that_defined_method(func)
 
-    def __init__(self, func):
+    def __init__(self, func, owner=None):
         self.func = func
+        self.owner = owner
 
     def __call__(self, *args, **kwargs):
-        return self.func(*args, **kwargs)
+        return self.func(self.owner, *args, **kwargs)
+
+    def __get__(self, owner, obj_type=None):
+
+        if not self.owner:
+
+            attr_temp = type(self)(self.func, owner=owner)
+            setattr(owner, self.func.__name__, attr_temp)
+
+        return getattr(owner, self.func.__name__)
 
 
 class IdioticDevice:
@@ -126,6 +136,6 @@ class IdioticDevice:
     def get_actions(cls):
         actions = set()
         for name, obj in cls.__dict__.items():
-            if isinstance(obj, Action):
+            if isinstance(obj, Behavior):
                 actions.add(name)
         return actions

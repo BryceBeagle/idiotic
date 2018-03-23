@@ -1,5 +1,5 @@
 from control.idiotic_device import IdioticDevice
-from control.idiotic_device import Action, Attribute
+from control.idiotic_device import Behavior, Attribute
 
 
 class DoorSensor(IdioticDevice):

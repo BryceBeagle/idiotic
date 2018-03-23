@@ -1,5 +1,5 @@
 from control.idiotic_device import IdioticDevice
-from control.idiotic_device import Attribute
+from control.idiotic_device import Behavior, Attribute
 
 
 class TempSensor(IdioticDevice):
@@ -18,13 +18,3 @@ class TempSensor(IdioticDevice):
     @temp.updater
     def temp(self, temp):
         self._temp = temp
-
-    @Attribute
-    def temp2(self):
-        return self._temp2
-
-    @temp2.updater
-    def temp2(self, temp2):
-        self._temp2 = temp2
-
-

@@ -68,14 +68,30 @@ class IdioticController:
                     class_dict = self.device_names[action['device']['class']]
                     device = class_dict[action['device']['name']]
 
-                attribute = action['attribute']
-                value = action['value']
+                if 'attribute' in action:
+                    attribute = action['attribute']
+                    value = action['value']
 
-                # https://stackoverflow.com/a/10452819/8134178
-                actions.append(lambda device=device,
-                                      attribute=attribute,
-                                      value=value:
-                               getattr(device, attribute).set(value))
+                    # https://stackoverflow.com/a/10452819/8134178
+                    actions.append(lambda device=device,
+                                          attribute=attribute,
+                                          value=value:
+                                   getattr(device, attribute).set(value))
+
+                elif 'behavior' in action:
+                    behavior = action['behavior']
+                    value = action['value']  # TODO: Support multiple arguments
+
+                    # https://stackoverflow.com/a/10452819/8134178
+                    # https://stackoverflow.com/a/10452819/8134178
+                    actions.append(lambda device=device,
+                                          behavior=behavior,
+                                          value=value:
+                                   # Directly call behavior function
+                                   getattr(device, behavior)(value))
+
+                else:
+                    raise AttributeError('Action missing behavior or attribute')
 
             # TODO: Conditionals
 
@@ -103,7 +119,8 @@ class IdioticController:
 
             attr = getattr(trig_dev, trigger['attribute'])
 
-            IdioticTrigger(routine, attr, trigger['check'], trigger['value'])
+            trig = IdioticTrigger(routine, attr, trigger['check'], trigger['value'])
+            trig.name = routine_name
 
             self.routines[routine_name] = routine
 

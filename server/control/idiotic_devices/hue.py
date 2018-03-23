@@ -1,7 +1,7 @@
 import phue
 
 from control.idiotic_device import IdioticDevice
-from control.idiotic_device import Action, Attribute
+from control.idiotic_device import Behavior, Attribute
 
 
 class HueBridge(phue.Bridge):
@@ -42,11 +42,11 @@ class HueLight(IdioticDevice):
 
         self._light_id = light_id
 
-    @Action
+    @Behavior
     def pulse_lights(self):
         pass
 
-    @Action
+    @Behavior
     def dim_lights(self):
         pass
 
@@ -148,7 +148,7 @@ class HueLight(IdioticDevice):
 
 class Temp(HueLight):
 
-    @Action
+    @Behavior
     def test(self):
         pass
 

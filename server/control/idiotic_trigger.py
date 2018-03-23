@@ -22,6 +22,8 @@ class IdioticTrigger:
         self.attr = attr
         self.subscribe(attr)
 
+        self.name = None
+
         self.active = False
 
     def subscribe(self, attr) -> None:
