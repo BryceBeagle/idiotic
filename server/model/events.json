@@ -26,5 +26,33 @@
         "value": 0
       }
     ]
+  },
+  "Turn on AC": {
+    "conditionals": null,
+    "actions": [
+      {
+        "device": {
+          "uuid": "62:01:94:31:6A:EA",
+          "class": "Thermostat",
+          "name": null
+        },
+        "attribute": "setActiveDevice",
+        "value": "ac"
+      }
+    ]
+  },
+  "Turn off AC": {
+    "conditionals": null,
+    "actions": [
+      {
+        "device": {
+          "uuid": "62:01:94:31:6A:EA",
+          "class": "Thermostat",
+          "name": null
+        },
+        "attribute": "setActiveDevice",
+        "value": "none"
+      }
+    ]
   }
 }

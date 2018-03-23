@@ -30,5 +30,21 @@
     "events": [
       "Living Room 1 off"
     ]
+  },
+  "Send command to thermostat": {
+    "trigger": {
+      "device": {
+        "uuid": "62:01:94:31:6A:EA",
+        "class": null,
+        "name": null
+      },
+      "attribute": "temp",
+      "check": "check_gt",
+      "value": 30
+    },
+    "conditional": null,
+    "events": [
+      "Turn on AC"
+    ]
   }
 }
