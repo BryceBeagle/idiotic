@@ -9,7 +9,6 @@ class TempSensor(IdioticDevice):
         super().__init__()
 
         self._temp = None
-        self._temp2 = None
 
     @Attribute
     def temp(self):
