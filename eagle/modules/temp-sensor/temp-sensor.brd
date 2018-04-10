@@ -156,14 +156,14 @@
 </layers>
 <board>
 <plain>
-<wire x1="-3.556" y1="0.762" x2="-8.89" y2="6.096" width="0.1524" layer="20"/>
-<wire x1="-8.89" y1="6.096" x2="-8.89" y2="34.798" width="0.1524" layer="20"/>
-<wire x1="-8.89" y1="34.798" x2="-5.588" y2="38.1" width="0.1524" layer="20"/>
+<wire x1="-1.778" y1="0.762" x2="-8.89" y2="7.874" width="0.1524" layer="20" curve="-90"/>
+<wire x1="-8.89" y1="7.874" x2="-8.89" y2="34.798" width="0.1524" layer="20"/>
+<wire x1="-8.89" y1="34.798" x2="-5.588" y2="38.1" width="0.1524" layer="20" curve="-90"/>
 <wire x1="-5.588" y1="38.1" x2="22.86" y2="38.1" width="0.1524" layer="20"/>
-<wire x1="22.86" y1="38.1" x2="26.162" y2="34.798" width="0.1524" layer="20"/>
-<wire x1="26.162" y1="34.798" x2="26.162" y2="2.54" width="0.1524" layer="20"/>
-<wire x1="26.162" y1="2.54" x2="24.384" y2="0.762" width="0.1524" layer="20"/>
-<wire x1="-3.556" y1="0.762" x2="24.384" y2="0.762" width="0.1524" layer="20"/>
+<wire x1="22.86" y1="38.1" x2="26.162" y2="34.798" width="0.1524" layer="20" curve="-90"/>
+<wire x1="26.162" y1="34.798" x2="26.162" y2="3.302" width="0.1524" layer="20"/>
+<wire x1="26.162" y1="3.302" x2="23.622" y2="0.762" width="0.1524" layer="20" curve="-90"/>
+<wire x1="-1.778" y1="0.762" x2="23.622" y2="0.762" width="0.1524" layer="20"/>
 </plain>
 <libraries>
 <library name="rcl" urn="urn:adsk.eagle:library:334">
@@ -1284,10 +1284,10 @@ MELF 0.10 W</description>
 <smd name="P$3" x="-2.2" y="-0.325" dx="1.45" dy="0.45" layer="1"/>
 <smd name="P$4" x="-2.2" y="-0.975" dx="1.45" dy="0.45" layer="1"/>
 <wire x1="1.2" y1="-1.2" x2="1.2" y2="1.2" width="0.127" layer="21"/>
-<smd name="P$5" x="2.2" y="0.975" dx="1.45" dy="0.45" layer="1"/>
-<smd name="P$6" x="2.2" y="0.325" dx="1.45" dy="0.45" layer="1"/>
-<smd name="P$7" x="2.2" y="-0.325" dx="1.45" dy="0.45" layer="1" rot="R180"/>
-<smd name="P$8" x="2.2" y="-0.975" dx="1.45" dy="0.45" layer="1" rot="R180"/>
+<smd name="P$8" x="2.2" y="0.975" dx="1.45" dy="0.45" layer="1"/>
+<smd name="P$7" x="2.2" y="0.325" dx="1.45" dy="0.45" layer="1"/>
+<smd name="P$6" x="2.2" y="-0.325" dx="1.45" dy="0.45" layer="1" rot="R180"/>
+<smd name="P$5" x="2.2" y="-0.975" dx="1.45" dy="0.45" layer="1" rot="R180"/>
 <circle x="-0.762" y="0.762" radius="0.127" width="0.0508" layer="21"/>
 </package>
 </packages>
@@ -1357,8 +1357,8 @@ MELF 0.10 W</description>
 <smd name="3" x="2.5" y="2.25" dx="1.5" dy="1.5" layer="1"/>
 <smd name="2" x="0" y="2.25" dx="1.5" dy="1.5" layer="1"/>
 <smd name="1" x="-2.5" y="2.25" dx="1.5" dy="1.5" layer="1"/>
-<hole x="-1.5" y="0" drill="0.9"/>
-<hole x="1.5" y="0" drill="0.9"/>
+<hole x="-1.5" y="0" drill="1.016"/>
+<hole x="1.5" y="0" drill="1.016"/>
 </package>
 </packages>
 </library>
@@ -1646,13 +1646,13 @@ design rules under a new name.</description>
 <contactref element="U$1" pad="P$4"/>
 <polygon width="0.1524" layer="1">
 <vertex x="-7.874" y="34.29"/>
-<vertex x="-7.874" y="6.858"/>
-<vertex x="-1.778" y="0.762"/>
-<vertex x="23.114" y="0.762"/>
-<vertex x="25.4" y="3.048"/>
-<vertex x="25.146" y="34.036"/>
+<vertex x="-7.874" y="8.636" curve="90"/>
+<vertex x="-1.778" y="1.778"/>
+<vertex x="23.368" y="1.778" curve="90"/>
+<vertex x="25.146" y="3.556"/>
+<vertex x="25.146" y="34.036" curve="90"/>
 <vertex x="22.352" y="37.084"/>
-<vertex x="-5.08" y="37.338"/>
+<vertex x="-5.08" y="37.338" curve="90"/>
 </polygon>
 <contactref element="JP1" pad="4"/>
 </signal>
@@ -1673,10 +1673,8 @@ design rules under a new name.</description>
 <wire x1="3.732" y1="21.922" x2="4.826" y2="20.828" width="0.6096" layer="1"/>
 <wire x1="2.286" y1="11.922" x2="2.286" y2="6.806" width="0.6096" layer="1"/>
 <wire x1="2.286" y1="6.806" x2="2.488" y2="6.604" width="0.6096" layer="1"/>
-<wire x1="-5.039" y1="7.325" x2="-5.039" y2="9.484" width="0.508" layer="1"/>
 <wire x1="2.488" y1="6.604" x2="-1.016" y2="6.604" width="0.508" layer="1"/>
-<wire x1="-1.016" y1="6.604" x2="-4.318" y2="6.604" width="0.508" layer="1"/>
-<wire x1="-4.318" y1="6.604" x2="-5.039" y2="7.325" width="0.508" layer="1"/>
+<wire x1="-2.286" y1="6.604" x2="-1.016" y2="6.604" width="0.508" layer="1"/>
 <wire x1="-1.016" y1="9.21" x2="-1.016" y2="6.604" width="0.508" layer="1"/>
 <wire x1="8.688" y1="6.604" x2="2.488" y2="6.604" width="0.6096" layer="1"/>
 <wire x1="18.286" y1="15.922" x2="7.54" y2="15.922" width="0.6096" layer="1"/>
@@ -1693,6 +1691,14 @@ design rules under a new name.</description>
 <wire x1="21.082" y1="35.814" x2="21.844" y2="35.052" width="0.6096" layer="1"/>
 <wire x1="-6.096" y1="34.544" x2="-4.826" y2="35.814" width="0.6096" layer="1"/>
 <wire x1="-4.826" y1="35.814" x2="21.082" y2="35.814" width="0.6096" layer="1"/>
+<wire x1="-3.089" y1="9.484" x2="-3.089" y2="7.407" width="0.508" layer="1"/>
+<wire x1="-3.089" y1="7.407" x2="-2.286" y2="6.604" width="0.508" layer="1"/>
+<contactref element="U$1" pad="P$5"/>
+<contactref element="U$1" pad="P$6"/>
+<contactref element="U$1" pad="P$7"/>
+<wire x1="-3.089" y1="9.484" x2="-3.739" y2="9.484" width="0.508" layer="1"/>
+<wire x1="-3.739" y1="9.484" x2="-4.389" y2="9.484" width="0.508" layer="1"/>
+<wire x1="-4.389" y1="9.484" x2="-5.039" y2="9.484" width="0.508" layer="1"/>
 </signal>
 <signal name="SDA">
 <contactref element="U$1" pad="P$1"/>

@@ -7374,10 +7374,10 @@ Connect 1.0 uF cap from GND to OUT&lt;/p&gt;</description>
 <smd name="P$3" x="-2.2" y="-0.325" dx="1.45" dy="0.45" layer="1"/>
 <smd name="P$4" x="-2.2" y="-0.975" dx="1.45" dy="0.45" layer="1"/>
 <wire x1="1.2" y1="-1.2" x2="1.2" y2="1.2" width="0.127" layer="21"/>
-<smd name="P$5" x="2.2" y="0.975" dx="1.45" dy="0.45" layer="1"/>
-<smd name="P$6" x="2.2" y="0.325" dx="1.45" dy="0.45" layer="1"/>
-<smd name="P$7" x="2.2" y="-0.325" dx="1.45" dy="0.45" layer="1" rot="R180"/>
-<smd name="P$8" x="2.2" y="-0.975" dx="1.45" dy="0.45" layer="1" rot="R180"/>
+<smd name="P$8" x="2.2" y="0.975" dx="1.45" dy="0.45" layer="1"/>
+<smd name="P$7" x="2.2" y="0.325" dx="1.45" dy="0.45" layer="1"/>
+<smd name="P$6" x="2.2" y="-0.325" dx="1.45" dy="0.45" layer="1" rot="R180"/>
+<smd name="P$5" x="2.2" y="-0.975" dx="1.45" dy="0.45" layer="1" rot="R180"/>
 <circle x="-0.762" y="0.762" radius="0.127" width="0.0508" layer="21"/>
 </package>
 </packages>
@@ -7717,8 +7717,8 @@ Connect 1.0 uF cap from GND to OUT&lt;/p&gt;</description>
 <smd name="3" x="2.5" y="2.25" dx="1.5" dy="1.5" layer="1"/>
 <smd name="2" x="0" y="2.25" dx="1.5" dy="1.5" layer="1"/>
 <smd name="1" x="-2.5" y="2.25" dx="1.5" dy="1.5" layer="1"/>
-<hole x="-1.5" y="0" drill="0.9"/>
-<hole x="1.5" y="0" drill="0.9"/>
+<hole x="-1.5" y="0" drill="1.016"/>
+<hole x="1.5" y="0" drill="1.016"/>
 </package>
 </packages>
 <symbols>
@@ -7970,6 +7970,17 @@ Connect 1.0 uF cap from GND to OUT&lt;/p&gt;</description>
 <wire x1="-7.62" y1="2.54" x2="-15.24" y2="2.54" width="0.1524" layer="91"/>
 <wire x1="-15.24" y1="2.54" x2="-15.24" y2="7.62" width="0.1524" layer="91"/>
 <junction x="-15.24" y="7.62"/>
+<wire x1="-15.24" y1="15.24" x2="-15.24" y2="17.78" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="A2"/>
+<wire x1="-15.24" y1="17.78" x2="-15.24" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="20.32" x2="-15.24" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="22.86" x2="-12.7" y2="22.86" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="A1"/>
+<wire x1="-12.7" y1="20.32" x2="-15.24" y2="20.32" width="0.1524" layer="91"/>
+<junction x="-15.24" y="20.32"/>
+<pinref part="U$1" gate="G$1" pin="A0"/>
+<wire x1="-12.7" y1="17.78" x2="-15.24" y2="17.78" width="0.1524" layer="91"/>
+<junction x="-15.24" y="17.78"/>
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="EN"/>

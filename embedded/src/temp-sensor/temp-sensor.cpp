@@ -21,7 +21,7 @@ void setup() {
 
     module.beginSocket(kServerHost, kServerPort);
 
-    tempsensor.begin(13, 12);
+    tempsensor.begin(13, 12, 0x1F);
 
     module.funcs["temp"] = IdioticModule::function_map {
             .get = [&] {return tempsensor.readTempC();}

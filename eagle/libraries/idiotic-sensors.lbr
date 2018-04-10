@@ -82,10 +82,10 @@
 <smd name="P$3" x="-2.2" y="-0.325" dx="1.45" dy="0.45" layer="1"/>
 <smd name="P$4" x="-2.2" y="-0.975" dx="1.45" dy="0.45" layer="1"/>
 <wire x1="1.2" y1="-1.2" x2="1.2" y2="1.2" width="0.127" layer="21"/>
-<smd name="P$5" x="2.2" y="0.975" dx="1.45" dy="0.45" layer="1"/>
-<smd name="P$6" x="2.2" y="0.325" dx="1.45" dy="0.45" layer="1"/>
-<smd name="P$7" x="2.2" y="-0.325" dx="1.45" dy="0.45" layer="1" rot="R180"/>
-<smd name="P$8" x="2.2" y="-0.975" dx="1.45" dy="0.45" layer="1" rot="R180"/>
+<smd name="P$8" x="2.2" y="0.975" dx="1.45" dy="0.45" layer="1"/>
+<smd name="P$7" x="2.2" y="0.325" dx="1.45" dy="0.45" layer="1"/>
+<smd name="P$6" x="2.2" y="-0.325" dx="1.45" dy="0.45" layer="1" rot="R180"/>
+<smd name="P$5" x="2.2" y="-0.975" dx="1.45" dy="0.45" layer="1" rot="R180"/>
 <circle x="-0.762" y="0.762" radius="0.127" width="0.0508" layer="21"/>
 </package>
 <package name="TO-92S">
