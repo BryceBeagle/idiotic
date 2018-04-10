@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.3.1">
+<eagle version="8.6.0">
 <drawing>
 <settings>
-<setting alwaysvectorfont="no"/>
+<setting alwaysvectorfont="yes"/>
 <setting keepoldvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
@@ -971,6 +971,12 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <sheets>
 <sheet>
 <plain>
+<text x="0" y="53.34" size="1.778" layer="91">Serial Headers</text>
+<text x="81.28" y="50.8" size="1.778" layer="91" rot="R180">Debug Switch</text>
+<text x="71.12" y="-7.62" size="1.778" layer="91" rot="R180">USB Connector</text>
+<text x="71.12" y="-22.86" size="1.778" layer="91" rot="R180">3.3V Regulator</text>
+<text x="0" y="5.08" size="1.778" layer="91" rot="R270">Breadboard
+Headers</text>
 </plain>
 <instances>
 <instance part="U$1" gate="G$1" x="33.02" y="20.32"/>
@@ -1193,6 +1199,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </schematic>
 </drawing>
 <compatibility>
+<note version="6.3" minversion="6.2.2" severity="warning">
+Since Version 6.2.2 text objects can contain more than one line,
+which will not be processed correctly with this version.
+</note>
 <note version="8.2" severity="warning">
 Since Version 8.2, EAGLE supports online libraries. The ids
 of those online libraries will not be understood (or retained)

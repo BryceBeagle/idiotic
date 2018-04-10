@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.2.2">
+<eagle version="8.6.0">
 <drawing>
 <settings>
-<setting alwaysvectorfont="no"/>
+<setting alwaysvectorfont="yes"/>
+<setting keepoldvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
@@ -526,6 +527,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <sheets>
 <sheet>
 <plain>
+<text x="-7.62" y="63.5" size="1.778" layer="97">3.3 V Regulator</text>
+<text x="10.16" y="2.54" size="1.778" layer="97" rot="R90">Hall Effect Sensor</text>
+<text x="101.6" y="27.94" size="1.778" layer="97" rot="R270">MicroUSB Connecter</text>
 </plain>
 <instances>
 <instance part="U$1" gate="G$1" x="58.42" y="10.16"/>

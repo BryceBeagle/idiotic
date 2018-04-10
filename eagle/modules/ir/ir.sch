@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.3.2">
+<eagle version="8.6.0">
 <drawing>
 <settings>
-<setting alwaysvectorfont="no"/>
+<setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
@@ -970,6 +970,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <sheets>
 <sheet>
 <plain>
+<text x="5.08" y="104.14" size="1.778" layer="97">MicroUSB Connector</text>
+<text x="7.62" y="81.28" size="1.778" layer="97">IR Sensor</text>
+<text x="-7.62" y="40.64" size="1.778" layer="97" rot="R90">3.3V Regulator</text>
+<text x="81.28" y="53.34" size="1.778" layer="97" rot="R180">Debug Switch</text>
+<text x="50.8" y="22.86" size="1.778" layer="97" rot="R180">IR Emitter (LED)</text>
 </plain>
 <instances>
 <instance part="U$1" gate="G$1" x="7.62" y="63.5"/>
