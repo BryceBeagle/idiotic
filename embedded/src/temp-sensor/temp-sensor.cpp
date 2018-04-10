@@ -28,8 +28,6 @@ void setup() {
     };
 }
 
-}
-
 
 void loop() {
 
