@@ -1,0 +1,6 @@
+.pioenvs
+.piolibdeps
+CMakeListsPrivate.txt
+
+.travis.yml
+CMakeLists.txt
