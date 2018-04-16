@@ -1,57 +1,29 @@
 {
-  "Living Room 1 on": {
+  "Demo Light on": {
     "conditionals": null,
     "actions": [
       {
         "device": {
           "uuid": null,
           "class": "HueLight",
-          "name": "Living Room 2"
+          "name": "Demo Light"
         },
         "attribute": "brightness",
         "value": 254
       }
     ]
   },
-  "Living Room 1 off": {
+  "Demo Light off": {
     "conditionals": null,
     "actions": [
       {
         "device": {
           "uuid": null,
           "class": "HueLight",
-          "name": "Living Room 2"
+          "name": "Demo Light"
         },
         "attribute": "brightness",
         "value": 0
-      }
-    ]
-  },
-  "Turn on AC": {
-    "conditionals": null,
-    "actions": [
-      {
-        "device": {
-          "uuid": "62:01:94:31:6A:EA",
-          "class": "Thermostat",
-          "name": null
-        },
-        "attribute": "setActiveDevice",
-        "value": "ac"
-      }
-    ]
-  },
-  "Turn off AC": {
-    "conditionals": null,
-    "actions": [
-      {
-        "device": {
-          "uuid": "62:01:94:31:6A:EA",
-          "class": "Thermostat",
-          "name": null
-        },
-        "attribute": "setActiveDevice",
-        "value": "none"
       }
     ]
   }

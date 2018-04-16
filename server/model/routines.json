@@ -1,8 +1,8 @@
 {
-  "Living room temp on": {
+  "Demo Light on temp": {
     "trigger": {
       "device": {
-        "uuid": "62:01:94:31:6A:EA",
+        "uuid": "6A:C6:3A:AC:89:EB",
         "class": null,
         "name": null
       },
@@ -12,13 +12,13 @@
     },
     "conditional": null,
     "events": [
-      "Living Room 1 on"
+      "Demo Light on"
     ]
   },
-  "Living room temp off": {
+  "Demo Light off temp": {
     "trigger": {
       "device": {
-        "uuid": "62:01:94:31:6A:EA",
+        "uuid": "6A:C6:3A:AC:89:EB",
         "class": null,
         "name": null
       },
@@ -28,23 +28,39 @@
     },
     "conditional": null,
     "events": [
-      "Living Room 1 off"
+      "Demo Light off"
     ]
   },
-  "Send command to thermostat": {
+  "Demo Light on door": {
     "trigger": {
       "device": {
-        "uuid": "62:01:94:31:6A:EA",
+        "uuid": "6A:C6:3A:AC:39:3D",
         "class": null,
         "name": null
       },
-      "attribute": "temp",
-      "check": "check_gt",
-      "value": 30
+      "attribute": "door_open",
+      "check": "check_true",
+      "value": null
     },
     "conditional": null,
     "events": [
-      "Turn on AC"
+      "Demo Light on"
+    ]
+  },
+  "Demo Light off door": {
+    "trigger": {
+      "device": {
+        "uuid": "6A:C6:3A:AC:39:3D",
+        "class": null,
+        "name": null
+      },
+      "attribute": "door_open",
+      "check": "check_false",
+      "value": null
+    },
+    "conditional": null,
+    "events": [
+      "Demo Light off"
     ]
   }
 }
