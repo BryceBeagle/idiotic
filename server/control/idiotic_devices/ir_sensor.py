@@ -6,7 +6,7 @@ class IRSensor(IdioticDevice):
 
     def __init__(self):
 
-        super(IRSensor, self).__init__()
+        super().__init__()
 
         self.signals = {}
 

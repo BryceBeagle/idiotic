@@ -1,19 +1,18 @@
 from control.idiotic_device import IdioticDevice
-from control.idiotic_device import Behavior, Attribute
+from control.idiotic_device import Attribute
 
 
 class DoorSensor(IdioticDevice):
 
     def __init__(self):
+        super().__init__()
 
-        super(DoorSensor, self).__init__()
-
-        self._state = None
+        self._door_open = None
 
     @Attribute
-    def state(self):
-        return self._state
+    def door_open(self):
+        return self._door_open
 
-    @state.setter
-    def state(self, state):
-        self._state = state
+    @door_open.updater
+    def door_open(self, door_open):
+        self._door_open = door_open
