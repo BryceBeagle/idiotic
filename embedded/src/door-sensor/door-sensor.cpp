@@ -1,84 +1,34 @@
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
+#include "idiotic_module.hpp"
 
-const char* ssid = "FlipTables";
-const char* password = "visit umbrella find shame";
-//const char* host = "brycebeagle.com";  // AWS
-const char* host = "192.168.1.108:5000"; // griefcake
+#define SERIAL_BAUD 115200
 
-String mac = "xxxx";
+#define WIFI_SSID "FlipTables"
+#define WIFI_PASSWORD "visit umbrella find shame"
 
-int inPin = 13;
+#define SERVER_ADDRESS "192.168.1.108"
+#define SERVER_PORT 5000
 
-int doorStatus = 0;
+#define PERIOD 2000  // 2 seconds
 
-WiFiClient client;
-HTTPClient http;
+#define HALL_EFFECT_PIN 13
 
-void alarmRequest(String statusVal) {
-
-    HTTPClient http;
-
-    Serial.println("TEST");
-
-    http.begin("http://" + String(host) + "/modules/door");
-    http.addHeader("Content-Type", "application/json");
-    
-    String message = "{\"status\":\"" + String(statusVal) + "\"}";
-    
-    int httpCode = http.POST(message);
-
-    Serial.println(httpCode);
-
-    http.end();
-}
+IdioticModule module("DoorSensor");
 
 void setup() {
 
-//  WiFi.macAddress(mac);
-  
-  Serial.begin(115200);
-  delay(10);
+	Serial.begin(SERIAL_BAUD);
+	module.connectWiFi(WIFI_SSID, WIFI_PASSWORD);
+	module.beginSocket(SERVER_ADDRESS, SERVER_PORT);
 
-  // prepare LED pin
-  pinMode(inPin, INPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(2, 0);
-  
-  // Connect to WiFi network
-  Serial.println();
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-  
-  WiFi.begin(ssid, password);
-  
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.println("WiFi connected");
-
-  // Print the IP address
-  Serial.println(WiFi.localIP());
-
-  Serial.println("Using pin " + inPin);
-  
+	module.funcs["door_open"] = IdioticModule::function_map{
+			.get = [&] { return digitalRead(HALL_EFFECT_PIN); }
+	};
 }
+
 
 void loop() {
 
-  if (doorStatus == 0  && digitalRead(inPin) == 0) {
-    Serial.println("Door Opened");
-    doorStatus = 1;
-    alarmRequest("open");
-    digitalWrite(LED_BUILTIN, LOW);
-  } else if (doorStatus == 1  && digitalRead(inPin) == 1) {
-    Serial.println("Door Closed");
-    doorStatus = 0;
-    alarmRequest("closed");
-    digitalWrite(LED_BUILTIN, HIGH);
-  }
-}
+	module.dataLoop();
+	delay(PERIOD);
 
+}
