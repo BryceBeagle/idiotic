@@ -63,7 +63,7 @@ IotDevices can be referred to either using the Class type and their name, or by 
 
 # Creating a new IdioticDevice
 
-Creating a new IdioticDevice is simple. First, create a new python file in the `control/idiotic_devices` directory.
+Creating a new IdioticDevice is simple. First, create a new python file in the `control/device_drivers` directory.
 Use the following snippet as a template for the file:
 ```python
 from control.idiotic_device import IdioticDevice

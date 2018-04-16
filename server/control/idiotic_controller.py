@@ -6,7 +6,7 @@ from .idiotic_routine import IdioticRoutine
 from .idiotic_trigger import IdioticTrigger
 from .idiotic_event import IdioticEvent
 
-from .idiotic_devices.hue import HueBridge
+from .device_drivers.hue import HueBridge
 
 
 class IdioticController:
@@ -133,10 +133,10 @@ class IdioticController:
         """
         try:
             # Import class and instantiate an instance of it. Note the instantiation at the end
-            mod = __import__('idiotic_devices', globals(), locals(), [klass], 1)
+            mod = __import__('device_drivers', globals(), locals(), [klass], 1)
             dev = getattr(mod, klass)()
         except ImportError:
-            print(f"Error importing {klass} from idiotic_devices")
+            print(f"Error importing {klass} from device_drivers")
             return None
 
         dev.ws.update(ws)
@@ -166,7 +166,7 @@ class IdioticController:
 
 if __name__ == '__main__':
 
-    from .idiotic_devices import IRSensor
+    from .device_drivers import IRSensor
 
     controller = IdioticController()
 
