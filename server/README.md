@@ -33,7 +33,7 @@ hello structure:
 }
 ```
 update structure:
-```
+```javascript
 {
   "uuid": "13:8C:14:87:B7:AD",
   "update": {
