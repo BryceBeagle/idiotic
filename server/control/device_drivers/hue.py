@@ -10,7 +10,8 @@ class HueBridge(phue.Bridge):
     __instance = None
 
     def __new__(cls, *args, **kwargs):
-        """Returns the current HueBridge object if it exists, otherwise creates a new one and returns it"""
+        """Returns the current HueBridge object if it exists, otherwise creates
+        a new one and returns it"""
 
         if cls.__instance is None:
             cls.__instance = super().__new__(cls, *args, **kwargs)
@@ -25,6 +26,7 @@ class HueBridge(phue.Bridge):
 
 
 class HueLight(IdioticDevice):
+    """Device that represents a single Hue Light"""
 
     bridge = HueBridge()
 
@@ -133,7 +135,8 @@ class HueLight(IdioticDevice):
                 # Remove light from group
                 lights.remove(self.light_id)
 
-                # Delete group if the light to remove is the only light in the group
+                # Delete group if the light to remove is the only light in the
+                # group
                 if not lights:
                     self.bridge.delete_group(group.group_id)
 
@@ -144,13 +147,6 @@ class HueLight(IdioticDevice):
         # New groups
         for group in groups:
             self.bridge.create_group(group, [self.light_id])
-
-
-class Temp(HueLight):
-
-    @Behavior
-    def test(self):
-        pass
 
 
 if __name__ == '__main__':
