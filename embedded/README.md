@@ -20,13 +20,12 @@ It is recommended to use PlatformIO toolchain for development and deployment of 
     1. Connect the module to WiFi using `IdioticModule::connectWiFi()`
     2. Begin the connection to the Idiotic server using `IdioticModule::beginSocket()`
     3. Populate the `Idiotic::funcs` map with attribute set and get functions using `IdioticModule::function_map`
-    structs. The key for each item in the map is the attribute name.
-
+    structs. The key for each item in the map is the attribute name. <br><br>
     Note:
-    * Each key must have an exact match in the corresponding device driver as either an attribute or a behavior
-    * The `.get` function supports lambda expressions, but for an unknown technical reason, I was unable to get this
-    working for the `.set` function. As a result, only function pointers are accepted. If a class method is required,
-    use `std::bind` for now.
+        * Each key must have an exact match in the corresponding device driver as either an attribute or a behavior
+        * The `.get` function supports lambda expressions, but for an unknown technical reason, I was unable to get this
+        working for the `.set` function. As a result, only function pointers are accepted. If a class method is
+        required, use `std::bind` for now.
     4. If serial debug output is desired, use `Serial.setDebugOutput(true)`
 6. In the loop() function:
     1. Run the dataloop using `IdioticModule::dataLoop()`
