@@ -51,10 +51,10 @@ get structure:
 # Creating a new IdioticDevice
 
 Creating a new IdioticDevice is simple. First, create a new python file in the `control/device_drivers` directory.
-Use the following snippet as a template for the file:
+Use the following snippet as a template/example for the file:
 ```python
 from control.idiotic_device import IdioticDevice
-from control.idiotic_device import Attribute
+from control.idiotic_device import Attribute, Behavior
 
 class MyDeviceName(IdioticDevice):
 

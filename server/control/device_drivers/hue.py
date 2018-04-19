@@ -162,8 +162,8 @@ if __name__ == '__main__':
             print("test")
 
     print(a.get_attributes())
-    print(a.get_actions())
-    print(HueLight.get_actions())
+    print(a.get_behaviors())
+    print(HueLight.get_behaviors())
     print(HueLight.get_attributes())
 
 
