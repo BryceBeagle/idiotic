@@ -9,3 +9,5 @@ requirements testing before executing
 `Behavior` decorators
 * `idiotic_routine.py` - Contains the `IdioticRoutine` class, which manage the flow of functionality in the system
 * `idiotic_trigger.py` - Contains the `IdioticTrigger` class, used by IdioticRoutines to subscribe to device attributes
+
+See the readme in `device_drivers/` for how to create a new device driver to be added to the system
