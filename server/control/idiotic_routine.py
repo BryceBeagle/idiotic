@@ -1,4 +1,4 @@
-from typing import List, Dict, Union
+from typing import List, Union
 
 from control.idiotic_trigger import IdioticTrigger
 from control.idiotic_event import IdioticEvent
@@ -6,23 +6,32 @@ from control.idiotic_conditional import IdioticConditional
 
 
 class IdioticRoutine:
-    """Sequence of events
+    """Sequence of events to run when triggered with a satisfied conditional
 
-    Each IotRoutine has only one trigger, but multiple IotRoutines can have the same IotEvent, with
-    different triggers
+    Each IdioticRoutine has only one trigger, but multiple IdioticRoutines can
+    have the same IdioticEvent, with different triggers, allowing the events to
+    be used with different routines, for different situations.
 
-    # TODO: Support for multiple triggers?
-
-    Conditionals can be tied to individual IotEvents within the IotRoutine, or to the entire
-    IotRoutine
+    Each routine can have a list of conditionals that must be satisfied for the
+    routine to run, once triggered. Each event can also have associated
+    conditionals for finer control.
     """
 
     def __init__(self, events=None, conditionals=None):
+        """Initialize an IdioticRoutine
 
-        # Will be overridden by properties below, but defining her for PEP8 compliance
+        The trigger for the routine is initialized _after_ using the routine as
+        an argument. This may be changed in the future.
+
+        Conditionals are optional. If none are supplied, the events are always
+        executed when the routine is triggered
+
+        :param events: List of events to execute
+        :param conditionals: Requirements for routine to run once triggered
+        """
         self._trigger = None
         self._events = []
-        self._conditionals = {None: []}
+        self._conditionals = []
 
         # Use properties
         self.events = events
@@ -31,12 +40,13 @@ class IdioticRoutine:
         self._name = None
 
     def __call__(self, *args, **kwargs):
-        """Trigger all events in routine"""
+        """Trigger all events in routine after verifying conditionals pass"""
 
         # All conditionals for routine must be true
         if not all(self.conditionals):
             return
 
+        # Run all events in event list
         for event in self.events:
             event()
 
@@ -46,10 +56,8 @@ class IdioticRoutine:
         return self._trigger
 
     @trigger.setter
-    def trigger(self, trigger: IdioticTrigger) -> None:
+    def trigger(self, trigger: IdioticTrigger):
         """Set trigger"""
-        if not isinstance(trigger, IdioticTrigger):
-            raise Exception("trigger is not an instance of IotTrigger")
         self._trigger = trigger
 
     @property
@@ -58,41 +66,33 @@ class IdioticRoutine:
         return self._events
 
     @events.setter
-    def events(self, events: Union[IdioticEvent, List[IdioticEvent]]) -> None:
-        """Set event(s)"""
+    def events(self, events: Union[IdioticEvent, List[IdioticEvent]]):
         if isinstance(events, IdioticEvent):
             self._events = [events]
         elif isinstance(events, list):
-            if not all(isinstance(event, IdioticEvent) for event in events):
-                raise Exception("event is not an instance of IotEvent")
             self._events = events
         else:
-            raise Exception("event is not an instance of IotEvent")
+            raise Exception("event list is not properly formatted")
 
-    def add_event(self, event: IdioticEvent) -> None:
+    def add_event(self, event: IdioticEvent):
         """Add another event"""
-        if not isinstance(event, IdioticEvent):  # TODO: Support for list of events?
-            raise Exception("event is not an instance of IotEvent")
         self._events.append(event)
 
-    def remove_event(self, event: IdioticEvent) -> None:
+    def remove_event(self, event: IdioticEvent):
         """Remove an event"""
-        if not isinstance(event, IdioticEvent):  # TODO: Support for list of events?
-            raise TypeError("event is not an instance of IotEvent")
         self._events.remove(event)
 
     @property
-    def conditionals(self) -> Dict[Union[None, IdioticConditional], List[IdioticEvent]]:
-        """Get conditionals pattern"""
-
+    def conditionals(self) -> List[IdioticConditional]:
+        """Conditionals for the routine"""
         return self._conditionals
 
     @conditionals.setter
-    def conditionals(self, conditionals: Union[None, IdioticConditional, List[IdioticConditional]]):
-
+    def conditionals(self, conditionals: Union[None, IdioticConditional,
+                                               List[IdioticConditional]]):
         # No conditionals
         if conditionals is None:
-            self._conditionals = [True]
+            self._conditionals = []
 
         # Single conditional
         elif isinstance(conditionals, IdioticConditional):
@@ -100,9 +100,8 @@ class IdioticRoutine:
 
         # List of conditionals
         elif isinstance(conditionals, list):
-            if not all(isinstance(conditional, IdioticConditional) for conditional in conditionals):
-                raise TypeError("conditionals must all be instances of IotConditional")
             self._conditionals = conditionals
 
         else:
-            raise TypeError("conditionals must all be instances of IotConditional")
+            raise TypeError("conditionals must all be instances of "
+                            "IotConditional")

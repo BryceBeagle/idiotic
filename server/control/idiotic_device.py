@@ -1,3 +1,6 @@
+from typing import Set
+
+
 class Attribute:
     """Decorator for functions within an IdioticDevice instance
 
@@ -9,6 +12,7 @@ class Attribute:
 
     TODO: Populate IdioticDevice.attributes list
     """
+
     def __init__(self, fget, fupdate=None, fset=None, owner=None):
 
         self.fget = fget
@@ -22,8 +26,8 @@ class Attribute:
     def __get__(self, owner, obj_type=None):
 
         if not self.owner:
-
-            attr_temp = type(self)(self.fget, self.fupdate, self.fset, owner=owner)
+            attr_temp = type(self)(self.fget, self.fupdate, self.fset,
+                                   owner=owner)
             setattr(owner, self.fget.__name__, attr_temp)
 
         return getattr(owner, self.fget.__name__)
@@ -82,9 +86,7 @@ class Behavior:
         return self.func(self.owner, *args, **kwargs)
 
     def __get__(self, owner, obj_type=None):
-
         if not self.owner:
-
             attr_temp = type(self)(self.func, owner=owner)
             setattr(owner, self.func.__name__, attr_temp)
 
@@ -92,6 +94,13 @@ class Behavior:
 
 
 class IdioticDevice:
+    """Base class for device drivers.
+
+    Subclasses gain the following attributes:
+        uuid
+        name
+        ws
+    """
 
     def __init__(self):
 
@@ -101,6 +110,7 @@ class IdioticDevice:
 
     @Attribute
     def uuid(self):
+        """Device UUID"""
         return self._uuid
 
     @uuid.updater
@@ -118,6 +128,7 @@ class IdioticDevice:
 
     @Attribute
     def ws(self):
+        """Device websocket, if it uses one"""
         return self._ws
 
     @ws.updater
@@ -125,7 +136,12 @@ class IdioticDevice:
         self._ws = ws
 
     @classmethod
-    def get_attributes(cls):
+    def get_attributes(cls) -> Set[str]:
+        """Get list of attributes that the device has.
+
+        Upon usage, every attribute (in the normal Python sense of the word) of
+        the class is checked to see if it is an instance of the Attribute class.
+        """
         attributes = set()
         for name, obj in cls.__dict__.items():
             if isinstance(obj, Attribute):
@@ -133,9 +149,14 @@ class IdioticDevice:
         return attributes
 
     @classmethod
-    def get_actions(cls):
-        actions = set()
+    def get_behaviors(cls) -> Set[str]:
+        """Get list of behaviors that the device supports.
+
+        Upon usage, every attribute (in the normal Python sense of the word) of
+        the class is checked to see if it is an instance of the Behavior class.
+        """
+        behaviors = set()
         for name, obj in cls.__dict__.items():
             if isinstance(obj, Behavior):
-                actions.add(name)
-        return actions
+                behaviors.add(name)
+        return behaviors

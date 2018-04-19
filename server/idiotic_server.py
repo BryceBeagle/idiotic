@@ -6,54 +6,54 @@ from flask_sockets import Sockets
 
 from control.idiotic_controller import IdioticController
 
-
+# Create a new Flask app with sockets
 app = Flask(__name__)
 app.config['DEBUG'] = True
 socketio = Sockets(app)
-
-logger = logging.getLogger('gunicorn.error')
 
 controller = IdioticController()
 
 
 @socketio.route('/embedded')
 def handle_json(ws):
-    """Set or get attribute of IdioticDevice
+    """Called whenever a websocket connects to the system at /embedded
 
-    json structure:
-        {"set" : [
-           {
-            "id"    : <uuid of IdioticDevice instance>,
-            "attr"  : <attribute name>,
-            "value" : <value>,
-           },
-           {
-            "class" : <type(IotDevice())>,
-            "name"  : <IotDevice().name>,
-            "attr"  : <attribute name>,
-            "value" : <value>
-           }
-        ],
-        "get : [
-           {
-            "id"    : <uuid of IotDevice instance>,
-            "attr"  : <attribute name>
-           },
-           {
-            "class" : <type(IotDevice())>,
-            "name"  : <IotDevice().name>,
-            "attr"  : <attribute name>
-           }
-        ]}
+    The purpose of this function is to parse the json-bodied message.
 
-    json contains a list of set and/or get commands. Either id, or class+name, must be specified in json
+    There are three types of JSON messages: update, get (unimplemented), and
+    hello.
 
-    :param module_class:
-    :return:
+    An IdioticDevice sends a hello message attempting to establish connection to
+    the server, usually during its initialization sequence. If the message is a
+    hello message, the json structure must contain a class type in the "class"
+    key to be associated with the uuid.
+
+    Every JSON message must have the uuid of the sender device.
+
+    hello structure:
+    {
+      "hello": null,
+      "uuid": "13:8C:14:87:B7:AD",
+      "class": "DoorSensor"
+    }
+
+    update structure:
+    {
+      "uuid": "13:8C:14:87:B7:AD",
+      "update": {
+        "door_state": 1,
+        "some_value": "some string"
+      }
+    }
+
+    get structure:
+    [unimplemented]
+
     """
     while not ws.closed:
         message = ws.receive()
 
+        # Print the message for debugging
         print(message)
 
         req_json = json.loads(message)
@@ -83,9 +83,13 @@ def handle_json(ws):
                     logging.error(f"Attribute {attr} does not exist or has no "
                                   f"update function")
 
+        if 'get' in req_json:
+            raise NotImplementedError
+
 
 @app.route("/")
 def hello():
+    """For debugging. Allows a user to verify they have access to the server"""
     return "Hello World"
 
 

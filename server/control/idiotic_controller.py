@@ -10,6 +10,14 @@ from .device_drivers.hue import HueBridge
 
 
 class IdioticController:
+    """The main controller for the Idiotic system
+
+    Manages all devices and routines. At startup, loads routine, event, and
+    device configurations from `server/model/`.
+
+    Currently has a hardcode to initialize the HueBridge in __init__, but this
+    should be removed in the future en lieu of a more modular solution.
+    """
 
     def __init__(self):
 
@@ -48,7 +56,8 @@ class IdioticController:
         for klass_name, klass_data in devices.items():
             for device in klass_data:
                 if device['uuid'] is None:
-                    raise NotImplementedError("null uuids in device json config files not supported")
+                    raise NotImplementedError(
+                        "null uuids in device json config files not supported")
                 self.new_device(klass_name, device['uuid'])
 
     def create_events_from_json(self, filename: str):
@@ -98,12 +107,44 @@ class IdioticController:
             self.events[event_name] = IdioticEvent(actions)
 
     def create_routines_from_json(self, filename: str):
-        """"Create IdioticEvent instances using json configuration"""
+        """Create IdioticEvent instances using json configuration
+
+        Each routine needs a trigger, conditional (can be null), and an event
+        list
+
+        Each event in the event list must have a corresponding entry in the
+        events.json
+
+        json structure of file:
+        {
+          "Demo Light on temp": {
+            "trigger": {
+              "device": {
+                "uuid": "6A:C6:3A:AC:89:EB",
+                "class": null,
+                "name": null
+              },
+              "attribute": "temp",
+              "check": "check_gt",
+              "value": 30
+            },
+            "conditional": null,
+            "events": [
+              "Demo Light on"
+            ]
+          }
+        }
+
+        """
 
         with open(filename) as fi:
             routines = json.load(fi)
 
+        # Iterate over routines expressed in file
         for routine_name, routine_data in routines.items():
+
+            # Create list of events using events pulled from events.json
+            # Each entry must have a corresponding entry in the events.json
             events = [self.events[event] for event in routine_data['events']]
 
             routine = IdioticRoutine(events, None)  # TODO: Conditionals
@@ -119,7 +160,8 @@ class IdioticController:
 
             attr = getattr(trig_dev, trigger['attribute'])
 
-            trig = IdioticTrigger(routine, attr, trigger['check'], trigger['value'])
+            trig = IdioticTrigger(routine, attr, trigger['check'],
+                                  trigger['value'])
             trig.name = routine_name
 
             self.routines[routine_name] = routine
@@ -128,12 +170,13 @@ class IdioticController:
         """Create a new IdioticDevice
         :param klass: IdioticDevice class type
         :param uuid: UUID of IdioticDevice (likely MAC address)
-        :param ws: Websocket instance
+        :param ws: [Optional] Websocket instance
         :return:
         """
         try:
-            # Import class and instantiate an instance of it. Note the instantiation at the end
+            # Import class and instantiate an instance of it.
             mod = __import__('device_drivers', globals(), locals(), [klass], 1)
+            # Note the instantiation at the end
             dev = getattr(mod, klass)()
         except ImportError:
             print(f"Error importing {klass} from device_drivers")
@@ -165,7 +208,6 @@ class IdioticController:
 
 
 if __name__ == '__main__':
-
     from .device_drivers import IRSensor
 
     controller = IdioticController()

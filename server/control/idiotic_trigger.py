@@ -2,6 +2,12 @@ import types
 
 
 class IdioticTrigger:
+    """Used by a routine to subscribe to an attribute's value
+
+    When the subscribed-to attribute's update function is called, uses the check
+    function with the current attribute's value to determine whether or not to
+    call the routine
+    """
 
     def __init__(self, routine, attr, check, value):
         """
@@ -34,7 +40,7 @@ class IdioticTrigger:
     def alert(self, value) -> None:
         """Called when attr's state changes
 
-        Calls self.trigger() if [conditional] is True
+        Calls self.trigger() if self.check [conditional] is True
 
         :param value: value of attr after state change
         """
