@@ -47,26 +47,6 @@ get structure:
 [unimplemented]
 ```
 
-IdioticDevices can be referred to either using the Class type and their name, or by just using their global UUID.
-`set` commands return their values in another JSON object with Class type and name, and UUID:
-### **TODO: This is not current**
-```javascript
-{[{
-    "class" : "DoorSensor",
-    "name"  : "Back Door",
-    "id"    : "0x4ab343cd",
-    "attr"  : "open",
-    "value" : false
-  },
-  {
-    "class" : "HueLight",
-    "name"  : "Dining Room 2",
-    "id"    : "0x4ab353ad",
-    "attr"  : "saturation",
-    "value" : 30
-   }
-]}
-```
 
 # Creating a new IdioticDevice
 
@@ -93,12 +73,17 @@ class MyDeviceName(IdioticDevice):
     @my_attribute.setter
     def my_attribute(value):
         """Instruct device to set my_attribute to value"""
-        self.ws.send().send(f'{{"set" : {{"{active_device}"}}}}')
+        self.ws.get().send(f'{{"set" : {{"{active_device}"}}}}')
 
-    @my_attribute.update
+    @my_attribute.updater
     def my_attribute(value):
         """Update value of my_attribute in controller's cache"""
         self._my_attribute = value
+
+    @Behavior
+    def thing_to_do(param1, param2):
+        """Have device do some thing"""
+        self.ws.get().send(f'{{"do" : "thing_to_do"}}')
 
 ```
 
@@ -108,17 +93,20 @@ Light would be an attribute, and a command used to make the bulb strobe between 
 
 ## Attributes
 
-Attributes have a getter and/or a setter function and their definition is meant to mimic that of properties. However,
-they are not descriptor objects and set using `my_attribute.set(value)` and queried using `my_attribute.get()`.
+Attributes represent singular values and states. For example, the brightness of a Hue Light would be an attribute, and
+would have a getter and a setter method. Because the HueLights do not ping the server with status information, the
+HueLight Attributes would not have updater methods. On the other hand, a temperature sensor whose sole purpose is to
+report status would have updater and getter functions for its temp attribute.
 
-To create an attribute, tag a function using the `@Attribute` decorator. This turns the following function into the
-getter method for an instance of an Attribute class. To create a setter for the Attribute use a `@my_attribute.setter`
-decorator.
-
-Using the `@Attribute` decorator is required to allow IdioticRoutines to access and set the the data inside the attribute.
-Attributes are also enumerated on the UI **\[Very much TODO\]**.
+Attributes are defined above a function use decorators. The plain @Attribute decorator must be used first and designates
+the following function as the getter function for the Attribute. To define a setter or updater function use
+`getter_func_name.setter` or `getter_func_name.updater`, where getter_func_name is the name of the function defined as
+the getter function.
 
 ## Behaviors
 
-Behaviors are Behaviors are not as complicated internally as attributes and only have a single method. However, the `@Behavior` decorator must be
-used to tell Idiotic to enumerate the Behavior and allow Routines to call it.
+Behaviors are abilities that a device can perform, that are slightly more complicated that the setting of a single value
+that an attribute setter function provides. An example of a behavior could be a HueLight having a transition ability to
+slowly change between two different colors, which would be arguments fort the behavior function. Behaviors are not as
+complicated internally as attributes and only have a single method. However, the @Behavior decorator must be used to
+tell Idiotic to enumerate the Behavior and allow Routines to call it.
