@@ -10,7 +10,24 @@ Json data structures are  [ArduinoJson library](https://github.com/bblanchon/Ard
 # Creating your own
 It is recommended to use PlatformIO toolchain for development and deployment of software to the ESP8266.
 
-1. From within the `idiotic/embedded` (`$EMBEDDED`) directory, initialize Platformio for your editor/IDE of choice by following [these instructions](http://docs.platformio.org/en/latest/userguide/cmd_init.html "these instructions")
-2. Create a new directory under `$EMBEDDED/src` with the name of your device.
-3. Create a new `.cpp` file inside that directory that will serve as the main file of the program.
-4. Edit the $EMBEDDED/platformio.init and change `src_dir` to match the src directory that you just created. Paths are relative to `$EMBEDDED`.
+1. If you are developing a new device, create a new directory under `$idiotic/embedded/src` with the name of your device
+2. Create a new `.cpp` source file in that directory and open it for editing
+3. Import `idiotic_module.hpp` to acquire the base IdioticModule class and its functionality
+4. Create an instance of `IdioticModule`, passing the device type as a string.
+
+    Note: This string must exactly match the class name of the corresponding device driver
+5. In the setup() function:
+    1. Connect the module to WiFi using `IdioticModule::connectWiFi()`
+    2. Begin the connection to the Idiotic server using `IdioticModule::beginSocket()`
+    3. Populate the `Idiotic::funcs` map with attribute set and get functions using `IdioticModule::function_map`
+    structs. The key for each item in the map is the attribute name.
+
+    Note:
+    * Each key must have an exact match in the corresponding device driver as either an attribute or a behavior
+    * The `.get` function supports lambda expressions, but for an unknown technical reason, I was unable to get this
+    working for the `.set` function. As a result, only function pointers are accepted. If a class method is required,
+    use `std::bind` for now.
+    4. If serial debug output is desired, use `Serial.setDebugOutput(true)`
+6. In the loop() function:
+    1. Run the dataloop using `IdioticModule::dataLoop()`
+    2. Delay the thread to for an amount of time to meet a desired period using `delay()`
