@@ -7,6 +7,14 @@ class IdioticEvent:
     """List of atomic actions to perform with the device, with a conditional
 
     Actions are usually attribute.setter functions or behaviors
+
+    Events are sequences of actions that can be executed by a routine. For
+    example, an event to turn off all the lights in a house would hold a list of
+    actions, each to command a single bulb to turn off. Just as events can hold
+    multiple actions, routines can hold multiple events. For example, if a user
+    wanted a routine to run when they go to bed, it might have an event to turn
+    of all the lights, an event to set an alarm on a smart alarm clock, and
+    another event to message a loved one “Goodnight” on a messaging platform.
     """
 
     def __init__(self, actions: Union[Callable, List[Callable]],
