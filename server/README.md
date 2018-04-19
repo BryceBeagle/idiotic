@@ -1,48 +1,55 @@
 # Introduction
 
 `idiotic_server.py` is the entry point of the software portion of this project. It operates as the glue that holds the
-Model, View and Controller together. It is run without arguments using Python 3 and has the following dependencies:
+Model and Controller together, plus any potential, future View. It is run without arguments using Python 3 and has the following dependencies:
 
 Required:
 * `flask` -- Runs the webserver
 
 
 Optional:
-* `phue` -- Required to use Phillips Hue lights and bridges
+* `phue` -- Required to use Phillips Hue lights and bridges*
+
+<sub><sup>\* currently required because of some hardcoding -- to be optional in future.<sup><sub>
 
 
-The server listens for HTTP POST and GET requests to query and control different modules connected to the controller.
-These requests are sent to \[server IP\]/modules. Commands are embedded in a json object inside the body of the message.
-Below is an example JSON object:
+The devices and the server communicate with each other using websockets. The data is sent on the socket in the form of
+string encoded JSON structures. Each JSON structure is an object with one or more of three allowed keys: set, get, and
+do. The value associated with the key is an array of tasks of that type for the recipient to perform. Depending on the
+intended recipient of the message, these instructions are slightly different.
+
+An IdioticDevice sends a hello message attempting to establish connection to the server, usually during its
+initialization sequence. If the message is a hello message, the json structure must contain a class type in the
+"class" key to be associated with the uuid.
+
+Below are example JSON objects, for each message type:
+
+hello structure:
 ```javascript
-{"set" : [
-   {
-    "id"    : "0x4ab343cd",
-    "attr"  : "brightness",
-    "value" : 254
-   },
-   {
-    "class" : "HueLight",
-    "name"  : "Dining Room 1",
-    "attr"  : "on",
-    "value" : true
-   }
-],
-"get" : [
-   {
-    "id"    : "0x23e4abd4",
-    "attr"  : "open"
-   },
-   {
-    "class" : "HueLight",
-    "name"  : "Dining Room 2",
-    "attr"  : "saturation"
-   }
-]}
+{
+  "hello": null,
+  "uuid": "13:8C:14:87:B7:AD",
+  "class": "DoorSensor"
+}
+```
+update structure:
+```
+{
+  "uuid": "13:8C:14:87:B7:AD",
+  "update": {
+    "door_state": 1,
+    "some_value": "some string"
+  }
+}
+```
+get structure:
+```
+[unimplemented]
 ```
 
-IotDevices can be referred to either using the Class type and their name, or by just using their global UUID.
+IdioticDevices can be referred to either using the Class type and their name, or by just using their global UUID.
 `set` commands return their values in another JSON object with Class type and name, and UUID:
+### **TODO: This is not current**
 ```javascript
 {[{
     "class" : "DoorSensor",
@@ -67,34 +74,35 @@ Creating a new IdioticDevice is simple. First, create a new python file in the `
 Use the following snippet as a template for the file:
 ```python
 from control.idiotic_device import IdioticDevice
-from control.idiotic_device import action, Attribute
+from control.idiotic_device import Attribute
 
 class MyDeviceName(IdioticDevice):
 
-    def __init__(opt_param=None, opt_param2=None):
-        self.param = opt_param
-        self.param2 = opt_param2
+    def __init__(self):
+        self._my_attribite = None
 
     @Attribute
     def my_attribute():
+        """Get my_attribute from device or from controller if cached
 
-        my_attribute = some_function_to_get_value_from_device_hardware()
-
-        return my_attribute
+        Implicit my_attribute.getter
+        """
+        # In this case, the value is retrieved from cache
+        return self._my_attribute
 
     @my_attribute.setter
     def my_attribute(value):
+        """Instruct device to set my_attribute to value"""
+        self.ws.send().send(f'{{"set" : {{"{active_device}"}}}}')
 
-        some_function_to_set_value_on_device_hardware(value)
-
-    @Action
-    def my_action(param_for_action):
-
-        some_function_to_tell_device_to_do_something(param_for_action)
+    @my_attribute.update
+    def my_attribute(value):
+        """Update value of my_attribute in controller's cache"""
+        self._my_attribute = value
 
 ```
 
-IdioticDevices consist of two main components: Attributes and Actions. Attributes represent singular values and states,
+IdioticDevices consist of two main components: Attributes and Behaviors. Attributes represent singular values and states,
 while Actions are meant to be used to perform something a little more in depth. For example, the brightness of a Hue
 Light would be an attribute, and a command used to make the bulb strobe between 3 colors would be an Action.
 
@@ -110,7 +118,7 @@ decorator.
 Using the `@Attribute` decorator is required to allow IdioticRoutines to access and set the the data inside the attribute.
 Attributes are also enumerated on the UI **\[Very much TODO\]**.
 
-## Actions
+## Behaviors
 
-Actions are not as complicated as as attributes and only have a single method. However, the `@Action` decorator must be
-used to tell Idiotic to enumerate the Action and allow Routines to call it.
+Behaviors are Behaviors are not as complicated internally as attributes and only have a single method. However, the `@Behavior` decorator must be
+used to tell Idiotic to enumerate the Behavior and allow Routines to call it.
