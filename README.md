@@ -1,78 +1,57 @@
-# Introduction
+The purpose of this project was to create a modular Internet of Things (IoT) system to create an interface between DIY
+devices and consumer grade products. The end product is focused on the automation of household tasks and behaviors for
+these devices, with functionality resembling a combination of IFTTT (If This Then That; used for integration between
+different web services) and Tasker (used for automating system actions on a cellphone). Users have the ability to
+integrate devices and services from off-the-shelf products and services, as well as third party or homebrewed solutions.
 
-The aim of this project is the creation of a modular Internet of Things (IoT) system that enables an interface between DIY IoT devices and consumer grade products such as Google Home or Amazon Alexa. The end software product will be focused on household tasks and behaviors, with functionality resembling a combination of IFTTT (used for interacting different web services) and Tasker (used for automating actions on a phone). Currently, most solutions to this problem function only with off-the-shelf products. This project seeks to allow users to use both off-the-shelf products and DIY solutions seamlessly. The program OpenHAB aligns most closely with this project’s end objectives, but functions using data pipelines instead of event driven actions.
+This project provides a design architecture as well as an implementation thereof. The architecture describes a system
+that addresses all of the design requirements, while the implementation makes it happen. The implementation provides the
+software required to run the system, as well as a set of physical modules that are able to work with it. The modules
+include parts lists, PCB schematics, board designs, and embedded software ‒ everything required to create and deploy one
+from scratch.
 
-I became interested in this area while working on an Honors Contract where I developed in internet connected Door Sensor. This thesis will serve as a continuation and expansion of that project. I am interested in this topic because it revolves around the interface between Software Engineering and Electrical Engineering. This project will demonstrate my programming capabilities and electrical systems understanding in a useful package, serving as a capstone for the focus areas that are not directly under my major or my diploma. 
+Users are able to configure their system to create collections of tasks, called routines, that are triggered by internal
+or external state changes, such as the time transitioning to a predesignated time of the day, or a door being opened.
+These routines contain events, or sequences of actions to perform, where each action is an atomic operation for a device
+to execute. A routine can contain one or more events, and each event can contain one or more actions to perform. For
+example, if a user wants their Philips Hue internet-connected light bulbs to turn on automatically when they open a
+specific door, they can create a routine that is run when a predesignated door sensor is activated. Devices send status
+updates to a server which listens to the changing values and notifies routines that are subscribed to pieces of data.
 
-The overall goal for this project is the design and production of a number of IoT PCB components and a modular software system that integrates them with off-the-shelf, consumer-available IoT products. Users will be able to integrate their own components with the software using a simple user interface. The components will then be able to be utilized by configuring event-driven actions with a web-based GUI. Examples of events include time of day, Google Home/Amazon Alexa voice commands, and open/closing of doors.
+The system has a server that handles connections and routes incoming data to device driver instances using a data
+control library, henceforth referred to as the controller. The controller manages routines and events in the system as
+well as the data structure that holds all of the device instances. Devices, both physical (e.g., a Temperature Sensor)
+and cloud-based (e.g., a Google Home), are configured for use by the controller with driver files that express the
+capabilities of the hardware or software that they represent. For example, a driver for the Philips Hue smart light
+bulbs would express the ability to set and retrieve attributes such as brightness, hue, saturation and on/off state, as
+well as behaviors such as dimming and pulsing.
 
-Modules to be created:
+Routines, events, and devices are stored in a configuration, allowing the system to start up preconfigured and ready for
+use. Events referenced in routines must have corresponding configuration entries describing them, and devices mentioned
+in events must also have drivers that the controller can access and utilize. Storing configurations in non-volatile,
+text-based formats allows them to be version controlled, shared, and edited with relative ease.
+
+The software provided with this project, called Idiotic, is an extendable implementation of the system described above.
+It is written in Python 3, with the server implemented with the Flask web framework library. Routines, events, and
+devices are loaded from JSON configuration files. There are also a small number of PCB devices, designed using Eagle,
+that function with the system as a demonstration of functionality.
+
+Developers that wish to integrate their own devices into Idiotic can make use of the server’s client platform agnostic
+websocket-based API to integrate their device within the system, using the simple, documented protocol. Creating a
+single driver file in a designated directory is all that is required to allow the controller to handle data from, and
+make commands to, a new device type. All integrated devices are treated as a first-class citizens within the system.
+
+Furthermore, if the new device is built on an ESP8266 microcontroller platform, there is a provided library that allows
+for expedited embedded development and integration within the system. A developer simply needs to extend a template file
+to map which functions are correlated with which pieces of data and behaviors. If the new device is unable to utilize
+this library, it simply needs to connect to the server over a Websocket and follow a simple communication protocol.
+
+Modules currently in the system:
 * Door Open/Close Sensor (already developed but revising is necessary)
-* IR blaster/receiver - Send IR signals to TV (with ability to record and reproduce remote signals)
-* HDMI CEC adapter - Detect HDMI CEC signals and interface with IR blaster to add CEC functionality to older TVs)
-* Digital Thermostat
-* Light Sensor (under consideration)
-* Motion Sensor (under consideration)
-* Vehicle Key Fob signal blaster/receiver (under consideration)
+* IR blaster/receiver **(hardware only)** - Send IR signals to TV (with ability to record and reproduce remote signals)
+* HVAC Thermostat
 		
-Core features of the software will include:
+Core features of the software  include:
 * Ability to utilize and integrate all created PCB modules
-* Ability to interface modules together to create useful actions
+* Ability to interface modules together to create useful routines and actions
 * Ability to add DIY modules with an easy to use interface
-* Interface with Google Home
-* Interface with Philips Hue
-
-The end product should be cheap (compared to other smart home solutions) and easy to set up and use. Experienced users could create their own PCBs and then integrate them into the system seamlessly.
-
-Resources will be needed in order to ensure completion of the project. The modules will require frequent use of the PCB mill in the Peralta Labs.  I have experience developing and printing PCBs, and the lab manager has granted me after hours access, as well as training for the mill. This will allow me to print boards on my own schedule, as my design necessitates. Additionally, the boards will require electrical components and the lab has a large supply of free parts (e.g. resistors, capacitors, regulators), allowing me to prototype cheaply and develop rapidly. Git and Github will be used for version control for the PCB files and software. Files will be checked in routinely to keep the repository up to date.
-
-This project will require understanding of both software and electrical engineering, as well as IoT systems. As such, the director for this project is from the Software department, and the second committee member is from the Engineering department with a background in IoT. 
-
-Because this is a project-based thesis, the end objective is a report on what I will have accomplished, not what others have done. As such, there will not be a strict requirement for citations. This is not to say that I will not be performing research, it will just be focused on my own work. Technical articles will be cited as is appropriate, although the focus of research will be on market research and comparison.
-
-Meetings will be conducted once per week ‒ more often if necessary ‒ starting at beginning of the Fall 2017 semester. Meetings will be used for conceptual guidance and progress reports. In advance for each meeting, I will prepare the necessary things I wish to talk about.
-
-The first semester of work will be mainly focused on PCB module development. Creating functional boards is a prerequisite for integrating them together. The second semester will focus on software design and integration with the first semester’s work. Schedules for both semesters are found below.
-
-
-## Semester 1 - R&D and PCB Modules
-|       Week          |            Task            
-| ------------------- | --------------------------
-Week 01 \| 2017-08-13 | Component research and initial planning
-Week 02 \| 2017-08-20 | Complete work on Door Sensing PCB
-Week 03 \| 2017-08-27 | Develop IR blaster/receiver PCB
-Week 04 \| 2017-09-03 | Develop IR blaster/receiver PCB
-Week 05 \| 2017-09-10 | Develop HDMI CEC PCB
-Week 06 \| 2017-09-17 | Develop HDMI CEC PCB
-Week 07 \| 2017-09-24 | Develop HDMI CEC PCB
-Week 08 \| 2017-10-01 | Basic integration of HDMI and IR modules
-Week 09 \| 2017-10-08 | Basic integration of HDMI and IR modules
-Week 10 \| 2017-10-15 | Develop Thermometer PCB
-Week 11 \| 2017-10-22 | Develop Thermometer PCB
-Week 12 \| 2017-10-29 | Develop Thermometer PCB
-Week 13 \| 2017-11-05 | Develop Thermometer PCB
-Week 14 \| 2017-11-12 | Add ability to control single module with Google Home
-Week 15 \| 2017-11-19 | Add ability to control Philips Hue with command line
-Week 16 \| 2017-11-26 | Link module to Philips Hue for testing
-Week 17 \| 2017-12-03 | Refinement of current work and preparation for 2nd semester. Continues through winter break
-
-## Semester 2 - Integration and Software Design
-|       Week          |            Task            
-| ------------------- | --------------------------
-Week 01 \| 2018-01-07 | Component research and initial planning
-Week 02 \| 2018-01-14 | Local module database (list of modules attached to network)
-Week 03 \| 2018-01-21 | Viewing status of modules attached to network
-Week 04 \| 2018-01-28 | Event handling and tasks
-Week 05 \| 2018-02-04 | Event handling and tasks
-Week 06 \| 2018-02-11 | Integration with Philips Hue
-Week 07 \| 2018-02-18 | Integration with Google Home
-Week 08 \| 2018-02-25 | User interface
-Week 09 \| 2018-03-04 | User interface refinement
-Week 10 \| 2018-03-11 | Module PCB refinement
-Week 11 \| 2018-03-18 | Create Report
-Week 12 \| 2018-03-25 | Create Report
-Week 13 \| 2018-04-01 | Thesis Defense
-Week 14 \| 2018-04-08 | Revising of Report
-Week 15 \| 2018-04-15 | Final submission due April 20 (signed signature title page, abstract, and digital submission)
-
-
