@@ -134,7 +134,7 @@ class IdioticDevice:
 
     @Attribute
     def uuid(self):
-        """Device UUID"""
+        """Device UUID. A string, usually a MAC address"""
         return self._uuid
 
     @uuid.updater
@@ -143,7 +143,7 @@ class IdioticDevice:
 
     @Attribute
     def name(self):
-        """Device name used for external access"""
+        """Device name used for external access or for display to user"""
         return self._name
 
     @name.updater
@@ -152,7 +152,9 @@ class IdioticDevice:
 
     @Attribute
     def ws(self):
-        """Device websocket, if it uses one"""
+        """Device websocket, if it uses one
+
+        Currently need to be flask-websockets, or at least duck-types thereof"""
         return self._ws
 
     @ws.updater
