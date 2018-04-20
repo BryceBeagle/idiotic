@@ -4,13 +4,13 @@ from typing import Set
 class Attribute:
     """Decorator for functions within an IdioticDevice instance
 
-    When the set() method is called, each subscribed IdioticTrigger's alert() method is called.
-    IdioticTriggers can subscribe by calling the .subscribe() method and unsubscribe by calling the .unsubscribe()
-    method.
+    When the .update method is called, each subscribed IdioticTrigger's alert
+    method is called. IdioticTriggers can subscribe by calling the .subscribe
+    method and unsubscribe by calling the .unsubscribe method.
 
-    Uses some python magic to return a descriptor. The __get__ dundie is required to set the owner post init
-
-    TODO: Populate IdioticDevice.attributes list
+    Uses some python magic to return a descriptor. The __get__ dundie is
+    required to set the owner post initialition, removing the Singleton aspect
+    that decorators usually have.
     """
 
     def __init__(self, fget, fupdate=None, fset=None, owner=None):
@@ -24,15 +24,37 @@ class Attribute:
         self.owner = owner
 
     def __get__(self, owner, obj_type=None):
+        """Special magical function the user should _never_ worry about.
 
+        Removes the singleton aspect of decorators in a very hacky way. Usually
+        decorators are singletons, bound to the Class. We want Attributes bound
+        to a class instance.
+
+        By default, Attributes are not bound to a class instance. Luckily,
+        whenever they are gotten (i.e., their __get__ method is called),
+        the owner class of the attribute (i.e., the device driver instance),
+        is passed. We keep that owner and use it to bind the methods to the
+        class instance. We also monkeypatch the device driver's Attribute
+        attribute to be a _new_ Attribute instance, this time with an owner.
+
+        If the Attribute does have an owner, we simply return the existing one
+        that the owning device class has in its dict.
+
+        This is a disgusting function, but is necessary.
+        """
+        # If not already bound to a class instance
         if not self.owner:
+            # Instantiate a new Attribute with an owner
             attr_temp = type(self)(self.fget, self.fupdate, self.fset,
                                    owner=owner)
+            # Monkeypatch it into the owner's dict
             setattr(owner, self.fget.__name__, attr_temp)
 
+        # Return the monkeypatched Attribute
         return getattr(owner, self.fget.__name__)
 
     def get(self):
+        """Getter function of Attribute"""
         return self.fget(self.owner)
 
     def update(self, value, notify=True):
@@ -55,21 +77,23 @@ class Attribute:
         return self.fset(self.owner, value)
 
     def getter(self, fget):
-        """Get value last reported to IdioticServer"""
+        """Set the getter function of Attribute"""
         return type(self)(fget, self.fupdate, self.fset)
 
     def updater(self, fupdate):
-        """Update the value that IdioticServer knows about"""
+        """Set the updater function of the Attribute"""
         return type(self)(self.fget, fupdate, self.fset)
 
     def setter(self, fset):
-        """Instruct IdioticDevice to set attribute value"""
+        """Set the setter function of the Attribute"""
         return type(self)(self.fget, self.fupdate, fset)
 
     def subscribe(self, subscriber):
+        """Subscribe to Attribute. Subscribers are called when .update is run"""
         self.subscribers.add(subscriber)
 
     def unsubscribe(self, subscriber):
+        """Unsubscribe from Attribute"""
         self.subscribers.discard(subscriber)
 
 
