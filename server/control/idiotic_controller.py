@@ -35,17 +35,26 @@ class IdioticController:
         self.create_routines_from_json('model/routines.json')
 
     def __getattr__(self, device_type):
-        """Used when getting dict of IdioticDevices of device_type"""
+        """Used when getting dict of IdioticDevices of device_type
+
+        Uses . operator
+        """
         if device_type in self.device_names:
             return self.device_names[device_type]
 
     def __getitem__(self, uuid):
-        """Used when IdioticDevice instance by uuid"""
+        """Used when getting IdioticDevice instance by uuid
+
+        Uses [] operator
+        """
         if uuid in self.device_uuids:
             return self.device_uuids[uuid]
 
     def __contains__(self, uuid):
-        """Return True if self.device_uuids contains uuid"""
+        """Return True if self.device_uuids contains uuid
+
+        Allows usage of 'in' keyword on controller
+        """
         return uuid in self.device_uuids
 
     def create_devices_from_json(self, filename: str):
