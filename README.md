@@ -50,6 +50,8 @@ Modules currently in the system:
 * Door Open/Close Sensor (already developed but revising is necessary)
 * IR blaster/receiver **(hardware only)** - Send IR signals to TV (with ability to record and reproduce remote signals)
 * HVAC Thermostat
+* Temperature sensor
+* Hue Light support
 		
 Core features of the software  include:
 * Ability to utilize and integrate all created PCB modules
