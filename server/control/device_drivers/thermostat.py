@@ -25,5 +25,5 @@ class Thermostat(IdioticDevice):
     def active_device(self, active_device):
         """Change the output mode of the device"""
         # TODO: Does not work on embedded device yet
-        self.ws.get().send(f'{{"get" : {{"{active_device}"}}}}')
+        self.ws.get().send(f'{{"set" : {{"{active_device}"}}}}')
 
