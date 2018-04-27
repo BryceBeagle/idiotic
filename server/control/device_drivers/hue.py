@@ -84,7 +84,7 @@ class HueLight(IdioticDevice):
     def hue(self):
         return self._light.hue
 
-    @hue.updater
+    @hue.setter
     def hue(self, hue):
         self._light.hue = hue
 
@@ -92,7 +92,7 @@ class HueLight(IdioticDevice):
     def saturation(self):
         return self._light.saturation
 
-    @saturation.updater
+    @saturation.setter
     def saturation(self, saturation):
         self._light.saturation = saturation
 
