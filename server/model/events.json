@@ -1,5 +1,5 @@
 {
-  "Demo Light on": {
+  "Demo Light blue": {
     "conditionals": null,
     "actions": [
       {
@@ -8,8 +8,22 @@
           "class": "HueLight",
           "name": "Demo Light"
         },
-        "attribute": "brightness",
-        "value": 254
+        "attribute": "hue",
+        "value": 46920
+      }
+    ]
+  },
+  "Demo Light red": {
+    "conditionals": null,
+    "actions": [
+      {
+        "device": {
+          "uuid": null,
+          "class": "HueLight",
+          "name": "Demo Light"
+        },
+        "attribute": "hue",
+        "value": 0
       }
     ]
   },
@@ -22,8 +36,22 @@
           "class": "HueLight",
           "name": "Demo Light"
         },
-        "attribute": "brightness",
-        "value": 0
+        "attribute": "on",
+        "value": false
+      }
+    ]
+  },
+  "Demo Light on": {
+    "conditionals": null,
+    "actions": [
+      {
+        "device": {
+          "uuid": null,
+          "class": "HueLight",
+          "name": "Demo Light"
+        },
+        "attribute": "on",
+        "value": true
       }
     ]
   }

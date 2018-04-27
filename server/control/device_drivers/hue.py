@@ -56,7 +56,7 @@ class HueLight(IdioticDevice):
     def room(self):
         return self._room
 
-    @room.updater
+    @room.setter
     def room(self, room):
         self._room = room
 
@@ -68,7 +68,7 @@ class HueLight(IdioticDevice):
     def on(self):
         return self._light.on
 
-    @on.updater
+    @on.setter
     def on(self, on):
         self._light.on = on
 

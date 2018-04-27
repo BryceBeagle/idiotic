@@ -1,5 +1,5 @@
 {
-  "Demo Light on temp": {
+  "Red when hot": {
     "trigger": {
       "device": {
         "uuid": "6A:C6:3A:AC:89:EB",
@@ -12,10 +12,10 @@
     },
     "conditional": null,
     "events": [
-      "Demo Light on"
+      "Demo Light red"
     ]
   },
-  "Demo Light off temp": {
+  "Blue when cold": {
     "trigger": {
       "device": {
         "uuid": "6A:C6:3A:AC:89:EB",
@@ -28,10 +28,10 @@
     },
     "conditional": null,
     "events": [
-      "Demo Light off"
+      "Demo Light blue"
     ]
   },
-  "Demo Light on door": {
+  "On when open": {
     "trigger": {
       "device": {
         "uuid": "6A:C6:3A:AC:39:3D",
@@ -47,7 +47,7 @@
       "Demo Light on"
     ]
   },
-  "Demo Light off door": {
+  "Off when closed": {
     "trigger": {
       "device": {
         "uuid": "6A:C6:3A:AC:39:3D",
