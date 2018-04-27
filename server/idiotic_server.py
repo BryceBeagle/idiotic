@@ -77,11 +77,7 @@ def handle_json(ws):
 
         if 'update' in req_json:
             for attr, value in req_json['update'].items():
-                try:
-                    getattr(controller[req_json['uuid']], attr).update(value)
-                except (AttributeError, TypeError):
-                    logging.error(f"Attribute {attr} does not exist or has no "
-                                  f"update function")
+                getattr(controller[req_json['uuid']], attr).update(value)
 
         if 'get' in req_json:
             raise NotImplementedError
