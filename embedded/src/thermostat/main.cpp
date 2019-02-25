@@ -4,10 +4,6 @@
 // Debug Serial
 #define SERIAL_BAUD 115200
 
-// WiFi
-#define WIFI_SSID "FlipTables"
-#define WIFI_PASSWORD "visit umbrella find shame"
-
 // Idiotic
 #define SERVER_HOST "192.168.1.108"
 #define SERVER_PORT 5000
@@ -24,8 +20,7 @@ const char *getThermostatMode();
 void setup() {
 
     Serial.begin(SERIAL_BAUD);
-    Serial.setDebugOutput(true);
-    module.connectWiFi(WIFI_SSID, WIFI_PASSWORD);
+    module.connectWiFi();
 
     module.beginSocket(SERVER_HOST, SERVER_PORT);
 

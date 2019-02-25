@@ -17,14 +17,13 @@ class IdioticModule {
 
     public:
 
-        String ssid, hostname, port;
         String class_type;
         String uuid;
 
         IdioticModule(String class_type): class_type(class_type) {}
 
-        void connectWiFi(String ssid, String password, String hostname);
-        void connectWiFi(String ssid, String password);
+        static void connectWiFi();
+        static void connectWiFi(String ssid, String password);
 
         void beginSocket(String host, uint16_t port);
 
@@ -47,7 +46,7 @@ class IdioticModule {
 
     private:
 
-        WebSocketsClient *_web_socket;
+        WebSocketsClient *_web_socket = nullptr;
         bool _socket_is_connected = false;
         uint64_t _last_heartbeat = 0;
 

@@ -2,9 +2,6 @@
 
 #define SERIAL_BAUD 115200
 
-#define WIFI_SSID "FlipTables"
-#define WIFI_PASSWORD "visit umbrella find shame"
-
 #define SERVER_ADDRESS "192.168.1.108"
 #define SERVER_PORT 5000
 
@@ -17,7 +14,7 @@ IdioticModule module("DoorSensor");
 void setup() {
 
 	Serial.begin(SERIAL_BAUD);
-	module.connectWiFi(WIFI_SSID, WIFI_PASSWORD);
+	module.connectWiFi();
 	module.beginSocket(SERVER_ADDRESS, SERVER_PORT);
 
 	module.funcs["door_open"] = IdioticModule::function_map{

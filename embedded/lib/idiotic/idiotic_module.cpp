@@ -1,5 +1,6 @@
 #include <ArduinoJson.h>
 #include <Arduino.h>
+#include <WiFiManager.h>
 
 #include "idiotic_module.hpp"
 
@@ -7,29 +8,43 @@
     #define SERIAL_BAUD 115200
 #endif
 
-void IdioticModule::connectWiFi(String ssid, String password, String hostname) {
 
-    WiFi.hostname(hostname);
-    connectWiFi(ssid, password);
+void IdioticModule::connectWiFi() {
+
+    WiFiManager wifiManager;
+
+    wifiManager.setAPCallback([](WiFiManager *myWiFiManager) {
+        Serial.print("AP SSID: ");
+        Serial.println(myWiFiManager->getConfigPortalSSID());
+    });
+
+    if (!wifiManager.autoConnect()) {
+        // This should never trigger as we're not using a timeout
+
+        Serial.println("failed to connect and hit timeout");
+        //reset and try again, or maybe put it to deep sleep
+        ESP.reset();
+        delay(1000);
+    }
+
+    Serial.print("Connected to ");
+    Serial.println(WiFi.SSID());
 
 }
 
 
 void IdioticModule::connectWiFi(String ssid, String password) {
 
-    this->ssid = ssid;
-    this->_password = password;
-
-    Serial.begin(SERIAL_BAUD);  // TODO: Serial only during a debug mode
-    WiFi.begin(ssid.c_str(), password.c_str());
-
     // Connect to WiFi network
+    Serial.println("");
     Serial.print("Connecting to ");
     Serial.println(ssid);
 
+    WiFi.begin(ssid.c_str(), password.c_str());
+
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
-        Serial.print(".");
+        Serial.print("!.!");
     }
     Serial.println("");
     Serial.println("WiFi connected");
@@ -73,7 +88,7 @@ void IdioticModule::_handleSocketEvent(WStype_t type,
         }
         case WStype_TEXT: {
             Serial.printf("[WSc] Payload received: %s\n", payload);
-            _parsePayload((char *)payload);
+            _parsePayload((char *) payload);
             break;
         }
         default: {
@@ -139,21 +154,19 @@ void IdioticModule::dataLoop() {
         // Send Json using socket
         _web_socket->sendTXT(buffer);
 
-    }
-
-    else {
+    } else {
         Serial.println("Socket not connected. Retrying");
     }
 }
 
 void IdioticModule::_parsePayload(char *payload) {
 
-    DynamicJsonBuffer parseBuffer(2*JSON_OBJECT_SIZE(1) + 20);
+    DynamicJsonBuffer parseBuffer(2 * JSON_OBJECT_SIZE(1) + 20);
     JsonObject &root = parseBuffer.parseObject(payload);
 
     if (root.containsKey("behavior")) {
         JsonObject &behaviors = root["behavior"];
-        for (JsonObject::iterator i = behaviors.begin();i != behaviors.end();
+        for (JsonObject::iterator i = behaviors.begin(); i != behaviors.end();
              ++i) {
             funcs[i->key].behavior(i->value.as<char *>());
         }
