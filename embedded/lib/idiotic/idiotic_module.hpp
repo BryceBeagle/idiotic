@@ -1,5 +1,4 @@
-#ifndef ESP8266_IDIOTIC_H
-#define ESP8266_IDIOTIC_H
+#pragma once
 
 #include <vector>
 #include <map>
@@ -61,6 +60,3 @@ class IdioticModule {
         void _parsePayload(char *payload);
 
 };
-
-
-#endif // ESP8266_IDIOTIC_H

@@ -1,5 +1,4 @@
-#ifndef THERMOSTAT_H
-#define THERMOSTAT_H
+#pragma once
 
 class Thermostat {
 
@@ -16,5 +15,3 @@ class Thermostat {
         Device getMode();
 
 };
-
-#endif // THERMOSTAT_H
