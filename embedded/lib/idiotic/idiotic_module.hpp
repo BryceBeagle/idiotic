@@ -12,6 +12,8 @@
 
 #include <WebSocketsClient.h>
 
+#include "idiotic_json_variant.h"
+
 
 class IdioticModule {
 
@@ -31,9 +33,9 @@ class IdioticModule {
         // "sorry, unimplemented: non-trivial designated initializers not
         // supported"
         typedef struct {
-            std::function<JsonVariant()> get;
-            void (*set)(const char *);  // TODO: allow lambdas
-            void (*behavior)(const char *);  // TODO: allow lambdas
+            std::function<IdioticJsonVariant()> get;
+            std::function<void(IdioticJsonVariant)> set;
+            std::function<void(String)> behavior;
         } function_map;
 
         // Map is used for a number of reasons:

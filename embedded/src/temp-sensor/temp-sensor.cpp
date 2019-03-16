@@ -5,7 +5,7 @@
 
 #define SERIAL_BAUD 115200
 
-const char* kServerHost = "192.168.1.182";
+const char* kServerHost = "192.168.1.89";
 const int   kServerPort = 5000;
 
 IdioticModule module("TempSensor");
@@ -14,6 +14,7 @@ Adafruit_MCP9808 tempsensor;
 void setup() {
 
     Serial.begin(SERIAL_BAUD);
+	Serial.setDebugOutput(true);
 
 	module.connectWiFi();
     module.beginSocket(kServerHost, kServerPort);
