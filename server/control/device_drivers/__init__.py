@@ -6,3 +6,4 @@ from .door_sensor import DoorSensor
 from .hue import HueLight
 from .temp_sensor import TempSensor
 from .thermostat import Thermostat
+from .gardenometer import Gardenometer
